@@ -125,7 +125,8 @@
                         },
                         {
                             "name": "MONGODB_CONNECTION_STRING",
-                            "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccountName')), '2015-11-06').primaryMasterKey]"                        }
+                            "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccountName')), '2015-11-06').connectionStrings[0].connectionString]"
+                        }
                     ]
                 }
             },
