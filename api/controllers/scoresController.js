@@ -1,43 +1,50 @@
 'use strict';
-
-
 const mongoose = require('mongoose'),
-  Score = mongoose.model('Scores');
+    Score = mongoose.model('Scores');
+const utilities = require('../../utilities');
 
-exports.listAllScores = function(req, res) {
-    Score.find({}, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
+exports.listAllScores = function (req, res) {
+    utilities.log(req, "listAllScores");
+    Score.find({}, function (err, score) {
+        if (err)
+            res.send(err);
+        res.json(score);
+    });
 };
 
 
 
 
-exports.createScore = function(req, res) {
-  const newScore = new Score(req.body);
-  newScore.save(function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
+exports.createScore = function (req, res) {
+    utilities.log(req, "createScore");
+    const newScore = new Score(req.body);
+    newScore.save(function (err, score) {
+        if (err)
+            res.send(err);
+        res.json(score);
+    });
 };
 
 
-exports.getScore = function(req, res) {
-  Score.findById(req.params.taskId, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
+exports.getScore = function (req, res) {
+    utilities.log(req, "getScore");
+    Score.findById(req.params.ScoreId, function (err, score) {
+        if (err)
+            res.send(err);
+        res.json(score);
+    });
 };
 
 
-exports.updateScore = function(req, res) {
-    Score.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
+exports.updateScore = function (req, res) {
+    utilities.log(req, "updateScore");
+    Score.findOneAndUpdate({
+        _id: req.params.ScoreId
+    }, req.body, {
+        new: true
+    }, function (err, score) {
+        if (err)
+            res.send(err);
+        res.json(score);
+    });
 };
