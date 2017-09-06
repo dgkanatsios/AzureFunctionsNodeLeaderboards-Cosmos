@@ -1,7 +1,8 @@
 require('dotenv').config();
 
-const express = require('express'),
-app = express(),
+const createHandler = require("azure-function-express").createHandler;
+const express = require("express");
+const app = express(),
 port = process.env.PORT || 3000,
 mongoose = require('mongoose'),
 Score = require('./api/models/scoresModel'), //created model loading here
@@ -24,7 +25,8 @@ const routes = require('./api/routes/scoresRoutes'); //importing route
 routes(app); //register the route
 
 
-app.listen(port);
+//app.listen(port);
 
 
-console.log('todo list RESTful API server started on: ' + port);
+console.log('scores RESTful API server started on: ' + port);
+module.exports = createHandler(app);
