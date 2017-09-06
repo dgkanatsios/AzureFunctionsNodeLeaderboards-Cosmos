@@ -3,7 +3,8 @@
       "authLevel" : "anonymous",
       "type"      : "httpTrigger",
       "direction" : "in",
-      "name"      : "req"
+      "name"      : "req",
+      "route": "{*segments}"
     }, {
       "type"      : "http",
       "direction" : "out",

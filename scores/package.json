@@ -12,10 +12,10 @@
   "dependencies": {
     "azure-function-express": "^1.2.2",
     "express": "^4.15.4",
-    "mongoose": "^4.11.10"
+    "mongoose": "^4.11.10",
+    "dotenv": "^4.0.0"
   },
   "devDependencies": {
-    "body-parser": "^1.17.2",
-    "dotenv": "^4.0.0"
+    "body-parser": "^1.17.2"
   }
 }
