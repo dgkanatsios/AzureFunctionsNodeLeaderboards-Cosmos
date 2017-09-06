@@ -1,11 +1,17 @@
 require('dotenv').config();
-
 const createHandler = require("azure-function-express").createHandler;
 const express = require("express");
 const app = express(),
-    port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
     Score = require('./api/models/scoresModel'); //created model loading here
+
+if(process.env.LOCAL_EXECUTION){
+    const bodyParser = require('body-parser');
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+    app.use(bodyParser.json());
+}
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
@@ -21,7 +27,9 @@ app.use(function (req, res) {
     })
 });
 
-console.log('scores RESTful API server started on: ' + port);
-
-//app.listen(port);
-module.exports = createHandler(app);
+if (process.env.LOCAL_EXECUTION) {
+    app.listen(3000);
+    console.log("Running on port 3000");
+} else {
+    module.exports = createHandler(app);
+}

@@ -12,9 +12,6 @@ exports.listAllScores = function (req, res) {
     });
 };
 
-
-
-
 exports.createScore = function (req, res) {
     utilities.log(req, "createScore");
     const newScore = new Score(req.body);
@@ -28,7 +25,7 @@ exports.createScore = function (req, res) {
 
 exports.getScore = function (req, res) {
     utilities.log(req, "getScore");
-    Score.findById(req.params.ScoreId, function (err, score) {
+    Score.findById(req.params.scoreId, function (err, score) {
         if (err)
             res.send(err);
         res.json(score);
@@ -39,7 +36,7 @@ exports.getScore = function (req, res) {
 exports.updateScore = function (req, res) {
     utilities.log(req, "updateScore");
     Score.findOneAndUpdate({
-        _id: req.params.ScoreId
+        _id: req.params.scoreId
     }, req.body, {
         new: true
     }, function (err, score) {
