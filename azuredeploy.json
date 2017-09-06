@@ -28,7 +28,7 @@
         },
         "repoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/davidebbo-test/Mvc52Application.git",
+            "defaultValue": "https://github.com/dgkanatsios/nodeleaderboardscores",
             "metadata": {
                 "description": "The URL for the GitHub repository that contains the project to deploy."
             }
