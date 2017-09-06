@@ -30,5 +30,5 @@ app.use(function (req, res) {
 
 console.log('scores RESTful API server started on: ' + port);
 
-app.listen(port);
-//module.exports = createHandler(app);
+//app.listen(port);
+module.exports = createHandler(app);
