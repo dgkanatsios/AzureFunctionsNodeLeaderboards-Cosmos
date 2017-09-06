@@ -1,5 +1,6 @@
 function log(req, msg) {
-    req.context.log(msg);
+    if (req.context)
+        req.context.log(msg);
 }
 
 module.exports = {

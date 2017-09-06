@@ -18,6 +18,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+const routes = require('./api/routes/scoresRoutes'); //importing route
+routes(app); //register the route
+
 //handle 404
 app.use(function (req, res) {
     res.status(404).send({
@@ -25,12 +28,7 @@ app.use(function (req, res) {
     })
 });
 
-const routes = require('./api/routes/scoresRoutes'); //importing route
-routes(app); //register the route
-
-
-//app.listen(port);
-
-
 console.log('scores RESTful API server started on: ' + port);
-module.exports = createHandler(app);
+
+app.listen(port);
+//module.exports = createHandler(app);
