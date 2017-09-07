@@ -3,45 +3,60 @@ const mongoose = require('mongoose'),
     Score = mongoose.model('Scores');
 const utilities = require('../../utilities');
 
-exports.listAllScores = function (req, res) {
-    utilities.log(req, "listAllScores");
-    Score.find({}, function (err, score) {
-        if (err)
-            res.send(err);
-        res.json(score);
+function respond(err, data, res) {
+    if (err)
+        res.send(err);
+    res.json(data);
+}
+
+function listAllScores(req, res) {
+    utilities.log("listAllScores", req);
+    Score.find({}, function (err, scores) {
+        respond(err, scores, res);
     });
 };
 
-exports.createScore = function (req, res) {
-    utilities.log(req, "createScore");
+function listAllScoresForUserID(req, res) {
+    utilities.log("listAllScoresForUserID", req);
+    Score.find({
+        'userID': req.params.userID
+    }, function (err, scores) {
+        respond(err, scores, res);
+    });
+};
+
+function createScore(req, res) {
+    utilities.log("createScore", req);
     const newScore = new Score(req.body);
     newScore.save(function (err, score) {
-        if (err)
-            res.send(err);
-        res.json(score);
+        respond(err, score, res);
     });
 };
 
 
-exports.getScore = function (req, res) {
-    utilities.log(req, "getScore");
+function getScore(req, res) {
+    utilities.log("getScore", req);
     Score.findById(req.params.scoreId, function (err, score) {
-        if (err)
-            res.send(err);
-        res.json(score);
+        respond(err, score, res);
     });
 };
 
 
-exports.updateScore = function (req, res) {
-    utilities.log(req, "updateScore");
+function updateScore(req, res) {
+    utilities.log("updateScore", req);
     Score.findOneAndUpdate({
         _id: req.params.scoreId
     }, req.body, {
         new: true
     }, function (err, score) {
-        if (err)
-            res.send(err);
-        res.json(score);
+        respond(err, score, res);
     });
 };
+
+module.exports = {
+    listAllScores,
+    listAllScoresForUserID,
+    createScore,
+    getScore,
+    updateScore
+}

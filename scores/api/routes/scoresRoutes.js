@@ -11,4 +11,7 @@ module.exports = function(app) {
   app.route('/api/scores/:scoreId')
     .get(score.getScore)
     .put(score.updateScore);
+
+    app.route('/api/scores/user/:userID')
+    .get(score.listAllScoresForUserID);
 };
