@@ -8,6 +8,12 @@
                 "description": "The name of the function app that you wish to create."
             }
         },
+        "databaseAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "The MongoDB database account name. Needs to be globally unique."
+            }
+        },
         "hostingPlanName": {
             "type": "string",
             "metadata": {
@@ -28,7 +34,7 @@
         },
         "repoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/dgkanatsios/nodeleaderboardscores",
+            "defaultValue": "https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard",
             "metadata": {
                 "description": "The URL for the GitHub repository that contains the project to deploy."
             }
@@ -38,12 +44,6 @@
             "defaultValue": "master",
             "metadata": {
                 "description": "The branch of the GitHub repository to use."
-            }
-        },
-        "databaseAccountName": {
-            "type": "string",
-            "metadata": {
-                "description": "The MongoDB database account name. Needs to be globally unique."
             }
         }
     },
