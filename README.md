@@ -4,7 +4,9 @@
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
-Beware that AppService name, storage account name and database name must be globally unique. If not, the script will fail to execute.
+The script will take some time to execute (due to resources creation and npm install execution), please be patient.
+Be aware that AppService name, storage account name and database name must all be globally unique. If not, the script will fail to execute. 
+
 
 ## Usage
 After you deploy the script, you will have an Azure Resource Group will the following resources
@@ -13,7 +15,7 @@ After you deploy the script, you will have an Azure Resource Group will the foll
 - An App Service Name that hosts the Azure Function
 - The Azure Function will pull the code from the GitHub repo you designate
 
-Now you can call the available web service methods from your game.
+Now you can call the available web service methods from your game. You can visit the Azure Portal to get the Azure Function URL, it will have the format https://**functionName**.azurewebsites.net
 
 ## Methods supported
 | VERB | Name | URL | Description |
@@ -25,12 +27,16 @@ Now you can call the available web service methods from your game.
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
 | PUT | updateScore | https://**functionURL**/api/scores/:scoreID | Updates a specific score |
 
-## How to extend the score object
-Easy! Find the api/models/scoresModel.js file and update it to your preferences.
+## FAQ
 
-## Do you accept PRs?
+#### How to extend the score object
+Easy! Find the api/models/scoresModel.js file and update it to your preferences
+
+#### Do you accept PRs?
 Sure, go ahead!
 
-## I found a bug/I want to request a new feature
+#### I found a bug/I want to request a new feature
 I would be really grateful if you reported it [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues)
 
+#### The first call is always terribly slow. Why?
+Yup, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (no, I haven't tested it yet)
