@@ -7,6 +7,16 @@
 The script will take some time to execute (due to resources creation and npm install execution), please be patient.
 Be aware that AppService name, storage account name and database name must all be globally unique. If not, the script will fail to execute. 
 
+## Designing the leaderboard
+
+Leaderboards within games can easily vary. In designing this library, we tried to satisfy the below requirements
+
+- store all scores (of course!)
+- a score object is immutable
+- we need to store all scores for each user
+- we need to see the top scores of each user
+- we need to see the top scores for every day (or a specific time period)
+- we need to see the top scores of all time, along with the users that accomplished them
 
 ## Usage
 After you deploy the script, you will have an Azure Resource Group will the following resources
@@ -40,3 +50,6 @@ I would be really grateful if you reported it [here](https://github.com/dgkanats
 
 #### The first call is always terribly slow. Why?
 Yup, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (no, I haven't tested it yet)
+
+#### How can I develop/test Azure Functions locally?
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details

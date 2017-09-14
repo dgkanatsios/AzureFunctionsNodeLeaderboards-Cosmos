@@ -3,19 +3,30 @@ const mongoose = require('mongoose');
 const Score = mongoose.model('Scores');
 const moment = require('moment');
 const utilities = require('../../utilities');
+const paginate = require('express-paginate');
 
 function respond(err, data, res) {
     if (err)
-        res.send(err);
-    res.json(data);
+        res.status(500).send(err);
+    else {
+        res.json(data);
+    }
 }
 
 //all scores for all users, descending
-function listAllScores(req, res) {
+function listScores(req, res) {
+    console.log(req.query);
     utilities.log("listAllScores", req);
-    Score.find({}, function (err, scores) {
+    Score.find({}).limit(req.query.limit).skip(req.query.skip).sort('-value').exec(function (err, scores) {
         respond(err, scores, res);
-    }).sort('-value');
+        // if (err)
+        //     res.send(err);
+        // res.json({
+        //     object: 'list',
+        //     has_more: paginate.hasNextPages(req)(scores.pages),
+        //     data: scores.docs
+        // });
+    });
 };
 
 //all scores for user, descending
@@ -42,7 +53,7 @@ function listScoresForUserIDDateDesc(req, res) {
 function createScore(req, res) {
     utilities.log("createScore", req);
     const newScore = new Score(req.body);
-    
+
     //ignore the datetime set by the client
     newScore.createdDate = moment.utc();
 
@@ -72,7 +83,7 @@ function updateScore(req, res) {
 };
 
 module.exports = {
-    listAllScores,
+    listScores,
     listAllScoresForUserID,
     listScoresForUserIDDateDesc,
     createScore,

@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const ScoreSchema = new Schema({
   userID: {
     type: String,

@@ -4,7 +4,7 @@ module.exports = function(app) {
 
   // todoList Routes
   app.route('/api/scores')
-    .get(score.listAllScores)
+    .get(score.listScores)
     .post(score.createScore);
 
 
