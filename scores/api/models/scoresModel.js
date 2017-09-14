@@ -15,6 +15,9 @@ const ScoreSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'Users'
+  },
+  description: {
+    type: String
   }
 });
 

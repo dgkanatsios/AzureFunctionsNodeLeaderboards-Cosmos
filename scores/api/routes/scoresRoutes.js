@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function(app) {
+module.exports = function (app) {
   const score = require('../controllers/scoresController');
 
   // todoList Routes
@@ -9,12 +9,14 @@ module.exports = function(app) {
 
 
   app.route('/api/scores/:scoreId')
-    .get(score.getScore)
-    .put(score.updateScore);
+    .get(score.getScore);
 
-    app.route('/api/scores/user/:userID')
+  app.route('/api/users/:userId')
+    .get(score.getUser);
+
+  app.route('/api/user/:userID')
     .get(score.listAllScoresForUserID);
 
-    app.route('/api/scores/user/latest/:userID')
+  app.route('/api/scores/user/latest/:userID')
     .get(score.listScoresForUserIDDateDesc);
 };

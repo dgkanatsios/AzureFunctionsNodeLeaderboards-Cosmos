@@ -6,14 +6,6 @@ const moment = require('moment');
 const utilities = require('../../utilities');
 
 
-function respond(err, data, res) {
-    if (err)
-        res.status(500).send(err);
-    else {
-        res.json(data);
-    }
-}
-
 //all scores for all users, descending
 function listScores(req, res) {
     console.log(req.query);
@@ -64,7 +56,7 @@ function createScore(req, res) {
             });
             newUser.save(function (err, user) {
                 if (err) {
-                    respond(JSON.stringify(err), '', res);
+                    respond(err, '', res);
                 } else {
                     saveScore(user._id, req, res);
                 }
@@ -73,7 +65,7 @@ function createScore(req, res) {
             saveScore(user._id, req, res);
         }
     }).catch(function (err) {
-        respond(JSON.stringify(err), null, res);
+        respond(err, null, res);
     });
 
 };
@@ -82,6 +74,7 @@ function saveScore(userId, req, res) {
     
     const newScore = new Score({
         value: req.body.value,
+        description : req.body.description,
         createdAt: moment.utc(),
         user: mongoose.Types.ObjectId(userId)
     });
@@ -109,22 +102,27 @@ function saveScore(userId, req, res) {
 //get a specific score
 function getScore(req, res) {
     utilities.log("getScore", req);
-    Score.findById(req.params.scoreId, function (err, score) {
+    Score.findById(req.params.scoreId).populate('user').exec(function (err, score) {
         respond(err, score, res);
     });
 };
 
-//update score
-function updateScore(req, res) {
-    utilities.log("updateScore", req);
-    Score.findOneAndUpdate({
-        _id: req.params.scoreId
-    }, req.body, {
-        new: true
-    }, function (err, score) {
-        respond(err, score, res);
+//get a specific user
+function getUser(req, res) {
+    utilities.log("getUser", req);
+    User.findById(req.params.userId, function (err, user) {
+        respond(err, user, res);
     });
 };
+
+
+function respond(err, data, res) {
+    if (err)
+        res.status(500).send(err.message || JSON.stringify(err));
+    else {
+        res.json(data);
+    }
+}
 
 module.exports = {
     listScores,
@@ -132,5 +130,5 @@ module.exports = {
     listScoresForUserIDDateDesc,
     createScore,
     getScore,
-    updateScore
+    getUser
 }

@@ -1,5 +1,5 @@
 const Score = require('../api/models/scoresModel');
-const scoresController = require('../api/controllers/scoresController.js');
+const User = require('../api/models/usersModel');
 const chai = require('chai');
 const server = require('../index');
 const should = chai.should();
@@ -11,16 +11,16 @@ describe('scores', function () {
     it('inserts 100 items into the database', function (done) {
         let promises = [];
         for (let i = 0; i < 100; i++) {
-            let req = chai.request(server).post("/api/scores").send({
-                userID: i.toString() + "dgkanatsios",
-                value: i
-            }).then(function (res) {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-            }).catch(function (err) {
-                console.log(err);
-                throw err;
-            });
+            let req = chai.request(server).post("/api/scores").set('x-ms-client-principal-id', 'testPrincipalID' + i)
+            .set('x-ms-client-principal-name', 'testPrincipalname' + i).send({
+                    value: i
+                }).then(function (res) {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                }).catch(function (err) {
+                    console.log(err);
+                    throw err;
+                });
             promises.push(req);
         }
         Promise.all(promises).then(function () {
@@ -65,14 +65,26 @@ describe('scores', function () {
     // });
 
 
-    // it('deletes the score collection', function (done) {
-    //     mongoose.connection.db.dropCollection('scores', function (err) {
-    //         if (err) {
-    //             console.log(err);
-    //             done(err);
-    //         } else {
-    //             done();
-    //         }
-    //     });
-    // });
+    it('deletes the score collection', function (done) {
+        mongoose.connection.db.dropCollection('scores', function (err) {
+            if (err) {
+                console.log(err);
+                done(err);
+            } else {
+                done();
+            }
+        });
+    });
+
+
+    it('deletes the users collection', function (done) {
+        mongoose.connection.db.dropCollection('users', function (err) {
+            if (err) {
+                console.log(err);
+                done(err);
+            } else {
+                done();
+            }
+        });
+    });
 });
