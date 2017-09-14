@@ -1,19 +1,20 @@
 'use strict';
 const mongoose = require('mongoose');
+const moment = require('moment');
 const Schema = mongoose.Schema;
 
 const ScoreSchema = new Schema({
-  userID: {
-    type: String,
-    required: 'Enter userID'
-  },
-  createdDate: {
+  createdAt: {
     type: Date,
-    default: Date.now
+    default: moment.utc()
   },
   value: {
     type: Number,
     required: 'Enter score value'
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users'
   }
 });
 

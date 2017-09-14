@@ -5,6 +5,7 @@ const app = express(),
     utilities = require('./utilities'),
     mongoose = require('mongoose'),
     Score = require('./api/models/scoresModel'), //load the model to avoid MissingSchemaError
+    User = require('./api/models/usersModel'),
     paginate = require('express-paginate');
 
 //don't use body-parser on Functions runtime, only when running locally

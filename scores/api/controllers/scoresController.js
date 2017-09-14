@@ -1,9 +1,10 @@
 'use strict';
 const mongoose = require('mongoose');
 const Score = mongoose.model('Scores');
+const User = mongoose.model('Users');
 const moment = require('moment');
 const utilities = require('../../utilities');
-const paginate = require('express-paginate');
+
 
 function respond(err, data, res) {
     if (err)
@@ -19,13 +20,6 @@ function listScores(req, res) {
     utilities.log("listAllScores", req);
     Score.find({}).limit(req.query.limit).skip(req.query.skip).sort('-value').exec(function (err, scores) {
         respond(err, scores, res);
-        // if (err)
-        //     res.send(err);
-        // res.json({
-        //     object: 'list',
-        //     has_more: paginate.hasNextPages(req)(scores.pages),
-        //     data: scores.docs
-        // });
     });
 };
 
@@ -49,18 +43,68 @@ function listScoresForUserIDDateDesc(req, res) {
     }).sort('-createdDate');
 };
 
-//create a new score
 function createScore(req, res) {
     utilities.log("createScore", req);
-    const newScore = new Score(req.body);
 
-    //ignore the datetime set by the client
-    newScore.createdDate = moment.utc();
+    //check if the user exists
+    const userId = req.headers['x-ms-client-principal-id'];
+    const userName = req.headers['x-ms-client-principal-name'];
+
+    User.findOne({
+        userId: userId
+    }).then(function (user) {
+        if (!user) {
+            //user does not exist, so let's create him/her
+            const newUserID = mongoose.Types.ObjectId();
+            const newUser = new User({
+                ObjectId: newUserID,
+                userId: userId,
+                userName: userName,
+                scores: []
+            });
+            newUser.save(function (err, user) {
+                if (err) {
+                    respond(JSON.stringify(err), '', res);
+                } else {
+                    saveScore(user._id, req, res);
+                }
+            });
+        } else {
+            saveScore(user._id, req, res);
+        }
+    }).catch(function (err) {
+        respond(JSON.stringify(err), null, res);
+    });
+
+};
+
+function saveScore(userId, req, res) {
+    
+    const newScore = new Score({
+        value: req.body.value,
+        createdAt: moment.utc(),
+        user: mongoose.Types.ObjectId(userId)
+    });
 
     newScore.save(function (err, score) {
-        respond(err, score, res);
+        if (err) {
+            respond(err, '', res);
+        } else {
+            User.findByIdAndUpdate(userId, {
+                $push: {
+                    scores: {
+                        value: req.body.value,
+                        score: mongoose.Types.ObjectId(score._id)
+                    }
+                }
+            }, {
+                new: true
+            }, function (err, updatedUser) {
+                respond(err, updatedUser, res);
+            });
+        }
     });
-};
+}
 
 //get a specific score
 function getScore(req, res) {
