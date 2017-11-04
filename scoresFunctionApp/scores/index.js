@@ -8,6 +8,9 @@ const app = express(),
     User = require('./api/models/usersModel'),
     paginate = require('express-paginate');
 
+
+utilities.DEBUG_GLOBAL = true;
+
 //don't use body-parser on Functions runtime, only when running locally in node environment
 //https://stackoverflow.com/a/43620157/1205817    
 if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {

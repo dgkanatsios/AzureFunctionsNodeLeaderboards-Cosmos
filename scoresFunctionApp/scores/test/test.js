@@ -4,8 +4,11 @@ const chai = require('chai');
 const server = require('../index');
 const should = chai.should();
 const mongoose = require('mongoose');
+const utilities = require('../utilities');
 
 chai.use(require('chai-http'));
+
+utilities.DEBUG_GLOBAL = false;
 
 describe('scores', function () {
     it('inserts 100 items into the database', function (done) {
