@@ -52,4 +52,10 @@ I would be really grateful if you reported it [here](https://github.com/dgkanats
 Yup, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (no, I haven't tested it yet)
 
 #### How can I develop/test Azure Functions locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details. After you install Azure Functions tools, run `func host start` on the Function directory.
+
+#### I saw you're using Mongoose discriminators. Why?
+To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
+
+#### How can I see what's going on in my DB?
+Check [this](https://azure.microsoft.com/en-us/features/storage-explorer/) free and cross-platform tool.

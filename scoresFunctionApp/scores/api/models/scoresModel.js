@@ -1,7 +1,8 @@
 'use strict';
-const mongoose = require('mongoose');
+
 const moment = require('moment');
-const Schema = mongoose.Schema;
+const Schema = require('mongoose').Schema;
+const Base = require('./baseModel');
 
 const ScoreSchema = new Schema({
   createdAt: {
@@ -21,4 +22,4 @@ const ScoreSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Scores', ScoreSchema);
+module.exports = Base.discriminator('Scores', ScoreSchema);

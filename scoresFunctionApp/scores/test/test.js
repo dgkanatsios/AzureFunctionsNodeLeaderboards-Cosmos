@@ -18,7 +18,7 @@ describe('scores', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                 }).catch(function (err) {
-                    console.log(err);
+                    console.log("Error: " + err);
                     throw err;
                 });
             promises.push(req);
@@ -65,8 +65,8 @@ describe('scores', function () {
     // });
 
 
-    it('deletes the score collection', function (done) {
-        mongoose.connection.db.dropCollection('scores', function (err) {
+    it('deletes the gamedata collection', function (done) {
+        mongoose.connection.db.dropCollection('gamedata', function (err) {
             if (err) {
                 console.log(err);
                 done(err);
@@ -76,15 +76,4 @@ describe('scores', function () {
         });
     });
 
-
-    it('deletes the users collection', function (done) {
-        mongoose.connection.db.dropCollection('users', function (err) {
-            if (err) {
-                console.log(err);
-                done(err);
-            } else {
-                done();
-            }
-        });
-    });
 });

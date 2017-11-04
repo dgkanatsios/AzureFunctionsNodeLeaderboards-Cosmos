@@ -8,7 +8,7 @@ const app = express(),
     User = require('./api/models/usersModel'),
     paginate = require('express-paginate');
 
-//don't use body-parser on Functions runtime, only when running locally
+//don't use body-parser on Functions runtime, only when running locally in node environment
 //https://stackoverflow.com/a/43620157/1205817    
 if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
     const bodyParser = require('body-parser');
@@ -37,7 +37,7 @@ app.use(function (req, res) {
     })
 });
 
-//are we running in a local environment on in Azure Functions?
+//are we running in a local node environment on in Azure Functions?
 if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
     app.listen(process.env.PORT);
     utilities.log(`Running on port ${process.env.PORT}`);

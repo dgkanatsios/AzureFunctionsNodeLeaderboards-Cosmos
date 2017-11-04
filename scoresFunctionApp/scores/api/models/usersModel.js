@@ -1,8 +1,8 @@
 'use strict';
-const mongoose = require('mongoose');
-const moment = require('moment');
-const Schema = mongoose.Schema;
 
+const moment = require('moment');
+const Schema = require('mongoose').Schema;
+const Base = require('./baseModel');
 
 const UserSchema = new Schema({
     userId: {
@@ -25,4 +25,4 @@ const UserSchema = new Schema({
     }]
 });
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = Base.discriminator('Users', UserSchema);
