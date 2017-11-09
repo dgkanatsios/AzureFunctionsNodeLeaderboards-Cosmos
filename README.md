@@ -65,3 +65,6 @@ Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/).
 
 #### What are the use cases for CosmosDB?
 Take a look at the relevant documentation page [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases).
+
+#### What can I use for authentication/authorization?
+If you want to protect your game leaderboards from unauthorized access, you should implement an appropriate mechanism. Azure App Service (a service which Azure Functions sits on) has an excellent implementation that you can use to protect your backend and it is documented [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). To use it in this Functions app, comment the appropriate lines in the `authhelper.js` file.

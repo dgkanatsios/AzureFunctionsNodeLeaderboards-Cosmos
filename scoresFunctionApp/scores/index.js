@@ -11,6 +11,9 @@ const app = express(),
 
 utilities.DEBUG_GLOBAL = true;
 
+//use our authenticator
+app.use(require('./authhelper'));
+
 //don't use body-parser on Functions runtime, only when running locally in node environment
 //https://stackoverflow.com/a/43620157/1205817    
 if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {

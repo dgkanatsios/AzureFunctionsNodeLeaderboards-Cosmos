@@ -38,10 +38,10 @@ function listScoresForUserIdDateDesc(req, res) {
 function createScore(req, res) {
     utilities.log("createScore", req);
 
-    //check if the user exists
-    const userId = req.headers['x-ms-client-principal-id'];
-    const userName = req.headers['x-ms-client-principal-name'];
+    const userId = req.headers['CUSTOM_USERID'];
+    const userName = req.headers['CUSTOM_USERNAME'];
 
+    //check if the user exists
     User.findOne({
             userId: userId
         })
