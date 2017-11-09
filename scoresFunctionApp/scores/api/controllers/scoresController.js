@@ -16,20 +16,20 @@ function listScores(req, res) {
 };
 
 //all scores for user, descending
-function listAllScoresForUserID(req, res) {
-    utilities.log("listAllScoresForUserID", req);
+function listAllScoresForUserId(req, res) {
+    utilities.log("listAllScoresForUserId", req);
     Score.find({
-        'userID': req.params.userID
+        userId: req.params.userId
     }, function (err, scores) {
         respond(err, scores, res);
     }).sort('-value');
 };
 
 //latest scores for user, descending
-function listScoresForUserIDDateDesc(req, res) {
-    utilities.log("listScoresForUserIDDateDesc", req);
+function listScoresForUserIdDateDesc(req, res) {
+    utilities.log("listScoresForUserIdDateDesc", req);
     Score.find({
-        'userID': req.params.userID
+        userId: req.params.userId
     }, function (err, scores) {
         respond(err, scores, res);
     }).sort('-createdDate');
@@ -43,38 +43,39 @@ function createScore(req, res) {
     const userName = req.headers['x-ms-client-principal-name'];
 
     User.findOne({
-        userId: userId
-    }).then(function (user) {
-        if (!user) {
-            //user does not exist, so let's create him/her
-            const newUserID = mongoose.Types.ObjectId();
-            const newUser = new User({
-                ObjectId: newUserID,
-                userId: userId,
-                userName: userName,
-                scores: []
-            });
-            newUser.save(function (err, user) {
-                if (err) {
-                    respond(err, '', res);
-                } else {
-                    saveScore(user._id, req, res);
-                }
-            });
-        } else {
-            saveScore(user._id, req, res);
-        }
-    }).catch(function (err) {
-        respond(err, null, res);
-    });
+            userId: userId
+        })
+        .then(function (user) {
+            if (!user) {
+                //user does not exist, so let's create him/her
+                const newUserID = mongoose.Types.ObjectId();
+                const newUser = new User({
+                    ObjectId: newUserID,
+                    userId: userId,
+                    userName: userName,
+                    scores: []
+                });
+                newUser.save(function (err, user) {
+                    if (err) {
+                        respond(err, '', res);
+                    } else {
+                        saveScore(user._id, req, res);
+                    }
+                });
+            } else {
+                saveScore(user._id, req, res);
+            }
+        }).catch(function (err) {
+            respond(err, null, res);
+        });
 
 };
 
 function saveScore(userId, req, res) {
-    
+
     const newScore = new Score({
         value: req.body.value,
-        description : req.body.description,
+        description: req.body.description,
         createdAt: moment.utc(),
         user: mongoose.Types.ObjectId(userId)
     });
@@ -126,8 +127,8 @@ function respond(err, data, res) {
 
 module.exports = {
     listScores,
-    listAllScoresForUserID,
-    listScoresForUserIDDateDesc,
+    listAllScoresForUserId,
+    listScoresForUserIdDateDesc,
     createScore,
     getScore,
     getUser

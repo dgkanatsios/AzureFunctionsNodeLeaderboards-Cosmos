@@ -14,9 +14,9 @@ module.exports = function (app) {
   app.route('/api/users/:userId')
     .get(score.getUser);
 
-  app.route('/api/user/:userID')
-    .get(score.listAllScoresForUserID);
+  app.route('/api/user/:userId')
+    .get(score.listAllScoresForUserId);
 
-  app.route('/api/scores/user/latest/:userID')
-    .get(score.listScoresForUserIDDateDesc);
+  app.route('/api/scores/user/latest/:userId')
+    .get(score.listScoresForUserIdDateDesc);
 };

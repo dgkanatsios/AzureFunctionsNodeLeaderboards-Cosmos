@@ -4,8 +4,8 @@ const express = require("express");
 const app = express(),
     utilities = require('./utilities'),
     mongoose = require('mongoose'),
-    Score = require('./api/models/scoresModel'), //load the model to avoid MissingSchemaError
-    User = require('./api/models/usersModel'),
+    Score = require('./api/models/scoresModel'), //we have to load the models here
+    User = require('./api/models/usersModel'), //to avoid MissingSchemaError
     paginate = require('express-paginate');
 
 
@@ -37,15 +37,15 @@ routes(app); //register the routes
 app.use(function (req, res) {
     res.status(404).send({
         url: req.originalUrl + ' not found, sorry!'
-    })
+    });
 });
 
-//are we running in a local node environment on in Azure Functions?
+//are we running in a node environment or in a Docker container?
 if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
-    app.listen(process.env.PORT);
-    utilities.log(`Running on port ${process.env.PORT}`);
-    module.exports = app; //for testing
-} else {
+    app.listen(process.env.PORT || 3000);
+    utilities.log(`Running on port ${process.env.PORT || 3000}`);
+    module.exports = app; //so our test can run appropriately
+} else { //we're running in Azure Functions runtime (either on Azure or local)
     const createHandler = require("azure-function-express").createHandler;
     module.exports = createHandler(app);
 }
