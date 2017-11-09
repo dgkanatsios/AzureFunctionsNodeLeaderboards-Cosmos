@@ -30,7 +30,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 // keep this before all routes that will use pagination
 app.use(paginate.middleware(10, 50));
 
-const routes = require('./api/routes/scoresRoutes'); //importing routes
+const routes = require('./api/routes/gameDataRoutes'); //importing routes
 routes(app); //register the routes
 
 //handle 404
