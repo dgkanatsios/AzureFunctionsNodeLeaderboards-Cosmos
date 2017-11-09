@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (app) {
-  const score = require('../controllers/scoresController');
+  const score = require('../controllers/gameDataController');
 
   // todoList Routes
   app.route('/api/scores')
