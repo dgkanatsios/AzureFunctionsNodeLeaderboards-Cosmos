@@ -42,13 +42,10 @@ Now you can call the available web service methods from your game. You can visit
 #### How to extend the score object
 Easy! Find the api/models/scoresModel.js file and update it to your preferences
 
-#### Do you accept PRs?
-Sure, go ahead!
+#### Do you accept PRs? I found a bug/I want to request a new feature
+Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues)
 
-#### I found a bug/I want to request a new feature
-I would be really grateful if you reported it [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues)
-
-#### The first call is always terribly slow. Why?
+#### The first call to the Azure Function is always terribly slow. Why?
 Yup, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project still experimental).
 
 #### How can I develop/test Azure Functions locally?
@@ -68,3 +65,6 @@ Take a look at the relevant documentation page [here](https://docs.microsoft.com
 
 #### What can I use for authentication/authorization?
 If you want to protect your game leaderboards from unauthorized access, you should implement an appropriate mechanism. Azure App Service (a service which Azure Functions sits on) has an excellent implementation that you can use to protect your backend and it is documented [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). To use it in this Functions app, comment the appropriate lines in the `authhelper.js` file.
+
+#### What if I want to set up some rate limit for my API?
+Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter).
