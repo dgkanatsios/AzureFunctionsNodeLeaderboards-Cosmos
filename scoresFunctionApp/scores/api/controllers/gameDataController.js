@@ -12,7 +12,7 @@ function listTopScores(req, res) {
     utilities.log("listTopScores", req);
     const count = Number(req.params.count);
     if (!count || count < 1 || count > config.maxCountOfScoresToReturn) {
-        const err = `"count must be between 1 and ${config.maxCountOfScoresToReturn}`;
+        const err = `count must be between 1 and ${config.maxCountOfScoresToReturn}`;
         respond(err, null, res);
     } else {
         Score.find({}, config.scoreProjection).sort('-value').limit(count).exec(function (err, scores) {
@@ -41,7 +41,7 @@ function listAllScoresForCurrentUser(req, res) {
         userId: userId
     }, function (err, scores) {
         respond(err, scores, res);
-    }).sort('-value');
+    }).sort('-value'); //sort on score value descending
 };
 
 //get a specific user
@@ -65,7 +65,6 @@ function getUser(req, res) {
 function createScore(req, res) {
     utilities.log("createScore", req);
 
-    //custom headers filled from authhelper.js
     let {
         userId,
         userName
@@ -133,10 +132,6 @@ function saveScore(user, req, res) {
     });
 }
 
-
-
-
-
 function respond(err, data, res) {
     if (err)
         res.status(500).send(err.message || JSON.stringify(err));
@@ -146,6 +141,7 @@ function respond(err, data, res) {
 }
 
 function getUserIdUserName(req) {
+    //custom headers filled from authhelper.js
     const userId = req.headers['CUSTOM_USERID'];
     const userName = req.headers['CUSTOM_USERNAME'];
     return {

@@ -5,8 +5,8 @@ const compression = require('compression');
 const app = express(),
     utilities = require('./utilities'),
     mongoose = require('mongoose'),
-    Score = require('./api/models/scoresModel'), //we have to load the models here
-    User = require('./api/models/usersModel'); //to avoid MissingSchemaError
+    Score = require('./api/models/scoresModel'), //we have to load the models here ...
+    User = require('./api/models/usersModel'); //to avoid MissingSchemaError in Mongoose
 
 app.use(compression());
 
@@ -29,8 +29,8 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
     useMongoClient: true,
 });
 
-const routes = require('./api/routes/gameDataRoutes'); //importing routes
-routes(app); //register the routes
+const routes = require('./api/routes/gameDataRoutes'); //import routes
+routes(app); //register them
 
 //handle 404
 app.use(function (req, res) {
