@@ -32,11 +32,10 @@ Now you can call the available web service methods from your game. You can visit
 | --- | --- | --- | --- |
 | POST | createScore | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score }. Returns the updated user details. |
 | GET | listAllScoresForCurrentUser | https://**functionURL**/api/users/scores | Gets all the scores for logged in user sorted by score value |
-| GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets all the top scores |
+| GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets the top 'count' scores |
+| GET | listLatestScores | https://**functionURL**/api/scores/latest/:count | Gets the latest 'count' scores |
 | GET | getUser | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores |
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
-| GET | listScoresForUserIDDateDesc | https://**functionURL**/api/scores/user/latest/:userID | Gets the scores for userID  sorted by createdDate value|
-| PUT | updateScore | https://**functionURL**/api/scores/:scoreID | Updates a specific score |
 
 ## FAQ
 

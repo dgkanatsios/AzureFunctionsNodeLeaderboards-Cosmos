@@ -7,19 +7,29 @@ const utilities = require('../../utilities');
 const config = require('../../config');
 
 
-//all scores for all users, descending
+//top scores for all users, descending
 function listTopScores(req, res) {
     utilities.log("listTopScores", req);
-    const count = Number(req.params.count);
-    if (!count || count < 1 || count > config.maxCountOfScoresToReturn) {
+    listScores(req,res,'-value');
+};
+
+//latest scores for all users, descending
+function listLatestScores(req, res) {
+    utilities.log("listLatestScores", req);
+    listScores(req,res,'-createdAt');
+};
+
+function listScores(req,res,sortByValue){
+    const count = Number(req.params.count) || 10;
+    if (count < 1 || count > config.maxCountOfScoresToReturn) {
         const err = `count must be between 1 and ${config.maxCountOfScoresToReturn}`;
         respond(err, null, res);
     } else {
-        Score.find({}, config.scoreProjection).sort('-value').limit(count).exec(function (err, scores) {
+        Score.find({}, config.scoreProjection).sort(sortByValue).limit(count).exec(function (err, scores) {
             respond(err, scores, res);
         });
     }
-};
+}
 
 //get a specific score
 function getScore(req, res) {
@@ -153,7 +163,7 @@ function getUserIdUserName(req) {
 module.exports = {
     listTopScores,
     listAllScoresForCurrentUser,
-    //listScoresForUserIdDateDesc,
+    listLatestScores,
     createScore,
     getScore,
     getUser
