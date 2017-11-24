@@ -4,6 +4,7 @@ const Score = mongoose.model('Scores');
 const User = mongoose.model('Users');
 const moment = require('moment');
 const utilities = require('../../utilities');
+const config = require('../../config');
 
 
 //all scores for all users, descending
@@ -38,20 +39,17 @@ function listScoresForUserIdDateDesc(req, res) {
 function createScore(req, res) {
     utilities.log("createScore", req);
 
+    //custom headers filled from authhelper.js
     const userId = req.headers['CUSTOM_USERID'];
     const userName = req.headers['CUSTOM_USERNAME'];
 
     //check if the user exists
-    User.findOne({
-            userId: userId
-        })
+    User.findById(userId)
         .then(function (user) {
             if (!user) {
                 //user does not exist, so let's create him/her
-                const newUserID = mongoose.Types.ObjectId();
                 const newUser = new User({
-                    ObjectId: newUserID,
-                    userId: userId,
+                    _id: userId,
                     userName: userName,
                     scores: []
                 });
@@ -59,11 +57,11 @@ function createScore(req, res) {
                     if (err) {
                         respond(err, '', res);
                     } else {
-                        saveScore(user._id, req, res);
+                        saveScore(userId, req, res);
                     }
                 });
             } else {
-                saveScore(user._id, req, res);
+                saveScore(userId, req, res);
             }
         }).catch(function (err) {
             respond(err, null, res);
@@ -72,27 +70,37 @@ function createScore(req, res) {
 };
 
 function saveScore(userId, req, res) {
-
     const newScore = new Score({
-        value: req.body.value,
+        value: Number(req.body.value),
         description: req.body.description,
         createdAt: moment.utc(),
-        user: mongoose.Types.ObjectId(userId)
+        user: userId
     });
 
     newScore.save(function (err, score) {
+        const minimalScoreData = {
+            value: Number(req.body.value),
+            score: mongoose.Types.ObjectId(score._id)
+        };
         if (err) {
             respond(err, '', res);
         } else {
             User.findByIdAndUpdate(userId, {
                 $push: {
-                    scores: {
-                        value: req.body.value,
-                        score: mongoose.Types.ObjectId(score._id)
+                    latestScores: {
+                        $each: [minimalScoreData],
+                        $slice: -config.latestScoresPerUserToKeep //minus because we want the last 10 elements
+                    },
+                    topScores: {
+                        $each: [minimalScoreData],
+                        $slice: config.topScoresPerUserToKeep, //plus because we want the first 10 elements                       
+                        $sort: {
+                            value: 1
+                        }
                     }
                 }
             }, {
-                new: true
+                new: true //return the updated object
             }, function (err, updatedUser) {
                 respond(err, updatedUser, res);
             });

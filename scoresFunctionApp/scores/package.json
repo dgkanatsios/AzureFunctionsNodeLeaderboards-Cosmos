@@ -13,10 +13,10 @@
   "dependencies": {
     "azure-function-express": "^1.2.2",
     "dotenv": "^4.0.0",
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "express-paginate": "^0.3.0",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.10"
+    "mongoose": "^4.13.4"
   },
   "devDependencies": {
     "azure-functions-core-tools": "^1.0.3",

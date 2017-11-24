@@ -14,7 +14,7 @@ const ScoreSchema = new Schema({
     required: 'Enter score value'
   },
   user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'Users'
   },
   description: {

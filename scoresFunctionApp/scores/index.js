@@ -9,8 +9,6 @@ const app = express(),
     paginate = require('express-paginate');
 
 
-utilities.DEBUG_GLOBAL = true;
-
 //use our authenticator
 app.use(require('./authhelper'));
 

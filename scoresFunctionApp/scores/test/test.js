@@ -14,26 +14,38 @@ describe('scores', function () {
 
     let userId;
     it("inserts a score of value 500 into the database for userID 'myTestPrincipalId'", function (done) {
-        chai.request(server).post("/api/scores").set('x-ms-client-principal-id', 'myTestPrincipalId')
-            .set('x-ms-client-principal-name', 'myTestPrincipalname').send({
-                value: 500 //score value
+        chai.request(server).post("/api/scores")
+            //.set('x-ms-client-principal-id', 'myTestPrincipalId')
+            //.set('x-ms-client-principal-name', 'myTestPrincipalname')
+            .send({
+                value: 500, //score value
+                userId: 'myTestPrincipalId',
+                userName: 'myTestPrincipalname'
             }).end(function (err, res) {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                userId = res.body.userId;
+                if (err) console.log(err);
+                else {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    userId = res.body.userId;
+                }
                 done();
             });
     });
 
     it("inserts another score with value 499 into the database for userID 'myTestPrincipalId'", function (done) {
-        chai.request(server).post("/api/scores").set('x-ms-client-principal-id', 'myTestPrincipalId')
-            .set('x-ms-client-principal-name', 'myTestPrincipalname').send({
-                value: 499 //score value
+        chai.request(server).post("/api/scores")
+            .send({
+                value: 499, //score value
+                userId: 'myTestPrincipalId',
+                userName: 'myTestPrincipalname'
             }).end(function (err, res) {
-                res.should.have.status(200);
-                res.body.should.be.a('object');
-                if (res.body.userId !== userId) //compare the userID with the previous one. They must be the same
-                    throw new Error('Different userId');
+                if (err) console.log(err);
+                else {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    if (res.body.userId !== userId) //compare the userID with the previous one. They must be the same
+                        throw new Error('Different userId');
+                }
                 done();
             });
     });
@@ -51,7 +63,7 @@ describe('scores', function () {
                 done();
             });
     });
-return;
+    return;
     it('inserts 100 items into the database', function (done) {
         let promises = [];
         for (let i = 0; i < 100; i++) {

@@ -1,5 +1,6 @@
+const config = require('./config');
 function log(msg, req) {
-    if(DEBUG_GLOBAL !== true) return;
+    if(config.DEBUG_GLOBAL !== true) return;
     
     if (req && req.context)
         req.context.log(msg);
@@ -7,9 +8,6 @@ function log(msg, req) {
         console.log(msg);
 }
 
-let DEBUG_GLOBAL;
-
 module.exports = {
-    log,
-    DEBUG_GLOBAL
+    log
 };

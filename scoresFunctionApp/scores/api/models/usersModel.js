@@ -5,9 +5,8 @@ const Schema = require('mongoose').Schema;
 const Base = require('./baseModel');
 
 const UserSchema = new Schema({
-    userId: {
-        type: String,
-        required: 'Enter userId'
+    _id:{
+        type: String
     },
     userName: {
         type: String
@@ -16,7 +15,14 @@ const UserSchema = new Schema({
         type: Date,
         default: moment.utc()
     },
-    scores: [{
+    latestScores: [{
+        value: Number,
+        score: {
+            type: Schema.Types.ObjectId,
+            ref: 'Scores'
+        }
+    }],
+    topScores: [{
         value: Number,
         score: {
             type: Schema.Types.ObjectId,

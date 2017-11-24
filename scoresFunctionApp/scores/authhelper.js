@@ -1,5 +1,6 @@
 const authenticator = function (req, res, next) {
-    //if using Azure App Service authentication https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview
+    //uncomment these two lines if using Azure App Service authentication
+    //https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview
     //req.headers['CUSTOM_USERID'] = req.headers['x-ms-client-principal-id'];
     //req.headers['CUSTOM_USERNAME'] = req.headers['x-ms-client-principal-name'];
 
