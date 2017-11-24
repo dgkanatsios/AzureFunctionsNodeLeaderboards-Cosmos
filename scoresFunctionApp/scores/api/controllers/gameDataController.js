@@ -8,40 +8,68 @@ const config = require('../../config');
 
 
 //all scores for all users, descending
-function listScores(req, res) {
-    console.log(req.query);
-    utilities.log("listAllScores", req);
-    Score.find({}).limit(req.query.limit).skip(req.query.skip).sort('-value').exec(function (err, scores) {
-        respond(err, scores, res);
+function listTopScores(req, res) {
+    utilities.log("listTopScores", req);
+    const count = Number(req.params.count);
+    if (!count || count < 1 || count > config.maxCountOfScoresToReturn) {
+        const err = `"count must be between 1 and ${config.maxCountOfScoresToReturn}`;
+        respond(err, null, res);
+    } else {
+        Score.find({}, config.scoreProjection).sort('-value').limit(count).exec(function (err, scores) {
+            respond(err, scores, res);
+        });
+    }
+};
+
+//get a specific score
+function getScore(req, res) {
+    utilities.log("getScore", req);
+    Score.findById(req.params.scoreId, config.scoreProjection).exec(function (err, score) {
+        respond(err, score, res);
     });
 };
 
 //all scores for user, descending
-function listAllScoresForUserId(req, res) {
-    utilities.log("listAllScoresForUserId", req);
+function listAllScoresForCurrentUser(req, res) {
+    utilities.log("listAllScoresForCurrentUser", req);
+    //custom headers filled from authhelper.js
+    let {
+        userId,
+        userName
+    } = getUserIdUserName(req);
     Score.find({
-        userId: req.params.userId
+        userId: userId
     }, function (err, scores) {
         respond(err, scores, res);
     }).sort('-value');
 };
 
-//latest scores for user, descending
-function listScoresForUserIdDateDesc(req, res) {
-    utilities.log("listScoresForUserIdDateDesc", req);
-    Score.find({
-        userId: req.params.userId
-    }, function (err, scores) {
-        respond(err, scores, res);
-    }).sort('-createdDate');
+//get a specific user
+function getUser(req, res) {
+    utilities.log("getUser", req);
+    User.findById(req.params.userId, config.userProjection, function (err, user) {
+        respond(err, user, res);
+    });
 };
+
+// //latest scores for user, descending
+// function listScoresForUserIdDateDesc(req, res) {
+//     utilities.log("listScoresForUserIdDateDesc", req);
+//     Score.find({
+//         userId: req.params.userId
+//     }, function (err, scores) {
+//         respond(err, scores, res);
+//     }).sort('-createdDate');
+// };
 
 function createScore(req, res) {
     utilities.log("createScore", req);
 
     //custom headers filled from authhelper.js
-    const userId = req.headers['CUSTOM_USERID'];
-    const userName = req.headers['CUSTOM_USERNAME'];
+    let {
+        userId,
+        userName
+    } = getUserIdUserName(req);
 
     //check if the user exists
     User.findById(userId)
@@ -57,11 +85,11 @@ function createScore(req, res) {
                     if (err) {
                         respond(err, '', res);
                     } else {
-                        saveScore(userId, req, res);
+                        saveScore({userId,userName}, req, res);
                     }
                 });
             } else {
-                saveScore(userId, req, res);
+                saveScore({userId,userName}, req, res);
             }
         }).catch(function (err) {
             respond(err, null, res);
@@ -69,12 +97,13 @@ function createScore(req, res) {
 
 };
 
-function saveScore(userId, req, res) {
+function saveScore(user, req, res) {
     const newScore = new Score({
         value: Number(req.body.value),
         description: req.body.description,
         createdAt: moment.utc(),
-        user: userId
+        userId: user.userId,
+        userName: user.userName
     });
 
     newScore.save(function (err, score) {
@@ -85,14 +114,14 @@ function saveScore(userId, req, res) {
         if (err) {
             respond(err, '', res);
         } else {
-            User.findByIdAndUpdate(userId, {
+            User.findByIdAndUpdate(user.userId, {
                 $push: {
                     latestScores: {
                         $each: [miniScoreData],
                         $slice: -config.latestScoresPerUserToKeep //minus because we want the last 10 elements
                     }
                 },
-                $max:{
+                $max: {
                     maxScoreValue: miniScoreData.value
                 }
             }, {
@@ -104,21 +133,8 @@ function saveScore(userId, req, res) {
     });
 }
 
-//get a specific score
-function getScore(req, res) {
-    utilities.log("getScore", req);
-    Score.findById(req.params.scoreId).populate('user').exec(function (err, score) {
-        respond(err, score, res);
-    });
-};
 
-//get a specific user
-function getUser(req, res) {
-    utilities.log("getUser", req);
-    User.findById(req.params.userId, function (err, user) {
-        respond(err, user, res);
-    });
-};
+
 
 
 function respond(err, data, res) {
@@ -129,10 +145,19 @@ function respond(err, data, res) {
     }
 }
 
+function getUserIdUserName(req) {
+    const userId = req.headers['CUSTOM_USERID'];
+    const userName = req.headers['CUSTOM_USERNAME'];
+    return {
+        userId,
+        userName
+    };
+}
+
 module.exports = {
-    listScores,
-    listAllScoresForUserId,
-    listScoresForUserIdDateDesc,
+    listTopScores,
+    listAllScoresForCurrentUser,
+    //listScoresForUserIdDateDesc,
     createScore,
     getScore,
     getUser

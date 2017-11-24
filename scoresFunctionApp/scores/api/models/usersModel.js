@@ -6,10 +6,12 @@ const Base = require('./baseModel');
 
 const UserSchema = new Schema({
     _id:{
-        type: String
+        type: String,
+        required: '_id is required'
     },
     userName: {
-        type: String
+        type: String,
+        required: 'userName is required'
     },
     createdAt: {
         type: Date,

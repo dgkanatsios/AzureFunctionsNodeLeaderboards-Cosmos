@@ -13,9 +13,13 @@ const ScoreSchema = new Schema({
     type: Number,
     required: 'Enter score value'
   },
-  user: {
+  userId: {
     type: String,
-    ref: 'Users'
+    required: 'Enter userId'
+  },
+  userName: {
+    type: String,
+    required: 'Enter userName'
   },
   description: {
     type: String

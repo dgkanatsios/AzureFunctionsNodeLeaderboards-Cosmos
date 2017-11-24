@@ -1,13 +1,14 @@
 require('dotenv').config();
 
 const express = require("express");
+const compression = require('compression');
 const app = express(),
     utilities = require('./utilities'),
     mongoose = require('mongoose'),
     Score = require('./api/models/scoresModel'), //we have to load the models here
-    User = require('./api/models/usersModel'), //to avoid MissingSchemaError
-    paginate = require('express-paginate');
+    User = require('./api/models/usersModel'); //to avoid MissingSchemaError
 
+app.use(compression());
 
 //use our authenticator
 app.use(require('./authhelper'));
@@ -27,9 +28,6 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
     useMongoClient: true,
 });
-
-// keep this before all routes that will use pagination
-app.use(paginate.middleware(10, 50));
 
 const routes = require('./api/routes/gameDataRoutes'); //importing routes
 routes(app); //register the routes

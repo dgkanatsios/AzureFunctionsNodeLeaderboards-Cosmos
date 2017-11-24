@@ -28,13 +28,14 @@ After you deploy the script, you will have an Azure Resource Group will the foll
 Now you can call the available web service methods from your game. You can visit the Azure Portal to get the Azure Function URL, it will have the format https://**functionName**.azurewebsites.net
 
 ## Methods supported
-| VERB | Name | URL | Description |
+| VERB | Method name | URL | Description |
 | --- | --- | --- | --- |
-| GET | listAllScores | https://**functionURL**/api/scores | Gets all the scores for all users |
-| GET | listAllScoresForUserID | https://**functionURL**/api/scores/user/:userID | Gets all the scores for userID sorted by score value |
-| GET | listScoresForUserIDDateDesc | https://**functionURL**/api/scores/user/latest/:userID | Gets the scores for userID  sorted by createdDate value|
-| POST | createScore | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "userID":"The ID of the User", "value":Integer value of the score } |
+| POST | createScore | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score }. Returns the updated user details. |
+| GET | listAllScoresForCurrentUser | https://**functionURL**/api/users/scores | Gets all the scores for logged in user sorted by score value |
+| GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets all the top scores |
+| GET | getUser | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores |
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
+| GET | listScoresForUserIDDateDesc | https://**functionURL**/api/scores/user/latest/:userID | Gets the scores for userID  sorted by createdDate value|
 | PUT | updateScore | https://**functionURL**/api/scores/:scoreID | Updates a specific score |
 
 ## FAQ
