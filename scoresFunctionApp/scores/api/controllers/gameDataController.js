@@ -78,7 +78,7 @@ function saveScore(userId, req, res) {
     });
 
     newScore.save(function (err, score) {
-        const minimalScoreData = {
+        const miniScoreData = {
             value: Number(req.body.value),
             score: mongoose.Types.ObjectId(score._id)
         };
@@ -88,16 +88,12 @@ function saveScore(userId, req, res) {
             User.findByIdAndUpdate(userId, {
                 $push: {
                     latestScores: {
-                        $each: [minimalScoreData],
+                        $each: [miniScoreData],
                         $slice: -config.latestScoresPerUserToKeep //minus because we want the last 10 elements
-                    },
-                    topScores: {
-                        $each: [minimalScoreData],
-                        $slice: config.topScoresPerUserToKeep, //plus because we want the first 10 elements                       
-                        $sort: {
-                            value: 1
-                        }
                     }
+                },
+                $max:{
+                    maxScoreValue: miniScoreData.value
                 }
             }, {
                 new: true //return the updated object

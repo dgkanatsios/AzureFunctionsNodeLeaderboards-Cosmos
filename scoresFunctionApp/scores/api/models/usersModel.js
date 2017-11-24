@@ -15,14 +15,10 @@ const UserSchema = new Schema({
         type: Date,
         default: moment.utc()
     },
+    maxScoreValue:{
+        type: Number
+    },
     latestScores: [{
-        value: Number,
-        score: {
-            type: Schema.Types.ObjectId,
-            ref: 'Scores'
-        }
-    }],
-    topScores: [{
         value: Number,
         score: {
             type: Schema.Types.ObjectId,
