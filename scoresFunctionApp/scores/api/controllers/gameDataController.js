@@ -132,7 +132,10 @@ function saveScore(user, req, res) {
                 },
                 $max: {
                     maxScoreValue: miniScoreData.value
-                }
+                },
+                $inc:{
+                    totalTimesPlayed: 1
+                },
             }, {
                 new: true //return the updated object
             }, function (err, updatedUser) {

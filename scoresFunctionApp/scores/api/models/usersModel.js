@@ -20,6 +20,9 @@ const UserSchema = new Schema({
     maxScoreValue:{
         type: Number
     },
+    totalTimesPlayed:{
+        type: Number
+    },
     latestScores: [{
         value: Number,
         score: {
