@@ -35,3 +35,6 @@ Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/).
 
 #### Where is the Application Insights documentation?
 Check [here](https://docs.microsoft.com/en-us/azure/application-insights/).
+
+#### All this is great, but I'd like something simpler, is there anything?
+You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App ServiceEasy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).
