@@ -32,16 +32,18 @@ It is required that you set two headers on each request to the Function, their n
 
 ## Operations supported
 
-Here you can see a short list of all the operations that are supported, check [here](OperationsSupported.md) for full details.
+Here you can see a short list of all the operations that are supported, check [here](README.operationsSupported.md) for full details.
 
 | VERB | Method name | URL | Description | 
 | --- | --- | --- | --- |
 | POST | createScore | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score }. Returns the updated user details. |
 | GET | listAllScoresForCurrentUser | https://**functionURL**/api/users/scores | Gets all the scores for logged in user sorted by score value |
-| GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets the top 'count' scores |
+| GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets the top 'count' scores for all time|
+| GET | listTodayTopScores | https://**functionURL**/api/scores/today/top/:count | Gets the top 'count' scores for today|
+| GET | listTopUsersTotalTimesPlayed | https://**functionURL**//api/users/toptotaltimesplayed | Gets the top users for all time in regards to the amount of time they have played|
 | GET | listLatestScores | https://**functionURL**/api/scores/latest/:count | Gets the latest 'count' scores |
 | GET | getUser | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores | 
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
 
 ## FAQ 
-Check [here](FAQ.md) for answers to common questions.
+Check [here](README.faq.md) for answers to common questions.

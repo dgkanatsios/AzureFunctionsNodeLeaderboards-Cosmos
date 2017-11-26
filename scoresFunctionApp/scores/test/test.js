@@ -20,7 +20,7 @@ describe('scores', function () {
             .send({
                 value: 500, //score value
                 userId: 'myTestPrincipalId',
-                userName: 'myTestPrincipalname'
+                username: 'myTestPrincipalname'
             }).end(function (err, res) {
                 if (err) console.log(err);
                 else {
@@ -37,7 +37,7 @@ describe('scores', function () {
             .send({
                 value: 499, //score value
                 userId: 'myTestPrincipalId',
-                userName: 'myTestPrincipalname'
+                username: 'myTestPrincipalname'
             }).end(function (err, res) {
                 if (err) console.log(err);
                 else {

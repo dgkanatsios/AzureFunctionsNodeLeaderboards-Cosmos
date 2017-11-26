@@ -2,18 +2,21 @@
 
 Details of all the operations supported in this Azure Function.
 
-### POST https://**functionURL**/api/scores -> createScore method in gameDataController.js
+### POST https://**functionURL**/api/scores -> createScore method in scoresController.js
 #### Description
-Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played.
+Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played. The return value contains the entire user object as well as the latest user's scores. 
 #### Post body
 ```javascript
-{ "value":`Integer value of the score` }
+//createdAt is optional
+//description is optional
+//50 is the integer value of the score
+{ "value":50, "createdAt":"2017-11-25T14:48:00", "description":"test description" }
 ```
 #### Sample return value
 ```javascript
 {
     "_id": "1234",
-    "userName": "dimitris",
+    "username": "dimitris",
     "__v": 0,
     "maxScoreValue": 12,
     "totalTimesPlayed": 2,
@@ -33,14 +36,20 @@ Creates a new score. Returns the updated user's details, including top score, la
     "createdAt": "2017-11-25T07:03:15.977Z"
 }
 ``` 
+To access the score you inserted, you can use
+```javascript
+const userDetails = ...;//the return value of the API call
+const latestScores = userDetails.latestScores; //reference to the latest scores array
+const scoreDetails = latestScores[latestScores.length - 1];//reference to the last inserted score, which is the one we created
+```
 
-### GET https://**functionURL**/api/users/:userId -> getUser method in gameDataController.js
+### GET https://**functionURL**/api/users/:userId -> getUser method in scoresController.js
 #### Description
 Gets a specific user's details, including top score, latest scores and number of times played.
 #### Sample return value
 ```javascript
 {
-    "userName": "dimitris",
+    "username": "dimitris",
     "maxScoreValue": 12,
     "totalTimesPlayed": 3,
     "latestScores": [

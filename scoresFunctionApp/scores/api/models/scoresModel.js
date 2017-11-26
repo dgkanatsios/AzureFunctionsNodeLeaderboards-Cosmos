@@ -5,10 +5,6 @@ const Schema = require('mongoose').Schema;
 const Base = require('./baseModel');
 
 const ScoreSchema = new Schema({
-  createdAt: {
-    type: Date,
-    default: moment.utc()
-  },
   value: {
     type: Number,
     required: 'Enter score value'
@@ -17,11 +13,19 @@ const ScoreSchema = new Schema({
     type: String,
     required: 'Enter userId'
   },
-  userName: {
+  username: {
     type: String,
-    required: 'Enter userName'
+    required: 'Enter username'
   },
-  description: {
+  createdAt: {
+    type: Date,
+    default: moment.utc() 
+    //we are not using ObjectId.getTimeStamp() to get 
+    //details about score timestamp because we need to bear in mind that some of the 
+    //incoming scores will have been stored offline, so their creation time in our DB will
+    //be different from the creation time in the client
+  },
+  description: { //optional score related description
     type: String
   }
 });

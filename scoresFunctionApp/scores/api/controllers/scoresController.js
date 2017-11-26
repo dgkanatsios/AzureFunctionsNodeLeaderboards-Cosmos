@@ -5,37 +5,49 @@ const User = mongoose.model('Users');
 const moment = require('moment');
 const utilities = require('../../utilities');
 const config = require('../../config');
+const controllerHelpers = require('./controllerHelpers');
 
+//users for all time that have played the most (i.e. have the most totalTimesPlayed)
+function listTopUsersTotalTimesPlayed(req,res){
+    utilities.log("listTopUsersTotalTimesPlayed",req);
+    controllerHelpers.listUsers(req,res,'-totalTimesPlayed');
+}
 
-//top scores for all users, descending
+//top scores for all users for today, descending
+function listTodayTopScores(req, res) {
+    utilities.log("listTodayTopScores", req);
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    controllerHelpers.listScores(req, res, '-value', {
+        createdAt: {
+            $gte: start,
+            $lt: end
+        }
+    });
+};
+
+//top scores for all users for all time, descending
 function listTopScores(req, res) {
     utilities.log("listTopScores", req);
-    listScores(req,res,'-value');
+    controllerHelpers.listScores(req, res, '-value');
 };
 
 //latest scores for all users, descending
 function listLatestScores(req, res) {
     utilities.log("listLatestScores", req);
-    listScores(req,res,'-createdAt');
+    controllerHelpers.listScores(req, res, '-createdAt');
 };
 
-function listScores(req,res,sortByValue){
-    const count = Number(req.params.count) || 10;
-    if (count < 1 || count > config.maxCountOfScoresToReturn) {
-        const err = `count must be between 1 and ${config.maxCountOfScoresToReturn}`;
-        respond(err, null, res);
-    } else {
-        Score.find({}, config.scoreProjection).sort(sortByValue).limit(count).exec(function (err, scores) {
-            respond(err, scores, res);
-        });
-    }
-}
 
 //get a specific score
 function getScore(req, res) {
     utilities.log("getScore", req);
     Score.findById(req.params.scoreId, config.scoreProjection).exec(function (err, score) {
-        respond(err, score, res);
+        controllerHelpers.respond(err, score, res);
     });
 };
 
@@ -45,12 +57,12 @@ function listAllScoresForCurrentUser(req, res) {
     //custom headers filled from authhelper.js
     let {
         userId,
-        userName
-    } = getUserIdUserName(req);
+        username
+    } = controllerHelpers.getUserIdusername(req);
     Score.find({
         userId: userId
     }, function (err, scores) {
-        respond(err, scores, res);
+        controllerHelpers.respond(err, scores, res);
     }).sort('-value'); //sort on score value descending
 };
 
@@ -58,27 +70,17 @@ function listAllScoresForCurrentUser(req, res) {
 function getUser(req, res) {
     utilities.log("getUser", req);
     User.findById(req.params.userId, config.userProjection, function (err, user) {
-        respond(err, user, res);
+        controllerHelpers.respond(err, user, res);
     });
 };
-
-// //latest scores for user, descending
-// function listScoresForUserIdDateDesc(req, res) {
-//     utilities.log("listScoresForUserIdDateDesc", req);
-//     Score.find({
-//         userId: req.params.userId
-//     }, function (err, scores) {
-//         respond(err, scores, res);
-//     }).sort('-createdDate');
-// };
 
 function createScore(req, res) {
     utilities.log("createScore", req);
 
     let {
         userId,
-        userName
-    } = getUserIdUserName(req);
+        username
+    } = controllerHelpers.getUserIdusername(req);
 
     //check if the user exists
     User.findById(userId)
@@ -87,32 +89,39 @@ function createScore(req, res) {
                 //user does not exist, so let's create him/her
                 const newUser = new User({
                     _id: userId,
-                    userName: userName,
+                    username: username,
                     scores: []
                 });
                 newUser.save(function (err, user) {
                     if (err) {
-                        respond(err, '', res);
+                        controllerHelpers.respond(err, '', res);
                     } else {
-                        saveScore({userId,userName}, req, res);
+                        saveScore({
+                            userId,
+                            username
+                        }, req, res);
                     }
                 });
             } else {
-                saveScore({userId,userName}, req, res);
+                saveScore({
+                    userId,
+                    username
+                }, req, res);
             }
         }).catch(function (err) {
-            respond(err, null, res);
+            controllerHelpers.respond(err, null, res);
         });
 
 };
 
 function saveScore(user, req, res) {
+    console.log(req.body.createdAt);
     const newScore = new Score({
         value: Number(req.body.value),
         description: req.body.description,
-        createdAt: moment.utc(),
+        createdAt: moment(req.body.createdAt) || moment.utc(),
         userId: user.userId,
-        userName: user.userName
+        username: user.username
     });
 
     newScore.save(function (err, score) {
@@ -121,7 +130,7 @@ function saveScore(user, req, res) {
             score: mongoose.Types.ObjectId(score._id)
         };
         if (err) {
-            respond(err, '', res);
+            controllerHelpers.respond(err, '', res);
         } else {
             User.findByIdAndUpdate(user.userId, {
                 $push: {
@@ -133,39 +142,25 @@ function saveScore(user, req, res) {
                 $max: {
                     maxScoreValue: miniScoreData.value
                 },
-                $inc:{
+                $inc: {
                     totalTimesPlayed: 1
                 },
             }, {
                 new: true //return the updated object
             }, function (err, updatedUser) {
-                respond(err, updatedUser, res);
+                controllerHelpers.respond(err, updatedUser, res);
             });
         }
     });
 }
 
-function respond(err, data, res) {
-    if (err)
-        res.status(500).send(err.message || JSON.stringify(err));
-    else {
-        res.json(data);
-    }
-}
 
-function getUserIdUserName(req) {
-    //custom headers filled from authhelper.js
-    const userId = req.headers['CUSTOM_USERID'];
-    const userName = req.headers['CUSTOM_USERNAME'];
-    return {
-        userId,
-        userName
-    };
-}
 
 module.exports = {
     listTopScores,
+    listTodayTopScores,
     listAllScoresForCurrentUser,
+    listTopUsersTotalTimesPlayed,
     listLatestScores,
     createScore,
     getScore,

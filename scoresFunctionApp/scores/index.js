@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
     useMongoClient: true,
 });
 
-const routes = require('./api/routes/gameDataRoutes'); //import routes
+const routes = require('./api/routes/scoresRoutes'); //import routes
 routes(app); //register them
 
 //handle 404

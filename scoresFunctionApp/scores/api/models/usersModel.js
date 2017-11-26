@@ -9,9 +9,9 @@ const UserSchema = new Schema({
         type: String,
         required: '_id is required'
     },
-    userName: {
+    username: {
         type: String,
-        required: 'userName is required'
+        required: 'username is required'
     },
     createdAt: {
         type: Date,
