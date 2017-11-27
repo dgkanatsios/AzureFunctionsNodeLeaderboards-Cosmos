@@ -1,0 +1,28 @@
+{
+  "name": "azurefunctionsnodeleaderboardscores-cosmos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "func host start",
+    "test": "mocha --timeout 60000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "azure-function-express": "^1.2.2",
+    "compression": "^1.7.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "moment": "^2.18.1",
+    "mongoose": "^4.13.4"
+  },
+  "devDependencies": {
+    "azure-functions-core-tools": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.5.2"
+  }
+}

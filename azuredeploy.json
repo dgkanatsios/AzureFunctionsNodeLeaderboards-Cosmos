@@ -54,6 +54,15 @@
         "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
     },
     "resources": [{
+            "type": "microsoft.insights/components",
+            "apiVersion": "2015-05-01",
+            "name": "[variables('functionAppName')]",
+            "location": "South Central US",
+            "properties": {
+                "ApplicationId": "[variables('functionAppName')]"
+            }
+        },
+        {
             "apiVersion": "2015-04-08",
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "kind": "MongoDB",
@@ -94,7 +103,8 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccountName'))]"
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccountName'))]",
+                "[resourceId('microsoft.insights/components/', variables('functionAppName'))]"
             ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -124,8 +134,20 @@
                             "value": "6.5.0"
                         },
                         {
+                            "name": "NODE_ENV",
+                            "value": "production"
+                        },
+                        {
                             "name": "MONGODB_CONNECTION_STRING",
                             "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccountName')), '2015-11-06').connectionStrings[0].connectionString]"
+                        },
+                        {
+                            "name":"APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value":"[reference(resourceId('microsoft.insights/components/', variables('functionAppName')), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "Project",
+                            "value": "scoresFunctionApp"
                         }
                     ]
                 }
