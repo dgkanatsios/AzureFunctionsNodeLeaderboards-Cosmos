@@ -7,7 +7,7 @@ const utilities = require('../../utilities');
 const config = require('../../config');
 const controllerHelpers = require('./controllerHelpers');
 
-//https://**functionURL**//api/users/toptotaltimesplayed
+//https://**functionURL**/api/users/toptotaltimesplayed
 //users for all time that have played the most (i.e. have the most totalTimesPlayed)
 function listTopUsersTotalTimesPlayed(req, res) {
     utilities.log("listTopUsersTotalTimesPlayed", req);
@@ -41,7 +41,7 @@ function listScoresForCurrentUser(req, res) {
         userId,
         username
     } = controllerHelpers.getUserIdusername(req);
-    controllerHelpers.listScores(req,res,'-value',{
+    controllerHelpers.listScores(req, res, '-value', {
         userId: userId
     });
 };

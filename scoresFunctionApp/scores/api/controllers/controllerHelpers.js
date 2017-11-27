@@ -20,7 +20,7 @@ function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount,
         respond(err, null, res, 400);
     } else {
         const _filter = queryFilter || {};
-        schemaName.find(_filter, projection).sort(sortByValue).limit(count).exec(function (err, scores) {
+        schemaName.find(_filter, projection).limit(count).sort(sortByValue).exec(function (err, scores) {
             respond(err, scores, res);
         });
     }

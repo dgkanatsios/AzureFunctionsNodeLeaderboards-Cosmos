@@ -15,12 +15,12 @@ utilities.DEBUG_GLOBAL = true;
 describe('Tests for the scores API: ', function () {
 
 
-    it("inserts a score of value 500 into the database for userID 'testUserId'", function (done) {
+    it("inserts a score of value 499 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
             .set('x-ms-client-principal-id', 'testUserId')
             .set('x-ms-client-principal-name', 'testUsername')
             .send({
-                value: 500, //score value
+                value: 499, //score value
             }).end(function (err, res) {
                 expect(err).to.be.null;
                 res.should.have.status(200);
@@ -29,12 +29,12 @@ describe('Tests for the scores API: ', function () {
             });
     });
 
-    it("inserts another score with value 499 into the database for userID 'testUserId'", function (done) {
+    it("inserts another score with value 500 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
             .set('x-ms-client-principal-id', 'testUserId')
             .set('x-ms-client-principal-name', 'testUsername')
             .send({
-                value: 499, //score value
+                value: 500, //score value
             }).end(function (err, res) {
                 expect(err).to.be.null;
                 res.should.have.status(200);
@@ -55,8 +55,8 @@ describe('Tests for the scores API: ', function () {
                 res.body.maxScoreValue.should.equal(500);
                 res.body.latestScores.should.be.a('Array');
                 res.body.latestScores.should.have.lengthOf(2);
-                res.body.latestScores[0].value.should.equal(500);
-                res.body.latestScores[1].value.should.equal(499);
+                res.body.latestScores[0].value.should.equal(499);
+                res.body.latestScores[1].value.should.equal(500);
                 done();
             });
     });

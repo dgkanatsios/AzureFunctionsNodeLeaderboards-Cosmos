@@ -1,14 +1,11 @@
 require('dotenv').config();
 
 const express = require("express");
-const compression = require('compression');
 const app = express(),
     utilities = require('./utilities'),
     mongoose = require('mongoose'),
     Score = require('./api/models/scoresModel'), //we have to load the models here ...
     User = require('./api/models/usersModel'); //to avoid MissingSchemaError in Mongoose
-
-app.use(compression());
 
 //use our authenticator
 app.use(require('./authhelper'));
