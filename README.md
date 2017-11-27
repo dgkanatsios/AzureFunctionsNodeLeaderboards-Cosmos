@@ -1,6 +1,6 @@
 # AzureFunctionsNodeLeaderboard-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to CosmosDB via MongoDB protocol. Click the button below to deploy.
+Set up an Express Node.js app on an Azure Function that talks to CosmosDB via MongoDB protocol. Click the button below to deploy it in your Azure subscription.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
@@ -9,13 +9,13 @@ Be aware that AppService name, storage account name and database name must all b
 
 ## Designing the leaderboard
 
-Leaderboards within games can easily vary. In designing this library, we tried to satisfy the below requirements
+Leaderboards within games can easily vary. In designing this library, we tried to satisfy the below requirements:
 
 - store all scores (of course!)
-- a score object is immutable
+- a score object is immutable (so you will not find any update methods)
 - we need to store all scores for each user
 - we need to see the top scores of each user
-- we need to see the top scores for every day (or a specific time period)
+- we need to see the top scores for today
 - we need to see the top scores of all time, along with the users that accomplished them
 
 ## Usage
