@@ -1,11 +1,11 @@
 {
-  "name": "nodeleaderboardscores",
+  "name": "azurefunctionsnodeleaderboardscores-cosmos",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "func host start",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 60000"
   },
   "keywords": [],
   "author": "",

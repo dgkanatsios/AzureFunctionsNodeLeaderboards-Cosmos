@@ -3,72 +3,95 @@ const User = require('../api/models/usersModel');
 const chai = require('chai');
 const server = require('../index');
 const should = chai.should();
+const expect = chai.expect;
 const mongoose = require('mongoose');
 const utilities = require('../utilities');
+const config = require('../config');
 
 chai.use(require('chai-http'));
 
-utilities.DEBUG_GLOBAL = false;
+utilities.DEBUG_GLOBAL = true;
 
-describe('scores', function () {
+describe('Tests for the scores API', function () {
 
-    let userId;
-    it("inserts a score of value 500 into the database for userID 'myTestPrincipalId'", function (done) {
+
+    it("inserts a score of value 500 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
-            //.set('x-ms-client-principal-id', 'myTestPrincipalId')
-            //.set('x-ms-client-principal-name', 'myTestPrincipalname')
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
             .send({
                 value: 500, //score value
-                userId: 'myTestPrincipalId',
-                username: 'myTestPrincipalname'
             }).end(function (err, res) {
-                if (err) console.log(err);
-                else {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    userId = res.body.userId;
-                }
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('object');
                 done();
             });
     });
 
-    it("inserts another score with value 499 into the database for userID 'myTestPrincipalId'", function (done) {
+    it("inserts another score with value 499 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
             .send({
                 value: 499, //score value
-                userId: 'myTestPrincipalId',
-                username: 'myTestPrincipalname'
             }).end(function (err, res) {
-                if (err) console.log(err);
-                else {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    if (res.body.userId !== userId) //compare the userID with the previous one. They must be the same
-                        throw new Error('Different userId');
-                }
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('object');
                 done();
             });
     });
 
     it('checks for these two scores', function (done) {
-        chai.request(server).get(`/api/scores/user/latest/${userId}`).set('x-ms-client-principal-id', 'testPrincipalId')
-            .set('x-ms-client-principal-name', 'testPrincipalname')
+        chai.request(server).get("/api/users/testUserId")
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
             .end(function (err, res) {
+                expect(err).to.be.null;
                 res.should.have.status(200);
                 res.body.should.be.a('object');
-                res.body.scores.should.be.a('Array');
-                res.body.scores.should.have.lengthOf(2);
-                res.body.scores[0].should.be(499);
-                res.body.scores[0].should.be(500);
+                res.body.totalTimesPlayed.should.equal(2);
+                res.body.maxScoreValue.should.equal(500);
+                res.body.latestScores.should.be.a('Array');
+                res.body.latestScores.should.have.lengthOf(2);
+                res.body.latestScores[0].value.should.equal(500);
+                res.body.latestScores[1].value.should.equal(499);
                 done();
             });
     });
-    return;
-    it('inserts 100 items into the database', function (done) {
+
+    it('checks for an uknown user', function (done) {
+        chai.request(server).get("/api/users/WrongUserId")
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+    it("inserts a score of value 101 into the database for a new user, 'anotherUserId'", function (done) {
+        chai.request(server).post("/api/scores")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .send({
+                value: 100, //score value
+            }).end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                done();
+            });
+    });
+
+    it('inserts another 99 scores into the database for another user', function (done) {
         let promises = [];
-        for (let i = 0; i < 100; i++) {
-            let req = chai.request(server).post("/api/scores").set('x-ms-client-principal-id', 'testPrincipalId' + i)
-                .set('x-ms-client-principal-name', 'testPrincipalname' + i).send({
+        for (let i = 1; i < 100; i++) {
+            let req = chai.request(server).post("/api/scores")
+                .set('x-ms-client-principal-id', 'anotherUserId')
+                .set('x-ms-client-principal-name', 'anotherUsername')
+                .send({
                     value: i
                 }).then(function (res) {
                     res.should.have.status(200);
@@ -79,52 +102,29 @@ describe('scores', function () {
         Promise.all(promises).then(function () {
             done();
         }).catch(function (err) {
-            console.log(err);
             done(err);
         });
     });
 
-
-
-    // it('queries the database 10 times', function (done) {
-    //     let promises = [];
-    //     for (let i = 0; i < 10; i++) {
-    //         let req = chai.request(server).get(`/api/scores?skip=${i*10}&limit=10`).then(function (res) {
-    //             res.should.have.status(200);
-    //             res.body.should.be.a('Array');
-
-    //             const resultArray = res.body;
-    //             const actualMembers = [];
-    //             resultArray.forEach(function (e) {
-    //                 actualMembers.push(e.value);
-    //             });
-
-    //             const expectedMembers = [];
-    //             for(let j=0;j<10;j++){
-    //                 expectedMembers.push((10 - i) * 10 - j - 1);
-    //             }
-
-    //             actualMembers.should.have.members(expectedMembers);
-
-    //         }).catch(function (err) {
-    //             console.log(err);
-    //             throw err;
-    //         });
-    //         promises.push(req);
-    //     }
-    //     Promise.all(promises).then(function () {
-    //         done();
-    //     }).catch(function (err) {
-    //         console.log(err);
-    //         done(err);
-    //     });
-    // });
-
+    it('checks the details of anotherUser', function (done) {
+        chai.request(server).get("/api/users/anotherUserId")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.totalTimesPlayed.should.equal(100);
+                res.body.maxScoreValue.should.equal(100);
+                res.body.latestScores.should.be.a('Array');
+                res.body.latestScores.should.have.lengthOf(config.latestScoresPerUserToKeep);
+                done();
+            });
+    });
 
     it('deletes the gamedata collection', function (done) {
         mongoose.connection.db.dropCollection('gamedata', function (err) {
             if (err) {
-                console.log(err);
                 done(err);
             } else {
                 done();

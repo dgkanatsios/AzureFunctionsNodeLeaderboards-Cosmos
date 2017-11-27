@@ -7,12 +7,14 @@ const utilities = require('../../utilities');
 const config = require('../../config');
 const controllerHelpers = require('./controllerHelpers');
 
+//https://**functionURL**//api/users/toptotaltimesplayed
 //users for all time that have played the most (i.e. have the most totalTimesPlayed)
-function listTopUsersTotalTimesPlayed(req,res){
-    utilities.log("listTopUsersTotalTimesPlayed",req);
-    controllerHelpers.listUsers(req,res,'-totalTimesPlayed');
+function listTopUsersTotalTimesPlayed(req, res) {
+    utilities.log("listTopUsersTotalTimesPlayed", req);
+    controllerHelpers.listUsers(req, res, '-totalTimesPlayed');
 }
 
+//https://**functionURL**/api/scores/today/top/:count
 //top scores for all users for today, descending
 function listTodayTopScores(req, res) {
     utilities.log("listTodayTopScores", req);
@@ -30,19 +32,21 @@ function listTodayTopScores(req, res) {
     });
 };
 
+//https://**functionURL**/api/scores/top/:count
 //top scores for all users for all time, descending
 function listTopScores(req, res) {
     utilities.log("listTopScores", req);
     controllerHelpers.listScores(req, res, '-value');
 };
 
+//https://**functionURL**/api/scores/latest/:count
 //latest scores for all users, descending
 function listLatestScores(req, res) {
     utilities.log("listLatestScores", req);
     controllerHelpers.listScores(req, res, '-createdAt');
 };
 
-
+//https://**functionURL**/api/scores/:scoreID
 //get a specific score
 function getScore(req, res) {
     utilities.log("getScore", req);
@@ -51,6 +55,7 @@ function getScore(req, res) {
     });
 };
 
+//https://**functionURL**/api/users/scores
 //all scores for user, descending
 function listAllScoresForCurrentUser(req, res) {
     utilities.log("listAllScoresForCurrentUser", req);
@@ -66,6 +71,7 @@ function listAllScoresForCurrentUser(req, res) {
     }).sort('-value'); //sort on score value descending
 };
 
+//https://**functionURL**/api/users/:userId
 //get a specific user
 function getUser(req, res) {
     utilities.log("getUser", req);
@@ -74,6 +80,8 @@ function getUser(req, res) {
     });
 };
 
+//https://**functionURL**/api/scores
+//creates a new score. If the user that got the score doesn't exist (new user), he/she is created, too
 function createScore(req, res) {
     utilities.log("createScore", req);
 
@@ -94,28 +102,27 @@ function createScore(req, res) {
                 });
                 newUser.save(function (err, user) {
                     if (err) {
-                        controllerHelpers.respond(err, '', res);
-                    } else {
+                        controllerHelpers.respond('Error in creating new user: ' + err, null, res);
+                    } else { //user was created, save the new score
                         saveScore({
                             userId,
                             username
                         }, req, res);
                     }
                 });
-            } else {
+            } else { //user exists, so just save the new score
                 saveScore({
                     userId,
                     username
                 }, req, res);
             }
         }).catch(function (err) {
-            controllerHelpers.respond(err, null, res);
+            controllerHelpers.respond('Error in creating/updating  user: ' + err, null, res);
         });
 
 };
 
 function saveScore(user, req, res) {
-    console.log(req.body.createdAt);
     const newScore = new Score({
         value: Number(req.body.value),
         description: req.body.description,
@@ -125,13 +132,13 @@ function saveScore(user, req, res) {
     });
 
     newScore.save(function (err, score) {
-        const miniScoreData = {
-            value: Number(req.body.value),
-            score: mongoose.Types.ObjectId(score._id)
-        };
         if (err) {
-            controllerHelpers.respond(err, '', res);
+            controllerHelpers.respond('Error in creating new score: ' + err, null, res);
         } else {
+            const miniScoreData = {
+                value: Number(req.body.value),
+                score: mongoose.Types.ObjectId(score._id)
+            };
             User.findByIdAndUpdate(user.userId, {
                 $push: {
                     latestScores: {
@@ -148,7 +155,10 @@ function saveScore(user, req, res) {
             }, {
                 new: true //return the updated object
             }, function (err, updatedUser) {
-                controllerHelpers.respond(err, updatedUser, res);
+                if (err)
+                    controllerHelpers.respond('Error in updating user with new score: ' + err, '', res);
+                else
+                    controllerHelpers.respond(null, updatedUser, res);
             });
         }
     });
