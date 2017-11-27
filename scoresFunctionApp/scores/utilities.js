@@ -13,8 +13,9 @@ function log(msg, req) {
 //if value is a valid integer, it returns the value
 //else it returns NaN
 function getInteger(value) {
-    if (typeof value === 'number' && (value % 1) === 0) {
-        return parseInt(value);
+    let parsedValue = parseInt(value);
+    if (typeof parsedValue === 'number' && (parsedValue % 1) === 0) {
+        return parsedValue;
     } else
         return NaN;
 }

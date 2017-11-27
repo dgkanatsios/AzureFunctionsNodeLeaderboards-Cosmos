@@ -32,6 +32,20 @@ function listTodayTopScores(req, res) {
     });
 };
 
+//https://**functionURL**/api/user/scores/:count
+//all scores for user, descending
+function listScoresForCurrentUser(req, res) {
+    utilities.log("listScoresForCurrentUser", req);
+    //custom headers filled from authhelper.js
+    let {
+        userId,
+        username
+    } = controllerHelpers.getUserIdusername(req);
+    controllerHelpers.listScores(req,res,'-value',{
+        userId: userId
+    });
+};
+
 //https://**functionURL**/api/scores/top/:count
 //top scores for all users for all time, descending
 function listTopScores(req, res) {
@@ -53,22 +67,6 @@ function getScore(req, res) {
     Score.findById(req.params.scoreId, config.scoreProjection).exec(function (err, score) {
         controllerHelpers.respond(err, score, res);
     });
-};
-
-//https://**functionURL**/api/users/scores
-//all scores for user, descending
-function listAllScoresForCurrentUser(req, res) {
-    utilities.log("listAllScoresForCurrentUser", req);
-    //custom headers filled from authhelper.js
-    let {
-        userId,
-        username
-    } = controllerHelpers.getUserIdusername(req);
-    Score.find({
-        userId: userId
-    }, function (err, scores) {
-        controllerHelpers.respond(err, scores, res);
-    }).sort('-value'); //sort on score value descending
 };
 
 //https://**functionURL**/api/users/:userId
@@ -169,7 +167,7 @@ function saveScore(user, req, res) {
 module.exports = {
     listTopScores,
     listTodayTopScores,
-    listAllScoresForCurrentUser,
+    listScoresForCurrentUser,
     listTopUsersTotalTimesPlayed,
     listLatestScores,
     createScore,

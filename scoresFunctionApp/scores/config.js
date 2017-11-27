@@ -5,21 +5,14 @@ const DEBUG_LOCAL = true;
 
 const scoreProjection = { 
     __v: 0,
-    _id: 0,
-    __type:0
+     __type:0
 };
 
 const userProjection = { 
     __v: 0,
-    _id: 0,
     __type:0
 };
 
-const minimalUserProjection = { 
-    __v: 0,
-    _id: 0,
-    __type:0
-};
 
 module.exports = {
     latestScoresPerUserToKeep,
@@ -27,6 +20,5 @@ module.exports = {
     maxCountOfUsersToReturn,
     scoreProjection,
     userProjection,
-    minimalUserProjection,
     DEBUG_LOCAL
 };

@@ -21,10 +21,10 @@ module.exports = function (app) {
   app.route('/api/users/:userId')
     .get(score.getUser);
 
-  app.route('/api/users/toptotaltimesplayed')
+  app.route('/api/users/toptotaltimesplayed/:count')
     .get(score.listTopUsersTotalTimesPlayed);
 
-  app.route('/api/user/scores')
-    .get(score.listAllScoresForCurrentUser);
+  app.route('/api/user/scores/:count')
+    .get(score.listScoresForCurrentUser);
 
 };
