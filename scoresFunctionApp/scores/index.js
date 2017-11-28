@@ -26,6 +26,9 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
     useMongoClient: true,
 });
 
+//connection string should also contain the database name, like 'mygamedatabase' is included below
+//mongodb://node-leaderboard:12345678==@node-leaderboard.documents.azure.com:10255/mygamedatabase?ssl=true&replicaSet=globaldb
+
 const routes = require('./api/routes/scoresRoutes'); //import routes
 routes(app); //register them
 

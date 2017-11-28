@@ -1,5 +1,6 @@
 FROM mhart/alpine-node:8.9.1
 ENV AZURE_FUNCTIONS_RUNTIME false
+ENV NODE_ENV production
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app

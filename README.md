@@ -1,6 +1,6 @@
 # AzureFunctionsNodeScores-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB protocol. Application Insights is used to provide performance metrics information.
+Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. Application Insights is used to provide performance metrics information.
 
 ## Deployment
 
@@ -68,3 +68,17 @@ Check [here](README.faq.md) for answers to common questions you may have.
 You might notice that there is a Dockerfile inside the Azure Functions code. You can use that to build the scores API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
+
+### Build Docker image
+To build the Docker image, cd to the scoresFunctionApp/scores directory and run the Docker CLI, here's an example
+
+```bash
+docker build -t username/azurefunctionsnodescores:0.1 .
+```
+
+Of course, you can replace **username**,**azurefunctionsnodescores** with the values of your choice. To run the container locally, you should use
+
+```bash
+docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-leaderboard:12345678@node-leaderboard.documents.azure.com:10255/mygame?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
+```
+giving, of course, your correct MongoDB or CosmosDB connection string (including the database name).
