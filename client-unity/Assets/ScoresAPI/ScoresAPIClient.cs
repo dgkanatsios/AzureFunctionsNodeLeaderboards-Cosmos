@@ -41,11 +41,44 @@ namespace ScoresAPI
             StartCoroutine(SelectByIDInternal<T>(id, onSelectByIDCompleted));
         }
 
-            
+        public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(ListScoresForCurrentUserInternal(count, callback));
+        }
 
         #endregion
 
-     
+        private IEnumerator ListScoresForCurrentUserInternal(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
+                (GetScoresAPIURL() + "/user/scores/" + count, HttpMethod.Get.ToString(), null, userID, username))
+            {
+                yield return www.Send();
+                if (Globals.DebugFlag) Debug.Log(www.responseCode);
+                CallbackResponse<Score[]> response = new CallbackResponse<Score[]>();
+                if (Utilities.IsWWWError(www))
+                {
+                    if (Globals.DebugFlag) Debug.Log(www.error);
+                    Utilities.BuildResponseObjectOnFailure(response, www);
+                }
+                else
+                {
+                    try
+                    {
+                        Score[] data = JsonHelper.GetJsonArray<Score>(www.downloadHandler.text);
+                        response.Result = data;
+                        response.Status = CallBackResult.Success;
+                    }
+                    catch (Exception ex)
+                    {
+                        response.Status = CallBackResult.DeserializationFailure;
+                        response.Exception = ex;
+                    }
+                }
+                callback(response);
+            }
+        }
 
         private IEnumerator CreateScoreInternal(Score instance, Action<CallbackResponse<User>> onInsertCompleted)
         {
@@ -116,15 +149,15 @@ namespace ScoresAPI
             }
         }
 
-      
-       
+
+
 
         private string GetScoresAPIURL()
         {
             return string.Format("{0}/api/", Url);
         }
 
-       
+
     }
 }
 

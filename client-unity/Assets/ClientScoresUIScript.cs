@@ -34,7 +34,7 @@ public class ClientScoresUIScript : MonoBehaviour
     public void CreateScore()
     {
         Score score = new Score();
-      
+
         score.value = UnityEngine.Random.Range(10, 100);
         ScoresAPIClient.Instance.CreateScore(score, createResponse =>
         {
@@ -52,9 +52,26 @@ public class ClientScoresUIScript : MonoBehaviour
         StatusText.text = "Loading...";
     }
 
-    public void SelectFiltered()
+    public void ListScoresForCurrentUser()
     {
-        SelectFilteredExecute(false);
+        ScoresAPIClient.Instance.ListScoresForCurrentUser(10, createResponse =>
+        {
+            if (createResponse.Status == CallBackResult.Success)
+            {
+                string result = "Create score completed";
+                if (Globals.DebugFlag)
+                    foreach (var item in createResponse.Result)
+                    {
+                        Debug.Log(string.Format("ID is {0},value is {1}", item._id, item.value));
+                    }
+                StatusText.text = result;
+            }
+            else
+            {
+                ShowError(createResponse.Exception.Message);
+            }
+        });
+        StatusText.text = "Loading...";
     }
 
     public void SelectFilteredCount()
