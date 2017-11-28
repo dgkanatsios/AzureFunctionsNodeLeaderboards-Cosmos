@@ -1,6 +1,10 @@
 # AzureFunctionsNodeScores-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to CosmosDB via MongoDB protocol. Click the button below to deploy it in your Azure subscription.
+Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB protocol. Application Insights is used to provide performance metrics information.
+
+## Deployment
+
+Click the button below to deploy it in your Azure subscription.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
@@ -9,11 +13,15 @@ Be aware that AppService name, storage account name and database name must all b
 
 ## Architecture
 
-The scores API is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The scores API code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our scores API code is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction).
+The scores API is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The scores API code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our scores API code is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction). Moreover, [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview) service is used to track your application's performance.
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/GameFunctionsCosmos.JPG?raw=true "Reference architecture")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
 
-[Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework.
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
+
+On the software architecture side of things, [Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework. Also, the [azure-functions-express](https://github.com/yvele/azure-function-express) package is used to facilitate the usage of Express within an Azure Function.
 
 ## Designing the leaderboard
 
@@ -54,4 +62,9 @@ Here you can see a short list of all the operations that are supported, check [h
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
 
 ## FAQ 
-Check [here](README.faq.md) for answers to common questions.
+Check [here](README.faq.md) for answers to common questions you may have.
+
+## Docker
+You might notice that there is a Dockerfile inside the Azure Functions code. You can use that to build the scores API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
