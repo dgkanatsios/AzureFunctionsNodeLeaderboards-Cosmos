@@ -7,7 +7,7 @@ Easy! Find the relevant JavaScript file in the api/models/folder and update it t
 Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues).
 
 #### The first call to the Azure Function is always a bit slow. Why?
-Indeed, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project is still experimental). However, all subsequent calls are blazingly fast!
+Indeed, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project is still experimental). There is also an idle timeout taking place. Check [here](https://github.com/Azure/azure-webjobs-sdk-script/issues/298) for a discussion on this matter.
 
 #### How can I develop/test this project locally?
 Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). Don't forget to set a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables.
@@ -18,7 +18,7 @@ We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com
 #### I saw you're using Mongoose discriminators. Why?
 To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
 
-#### How can I see the score data on my CosmosDB instance?
+#### How can I see the data on my CosmosDB instance?
 Check [this](https://azure.microsoft.com/en-us/features/storage-explorer/) free and cross-platform tool. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
 
 #### Can I try CosmosDB for free?
