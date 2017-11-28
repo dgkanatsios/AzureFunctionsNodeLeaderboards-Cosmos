@@ -88,6 +88,12 @@ function createScore(req, res) {
         username
     } = controllerHelpers.getUserIdusername(req);
 
+    //validate score
+    const scoreValue = utilities.getInteger(req.body.value);
+    if (isNaN(scoreValue) || scoreValue < 0){
+        controllerHelpers.respond('score value must be an integer', '', res, 400);
+    }
+
     //check if the user exists
     User.findById(userId)
         .then(function (user) {

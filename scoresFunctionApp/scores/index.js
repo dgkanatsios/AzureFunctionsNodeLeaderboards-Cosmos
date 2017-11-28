@@ -5,7 +5,7 @@ const app = express(),
     utilities = require('./utilities'),
     config = require('./config'),
     mongoose = require('mongoose'),
-    Score = require('./api/models/scoresModel'), //we have to load the models here ...
+    Score = require('./api/models/scoresModel'), //we have to load the models here 
     User = require('./api/models/usersModel'); //to avoid MissingSchemaError in Mongoose
 
 //use our authenticator
@@ -25,7 +25,7 @@ if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
 let connectionString = process.env.MONGODB_CONNECTION_STRING;
 //add the database name
 const pos = connectionString.lastIndexOf('/');
-connectionString = connectionString.substring(0,pos)+`/${config.databaseName}`+connectionString.substring(pos+1);
+connectionString = connectionString.substring(0, pos) + `/${config.databaseName}` + connectionString.substring(pos + 1);
 
 //above methods need to be executed because Mongo connection string should also contain the database name
 //whereas the one that gets created from the ARM template contains only the server related details, not the the database name

@@ -1,6 +1,6 @@
 {
   "name": "azurefunctionsnodeleaderboardscores-cosmos",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,6 @@
     "mongoose": "^4.13.4"
   },
   "devDependencies": {
-    "azure-functions-core-tools": "^1.0.3",
     "body-parser": "^1.17.2",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",

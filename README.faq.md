@@ -10,7 +10,7 @@ Sure, if you want to contribute via a pull request, go ahead! For bugs/features/
 Indeed, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project is still experimental). However, all subsequent calls are blazingly fast!
 
 #### How can I develop/test this project locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`).
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). To debug from Visual Studio Code, run `func host start --debug vscode`. 
 
 #### What frameworks are you using for tests?
 We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt.
