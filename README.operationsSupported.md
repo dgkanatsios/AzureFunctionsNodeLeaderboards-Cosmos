@@ -1,6 +1,6 @@
-# Operations supported
+# AzureFunctionsNodeScores-Cosmos - Operations supported
 
-Details of all the operations supported in this Azure Function.
+Details of all the operations supported in the scoresFunctionApp Azure Function.
 
 ## POST https://**functionURL**/api/scores 
 #### Description

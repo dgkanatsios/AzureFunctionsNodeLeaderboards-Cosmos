@@ -1,4 +1,4 @@
-# Frequently Asked Questions
+# AzureFunctionsNodeScores-Cosmos - Frequently Asked Questions
 
 #### How to extend the score or the user object?
 Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences.

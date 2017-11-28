@@ -1,4 +1,4 @@
-# AzureFunctionsNodeLeaderboard-Cosmos
+# AzureFunctionsNodeScores-Cosmos
 
 Set up an Express Node.js app on an Azure Function that talks to CosmosDB via MongoDB protocol. Click the button below to deploy it in your Azure subscription.
 
@@ -6,6 +6,14 @@ Set up an Express Node.js app on an Azure Function that talks to CosmosDB via Mo
 
 The script will take some time to execute (due to resources creation and npm install execution), please be patient.
 Be aware that AppService name, storage account name and database name must all be globally unique. If not, the script will fail to execute. 
+
+## Architecture
+
+The scores API is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The scores API code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our scores API code is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction).
+
+![alt text](media/GameFunctionsCosmos.jpg "Reference architecture")
+
+[Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework.
 
 ## Designing the leaderboard
 
