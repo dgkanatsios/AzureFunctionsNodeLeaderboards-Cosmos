@@ -24,7 +24,8 @@ if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
 //get server connection string
 let connectionString = process.env.MONGODB_CONNECTION_STRING;
 //add the database name
-connectionString = connectionString.replace(connectionString.lastIndexOf('/',`/${config.databaseName}`));
+const pos = connectionString.lastIndexOf('/');
+connectionString = connectionString.substring(0,pos)+`/${config.databaseName}`+connectionString.substring(pos+1);
 
 //above needs to be done because connection string should also contain the database name
 //whereas the one that gets created from the ARM template contains only the server related details, not the the database name
