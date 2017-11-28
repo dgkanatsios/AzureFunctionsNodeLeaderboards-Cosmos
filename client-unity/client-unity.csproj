@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.6.4f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -81,16 +83,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ClientScoresAPI\AppServiceUtilities.cs" />
-    <Compile Include="Assets\ClientScoresAPI\CallbackResponse.cs" />
-    <Compile Include="Assets\ClientScoresAPI\Constants.cs" />
-    <Compile Include="Assets\ClientScoresAPI\EasyTablesClient.cs" />
-    <Compile Include="Assets\ClientScoresAPI\Globals.cs" />
-    <Compile Include="Assets\ClientScoresAPI\JsonHelper.cs" />
-    <Compile Include="Assets\ClientScoresAPI\Score.cs" />
-    <Compile Include="Assets\ClientScoresAPI\SelectFilteredResult.cs" />
-    <Compile Include="Assets\ClientScoresAPI\TableQuery.cs" />
-    <Compile Include="Assets\ClientScoresAPI\Utilities.cs" />
+    <Compile Include="Assets\ScoresAPI\CallbackResponse.cs" />
+    <Compile Include="Assets\ScoresAPI\ScoresAPIClient.cs" />
+    <Compile Include="Assets\ScoresAPI\Globals.cs" />
+    <Compile Include="Assets\ScoresAPI\JsonHelper.cs" />
+    <Compile Include="Assets\ScoresAPI\Score.cs" />
+    <Compile Include="Assets\ScoresAPI\SelectFilteredResult.cs" />
+    <Compile Include="Assets\ScoresAPI\User.cs" />
+    <Compile Include="Assets\ScoresAPI\Utilities.cs" />
     <Compile Include="Assets\ClientScoresUIScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

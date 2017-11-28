@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AzureServicesForUnity.Shared
+namespace ScoresAPI
 {
-    public class Globals
+    public static class Globals
     {
         public static bool DebugFlag { get; set; }
 
@@ -14,6 +14,8 @@ namespace AzureServicesForUnity.Shared
         public static readonly string ApplicationJson = "application/json";
         public static readonly string ErrorOccurred = "Error occurred";
 
-        public static readonly string LibraryVersion = "0.0.12";
+        public static readonly string PrincipalID ="x-ms-client-principal-id";
+        public static readonly string PrincipalName ="x-ms-client-principal-name";
+        public static readonly string LibraryVersion = "0.1";
     }
 }

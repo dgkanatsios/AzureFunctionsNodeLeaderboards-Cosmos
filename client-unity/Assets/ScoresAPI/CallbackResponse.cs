@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AzureServicesForUnity.Shared
+namespace ScoresAPI
 {
     /// <summary>
     /// Holds the response status and possible (hope not!) exception instance

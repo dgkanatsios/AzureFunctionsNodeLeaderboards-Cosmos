@@ -7,10 +7,13 @@ Easy! Find the relevant JavaScript file in the api/models/folder and update it t
 Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues).
 
 #### The first call to the Azure Function is always a bit slow. Why?
-Yup, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project still experimental).
+Indeed, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project is still experimental). However, all subsequent calls are blazingly fast!
 
-#### How can I develop/test Azure Functions locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`).
+#### How can I develop/test this project locally?
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`).
+
+#### What frameworks are you using for tests?
+We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt.
 
 #### I saw you're using Mongoose discriminators. Why?
 To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AzureServicesForUnity.AppService
+namespace ScoresAPI
 {
     [Serializable]
     public class SelectFilteredResult<T>

@@ -1,5 +1,4 @@
-﻿using AzureServicesForUnity.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,10 +14,32 @@ using Windows.Security.Cryptography;
 using System.Runtime.InteropServices.WindowsRuntime;
 #endif
 
-namespace AzureServicesForUnity.Shared
+namespace ScoresAPI
 {
     public static class Utilities
     {
+        public static UnityWebRequest BuildScoresAPIWebRequest(string url, string method, string json, string userID, string username)
+        {
+            UnityWebRequest www = new UnityWebRequest(url, method);
+
+            www.SetRequestHeader(Globals.Accept, Globals.ApplicationJson);
+            www.SetRequestHeader(Globals.Content_Type, Globals.ApplicationJson);
+
+            www.SetRequestHeader(Globals.PrincipalID, userID);
+            www.SetRequestHeader(Globals.PrincipalName, username);
+
+            www.downloadHandler = new DownloadHandlerBuffer();
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                byte[] payload = Encoding.UTF8.GetBytes(json);
+                UploadHandler handler = new UploadHandlerRaw(payload);
+                handler.contentType = Globals.ApplicationJson;
+                www.uploadHandler = handler;
+            }
+            return www;
+        }
+
         public static void ValidateForNull(params object[] objects)
         {
             foreach (object obj in objects)
@@ -61,44 +82,6 @@ namespace AzureServicesForUnity.Shared
         {
             response.Status = CallBackResult.LocalException;
             response.Exception = ex;
-        }
-
-        public static string ComputeHmac256(byte[] key, string message)
-        {
-#if NETFX_CORE
-
-			MacAlgorithmProvider provider = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha256);
-			CryptographicHash hash = provider.CreateHash(key.AsBuffer());
-			hash.Append(CryptographicBuffer.ConvertStringToBinary(message, BinaryStringEncoding.Utf8));
-			return CryptographicBuffer.EncodeToBase64String(hash.GetValueAndReset());
-#else
-            using (HashAlgorithm hashAlgorithm = new HMACSHA256(key))
-            {
-                byte[] messageBuffer = Encoding.UTF8.GetBytes(message);
-                return Convert.ToBase64String(hashAlgorithm.ComputeHash(messageBuffer));
-            }
-#endif
-        }
-
-        public static string GetAuthorization(string accountName, string signature)
-        {
-            return
-               string.Format(CultureInfo.InvariantCulture, "{0} {1}:{2}", "SharedKey", accountName, signature);
-        }
-
-        public static string CanonicalizeHttpRequest(UnityWebRequest request, string accountName)
-        {
-            CanonicalizedString canonicalizedString = new CanonicalizedString(request.method, 200);
-
-            canonicalizedString.AppendCanonicalizedElement(request.GetRequestHeader("ContentMd5"));
-            canonicalizedString.AppendCanonicalizedElement(request.GetRequestHeader("Content-Type"));
-
-            AuthenticationUtility.AppendCanonicalizedDateHeader(canonicalizedString, request, true);
-
-            string resourceString = AuthenticationUtility.GetCanonicalizedResourceString(new Uri(request.url), accountName, true);
-            canonicalizedString.AppendCanonicalizedElement(resourceString);
-
-            return canonicalizedString.ToString();
         }
 
     }
