@@ -72,9 +72,9 @@ To build the Docker image, cd to the scoresFunctionApp/scores directory and run 
 docker build -t username/azurefunctionsnodescores:0.1 .
 ```
 
-Of course, you can replace **username**,**azurefunctionsnodescores** with the values of your choice. To run the container locally, you should use
+Of course, you can replace **username**,**azurefunctionsnodescores** with the values of your choice. To run the container locally, you should use the following command
 
 ```bash
-docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygame?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
+docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygameDB?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
 ```
-setting, of course, your correct MongoDB or CosmosDB connection string (including the database name).
+Don't forget to set your correct MongoDB or CosmosDB connection string (including the database name).
