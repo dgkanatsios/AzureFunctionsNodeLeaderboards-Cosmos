@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const app = express(),
     utilities = require('./utilities'),
+    config = require('./config'),
     mongoose = require('mongoose'),
     Score = require('./api/models/scoresModel'), //we have to load the models here ...
     User = require('./api/models/usersModel'); //to avoid MissingSchemaError in Mongoose
@@ -20,14 +21,20 @@ if (process.env.AZURE_FUNCTIONS_RUNTIME === 'false') {
     app.use(bodyParser.json());
 }
 
-// mongoose instance connection url connection
+//get server connection string
+let connectionString = process.env.MONGODB_CONNECTION_STRING;
+//add the database name
+connectionString = connectionString.replace(connectionString.lastIndexOf('/',`/${config.databaseName}`));
+
+//above needs to be done because connection string should also contain the database name
+//whereas the one that gets created from the ARM template contains only the server related details, not the the database name
+//mongodb://node-scores:12345678==@node-scores.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+
+// mongoose instance connection 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
+mongoose.connect(connectionString, {
     useMongoClient: true,
 });
-
-//connection string should also contain the database name, like 'mygamedatabase' is included below
-//mongodb://node-leaderboard:12345678==@node-leaderboard.documents.azure.com:10255/mygamedatabase?ssl=true&replicaSet=globaldb
 
 const routes = require('./api/routes/scoresRoutes'); //import routes
 routes(app); //register them

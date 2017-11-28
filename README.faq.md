@@ -31,7 +31,11 @@ Since your API is stateless, you should use a store to preserve state in order t
 Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/). When you deploy the Function via the ARM template provided, you are billed by Azure Functions consumption plan. First million calls per month are free, for the rest check the pricing page [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-feature-support).
 
 #### Where is the Application Insights documentation?
-Check [here](https://docs.microsoft.com/en-us/azure/application-insights/).
+Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you. 
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
 
 #### All this is great, but I'd like something simpler for my Unity game, is there anything else?
 You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).

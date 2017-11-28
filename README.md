@@ -17,10 +17,6 @@ The scores API is served by [Azure Functions](https://docs.microsoft.com/en-us/a
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
-
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
-
 On the software architecture side of things, [Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework. Also, the [azure-functions-express](https://github.com/yvele/azure-function-express) package is used to facilitate the usage of Express within an Azure Function.
 
 ## Designing the leaderboard
@@ -79,6 +75,6 @@ docker build -t username/azurefunctionsnodescores:0.1 .
 Of course, you can replace **username**,**azurefunctionsnodescores** with the values of your choice. To run the container locally, you should use
 
 ```bash
-docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-leaderboard:12345678@node-leaderboard.documents.azure.com:10255/mygame?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
+docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygame?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
 ```
 giving, of course, your correct MongoDB or CosmosDB connection string (including the database name).

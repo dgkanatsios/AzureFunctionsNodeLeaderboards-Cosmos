@@ -1,6 +1,7 @@
 const latestScoresPerUserToKeep = 10;
 const maxCountOfScoresToReturn = 10;
 const maxCountOfUsersToReturn = 10;
+const databaseName = 'gameData';
 const DEBUG_LOCAL = true;
 
 const scoreProjection = { 
@@ -20,5 +21,6 @@ module.exports = {
     maxCountOfUsersToReturn,
     scoreProjection,
     userProjection,
+    databaseName,
     DEBUG_LOCAL
 };
