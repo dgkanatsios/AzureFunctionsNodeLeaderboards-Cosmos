@@ -1,6 +1,6 @@
 # AzureFunctionsNodeScores-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app stores game scores and some user details. Application Insights is used to provide performance metrics information.
+Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app is a RESTful API service that stores game scores and some user details. Azure Application Insights service is used to provide information and metrics regarding application performance.
 
 ## Deployment
 
@@ -24,11 +24,11 @@ On the software architecture side of things, [Mongoose](http://mongoosejs.com) i
 Leaderboards within games can easily vary. In designing this library, we tried to satisfy the below requirements:
 
 - store all scores (of course!)
-- a score object is immutable (so you will not find any update methods)
+- a score object is immutable (so you will not find any update methods here)
 - we need to store all scores for each user
 - we need to see the top scores of each user
 - we need to see the top scores for today
-- we need to see the top scores of all time, along with the users that accomplished them
+- we need to see the top scores of all time, along with the users that got them
 
 ## Usage
 After you deploy the script, you will have an Azure Resource Group will the following resources
@@ -40,7 +40,7 @@ After you deploy the script, you will have an Azure Resource Group will the foll
 Now you can call the available web service methods from your game. You can visit the Azure Portal to get the Azure Function URL, it will have the format https://**functionName**.azurewebsites.net
 
 ## Authentication
-It is required that you set two headers on each request to the Function, their names are `x-ms-client-principal-id` and `x-ms-client-principal-name`. If values are missing, then you request will fail. The `x-ms-client-principal-id` should be unique for each user. That is, each time you use the same `x-ms-client-principal-id` for inserting a new score, this score will belong to the same user. The 'how' this values are filled is left to you as an implementation. App Service (the service on which Azure Functions is based on) supports various authentication methods, you can check them [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview).
+It is required that you set two headers on each request to the Function, their names are `x-ms-client-principal-id` and `x-ms-client-principal-name`. If values are missing, then you request will fail. The `x-ms-client-principal-id` should be unique for each user. That is, each time you use the same `x-ms-client-principal-id` for inserting a new score, this score will belong to the same user. The 'how' this values are filled is left to you as an implementation. App Service (the service on which Azure Functions is based on) supports various authentication methods, you can check them [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). It is worth mentioning that there is no applied authorization on the API calls. This means that all users can call all methods with any kind of parameters.
 
 ## Operations supported
 

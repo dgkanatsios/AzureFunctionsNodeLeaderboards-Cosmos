@@ -1,7 +1,7 @@
 # AzureFunctionsNodeScores-Cosmos - Frequently Asked Questions
 
 #### How to extend the score or the user object?
-Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences.
+Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences. Added fields/properties will 'automagically' be persisted in the database.
 
 #### Do you accept PRs? I found a bug/I want to request a new feature
 Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues).
@@ -10,7 +10,7 @@ Sure, if you want to contribute via a pull request, go ahead! For bugs/features/
 Indeed, for the time being. Check [here](https://github.com/Azure/azure-functions-pack) for a way it can be improved (project is still experimental). However, all subsequent calls are blazingly fast!
 
 #### How can I develop/test this project locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). To debug from Visual Studio Code, run `func host start --debug vscode`. 
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). Don't forget to set a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables.
 
 #### What frameworks are you using for tests?
 We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt.
@@ -22,7 +22,7 @@ To save you some money. CosmosDB charges per collection, check [here](https://an
 Check [this](https://azure.microsoft.com/en-us/features/storage-explorer/) free and cross-platform tool. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
 
 #### Can I try CosmosDB for free?
-Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases).
+Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure, also check [here](https://azure.microsoft.com/en-us/free/).
 
 #### What can I use for authentication/authorization?
 If you want to protect your game leaderboards from unauthorized access, you should implement an appropriate mechanism. Azure App Service (a service which Azure Functions sits on) has an excellent implementation that you can use to protect your backend and it is documented [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). To use it in this Functions app, comment the appropriate lines in the `authhelper.js` file.
