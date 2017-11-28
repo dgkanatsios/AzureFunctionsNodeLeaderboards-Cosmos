@@ -1,7 +1,7 @@
 const latestScoresPerUserToKeep = 10;
 const maxCountOfScoresToReturn = 10;
 const maxCountOfUsersToReturn = 10;
-const databaseName = 'gameData';
+const databaseName = 'gameDataDB';
 const DEBUG_LOCAL = true;
 
 const scoreProjection = { 
