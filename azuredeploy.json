@@ -5,13 +5,13 @@
         "appName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the function app that you wish to create."
+                "description": "The name of the function app that you wish to create. Needs to be globally unique, will determine your Function's DNS"
             }
         },
         "databaseAccountName": {
             "type": "string",
             "metadata": {
-                "description": "The CosmosDB database account name. Needs to be globally unique."
+                "description": "The CosmosDB database account name (server name). Needs to be globally unique."
             }
         },
         "hostingPlanName": {
