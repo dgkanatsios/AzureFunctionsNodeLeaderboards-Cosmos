@@ -1,6 +1,6 @@
 # AzureFunctionsNodeScores-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. Application Insights is used to provide performance metrics information.
+Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app stores game scores and some user details. Application Insights is used to provide performance metrics information.
 
 ## Deployment
 
@@ -13,7 +13,7 @@ Be aware that AppService name, storage account name and database name must all b
 
 ## Architecture
 
-The scores API is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The scores API code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our scores API code is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction). Moreover, [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview) service is used to track your application's performance.
+The scores API that's created is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The scores API code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our scores API code is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction). Moreover, [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview) service is used to track your application's performance.
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
 
@@ -77,4 +77,4 @@ Of course, you can replace **username**,**azurefunctionsnodescores** with the va
 ```bash
 docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygame?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
 ```
-giving, of course, your correct MongoDB or CosmosDB connection string (including the database name).
+setting, of course, your correct MongoDB or CosmosDB connection string (including the database name).

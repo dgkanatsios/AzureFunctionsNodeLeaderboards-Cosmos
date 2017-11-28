@@ -22,8 +22,8 @@ const ScoreSchema = new Schema({
     default: moment.utc() 
     //we are not using ObjectId.getTimeStamp() to get 
     //details about score timestamp because we need to bear in mind that some of the 
-    //incoming scores will have been stored offline, so their creation time in our DB will
-    //be different from the creation time in the client
+    //incoming scores maybe will have been stored offline, so their creation time in our DB will
+    //be different from the creation time in the client that accesses our score API
   },
   description: { //optional score related description
     type: String

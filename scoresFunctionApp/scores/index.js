@@ -27,7 +27,7 @@ let connectionString = process.env.MONGODB_CONNECTION_STRING;
 const pos = connectionString.lastIndexOf('/');
 connectionString = connectionString.substring(0,pos)+`/${config.databaseName}`+connectionString.substring(pos+1);
 
-//above needs to be done because connection string should also contain the database name
+//above methods need to be executed because Mongo connection string should also contain the database name
 //whereas the one that gets created from the ARM template contains only the server related details, not the the database name
 //mongodb://node-scores:12345678==@node-scores.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
 
