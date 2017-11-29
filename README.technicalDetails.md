@@ -1,4 +1,4 @@
-# AzureFunctionsNodeScores-Cosmos - Operations supported
+# AzureFunctionsNodeScores-Cosmos - Technical details
 
 Details of all the operations supported in the scoresFunctionApp Azure Function.
 

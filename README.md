@@ -44,7 +44,7 @@ It is required that you set two headers on each request to the Function, their n
 
 ## Operations supported
 
-Here you can see a short list of all the operations that are supported, check [here](README.operationsSupported.md) for full details.
+Here you can see a short list of all the operations that are supported, check [here](README.technicalDetails.md) for full details.
 
 | VERB | Method name | URL | Description | 
 | --- | --- | --- | --- |
