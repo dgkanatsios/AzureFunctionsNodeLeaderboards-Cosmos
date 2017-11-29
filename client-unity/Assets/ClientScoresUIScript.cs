@@ -74,63 +74,27 @@ public class ClientScoresUIScript : MonoBehaviour
         StatusText.text = "Loading...";
     }
 
-    public void SelectFilteredCount()
-    {
-        SelectFilteredExecute(true);
-    }
-
-    private void SelectFilteredExecute(bool includeTotalCount)
-    {
-        //string filterquery = "score gt 50 and startswith(playername,'dimi')";
-
-        //TableQuery tq = new TableQuery();
-        //tq.filter = filterquery;
-        //tq.orderBy = "score";
-        //tq.inlineCount = includeTotalCount;
-
-        //EasyTablesClient.Instance.SelectFiltered<Highscore>(tq, x =>
-        //{
-        //    if (x.Status == CallBackResult.Success)
-        //    {
-        //        foreach (var item in x.Result.results)
-        //        {
-        //            if (Globals.DebugFlag) Debug.Log(string.Format("ID is {0},score is {1},name is {2}", item.id, item.score, item.playername));
-        //        }
-        //        if (includeTotalCount)
-        //        {
-        //            StatusText.text = string.Format("Brought {0} rows out of {1}", x.Result.results.Count(), x.Result.count);
-        //        }
-        //        else
-        //        {
-        //            StatusText.text = string.Format("Brought {0} rows", x.Result.results.Count());
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ShowError(x.Exception.Message);
-        //    }
-        //});
-        //StatusText.text = "Loading...";
-    }
-
-
-
+   
     public void SelectByID()
     {
-        //EasyTablesClient.Instance.SelectByID<Highscore>("ecca86cb-8e35-47ac-8eef-74dc2ef87faa", x =>
-        //{
-        //    if (x.Status == CallBackResult.Success)
-        //    {
-        //        Highscore hs = x.Result;
-        //        if (Globals.DebugFlag) Debug.Log(hs.score);
-        //        StatusText.text = "score of selected Highscore entry is " + hs.score;
-        //    }
-        //    else
-        //    {
-        //        ShowError(x.Exception.Message);
-        //    }
-        //});
-        //StatusText.text = "Loading...";
+        ScoresAPIClient.Instance.GetUserDetails(ScoresAPIClient.Instance.userID, response =>
+        {
+            if (response.Status == CallBackResult.Success)
+            {
+                string result = "Create score completed";
+                if (Globals.DebugFlag)
+                {
+                    User u = response.Result;
+                    Debug.Log(u.maxScoreValue);
+                }
+                StatusText.text = result;
+            }
+            else
+            {
+                ShowError(response.Exception.Message);
+            }
+        });
+        StatusText.text = "Loading...";
     }
 
 }

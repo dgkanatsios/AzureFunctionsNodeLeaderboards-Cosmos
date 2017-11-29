@@ -24,10 +24,6 @@ namespace ScoresAPI
 
 
 
-        #region Public methods
-
-
-
         public void CreateScore(Score instance, Action<CallbackResponse<User>> oncreateScoreCompleted)
         {
             Utilities.ValidateForNull(instance, oncreateScoreCompleted);
@@ -35,10 +31,10 @@ namespace ScoresAPI
         }
 
 
-        public void SelectByID<T>(string id, Action<CallbackResponse<T>> onSelectByIDCompleted)
+        public void GetUserDetails(string _userID, Action<CallbackResponse<User>> callback)
         {
-            Utilities.ValidateForNull(id, onSelectByIDCompleted);
-            StartCoroutine(SelectByIDInternal<T>(id, onSelectByIDCompleted));
+            Utilities.ValidateForNull(_userID, callback);
+            StartCoroutine(GetUserDetailsInternal(_userID, callback));
         }
 
         public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
@@ -47,7 +43,6 @@ namespace ScoresAPI
             StartCoroutine(ListScoresForCurrentUserInternal(count, callback));
         }
 
-        #endregion
 
         private IEnumerator ListScoresForCurrentUserInternal(int count, Action<CallbackResponse<Score[]>> callback)
         {
@@ -118,14 +113,14 @@ namespace ScoresAPI
             }
         }
 
-        private IEnumerator SelectByIDInternal<T>(string id, Action<CallbackResponse<T>> onSelectByIDCompleted)
+        private IEnumerator GetUserDetailsInternal(string _userID, Action<CallbackResponse<User>> callback)
         {
             using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (GetScoresAPIURL() + "/" + WWW.EscapeURL(id), HttpMethod.Get.ToString(), null, userID, username))
+                (GetScoresAPIURL() + "/users/" + WWW.EscapeURL(_userID), HttpMethod.Get.ToString(), null, userID, username))
             {
                 yield return www.Send();
                 if (Globals.DebugFlag) Debug.Log(www.responseCode);
-                CallbackResponse<T> response = new CallbackResponse<T>();
+                CallbackResponse<User> response = new CallbackResponse<User>();
                 if (Utilities.IsWWWError(www))
                 {
                     if (Globals.DebugFlag) Debug.Log(www.error);
@@ -135,7 +130,7 @@ namespace ScoresAPI
                 {
                     try
                     {
-                        T data = JsonUtility.FromJson<T>(www.downloadHandler.text);
+                        User data = JsonUtility.FromJson<User>(www.downloadHandler.text);
                         response.Result = data;
                         response.Status = CallBackResult.Success;
                     }
@@ -145,7 +140,7 @@ namespace ScoresAPI
                         response.Exception = ex;
                     }
                 }
-                onSelectByIDCompleted(response);
+                callback(response);
             }
         }
 
