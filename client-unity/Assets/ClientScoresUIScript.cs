@@ -58,7 +58,7 @@ public class ClientScoresUIScript : MonoBehaviour
         {
             if (createResponse.Status == CallBackResult.Success)
             {
-                string result = "Create score completed";
+                string result = "List scores for current user completed";
                 if (Globals.DebugFlag)
                     foreach (var item in createResponse.Result)
                     {
@@ -75,17 +75,22 @@ public class ClientScoresUIScript : MonoBehaviour
     }
 
    
-    public void SelectByID()
+    public void GetUserDetails()
     {
         ScoresAPIClient.Instance.GetUserDetails(ScoresAPIClient.Instance.userID, response =>
         {
             if (response.Status == CallBackResult.Success)
             {
-                string result = "Create score completed";
+                string result = "Get user details completed";
                 if (Globals.DebugFlag)
                 {
                     User u = response.Result;
-                    Debug.Log(u.maxScoreValue);
+                    Debug.Log("Max score:" + u.maxScoreValue);
+                    Debug.Log("Total times played:" + u.totalTimesPlayed);
+                    foreach (var score in u.latestScores)
+                    {
+                        Debug.Log("score:" + score.value);
+                    }
                 }
                 StatusText.text = result;
             }
@@ -97,6 +102,7 @@ public class ClientScoresUIScript : MonoBehaviour
         StatusText.text = "Loading...";
     }
 
+  
 }
 
 
