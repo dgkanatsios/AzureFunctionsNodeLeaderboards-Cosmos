@@ -1,10 +1,10 @@
-# AzureFunctionsNodeScores-Cosmos
+# AzureFunctionsNodeLeaderboards-Cosmos
 
-Set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app is a RESTful API service that stores game scores and some user details. Azure Application Insights service is used to provide information and metrics regarding application performance.
+This project allows you to set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app is a RESTful API service that stores game leaderboards (scores) and exposes them via well-known HTTP methods. Azure Application Insights service is used to provide information and metrics regarding application performance.
 
 ## Deployment
 
-Click the button below to deploy it in your Azure subscription.
+Click the button below to deploy the project in your Azure subscription.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 

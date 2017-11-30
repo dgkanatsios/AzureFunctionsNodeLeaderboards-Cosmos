@@ -1,6 +1,6 @@
-# AzureFunctionsNodeScores-Cosmos - Technical details
+# AzureFunctionsNodeLeaderboards-Cosmos - Technical details
 
-Details of all the operations supported in the scoresFunctionApp Azure Function.
+Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function.
 
 ## POST https://**functionURL**/api/scores 
 #### Description

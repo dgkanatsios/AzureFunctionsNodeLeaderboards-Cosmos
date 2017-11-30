@@ -1,6 +1,6 @@
-# AzureFunctionsNodeScores-Cosmos - Frequently Asked Questions
+# AzureFunctionsNodeLeaderboards-Cosmos - Frequently Asked Questions
 
-#### How to extend the score or the user object?
+#### How to extend the Score or the User object?
 Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences. Added fields/properties will 'automagically' be persisted in the database.
 
 #### Do you accept PRs? I found a bug/I want to request a new feature
