@@ -61,4 +61,4 @@ Here you can see a short list of all the operations that are supported, check [h
 Check [here](README.faq.md) for answers to common questions you may have.
 
 ## Docker
-You might notice that there is a Dockerfile inside the Azure Functions code. Check the [README.technicalDetails.md] file for instructions on how to build and run the projet on a Docker container.
+You might notice that there is a Dockerfile inside the Azure Functions code. Check the [README.technicalDetails.md](README.technicalDetails.md) file for instructions on how to build and run the projet on a Docker container.
