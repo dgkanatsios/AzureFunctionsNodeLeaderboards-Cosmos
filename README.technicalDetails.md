@@ -1,8 +1,10 @@
 # AzureFunctionsNodeLeaderboards-Cosmos - Technical details
 
+## Leaderboards API supported REST HTTP methods/operations
+
 Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function.
 
-## POST https://**functionURL**/api/scores 
+### POST https://**functionURL**/api/scores 
 #### Description
 Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played. The return value contains the entire user object as well as the latest user's scores. 
 #### Post body
@@ -12,7 +14,7 @@ Creates a new score. Returns the updated user's details, including top score, la
 //50 is the integer value of the score
 { "value":50, "createdAt":"2017-11-25T14:48:00", "description":"test description" }
 ```
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 {
     "_id": "1234",
@@ -43,10 +45,10 @@ const latestScores = userDetails.latestScores; //reference to the latest scores 
 const scoreDetails = latestScores[latestScores.length - 1];//reference to the last inserted score, which is the one we created
 ```
 
-## GET https://**functionURL**/api/users/:userId 
+### GET https://**functionURL**/api/users/:userId 
 #### Description
 Gets a specific user's details, including top score, latest scores and number of times played.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 {
     "username": "dimitris",
@@ -73,10 +75,10 @@ Gets a specific user's details, including top score, latest scores and number of
 }
 ``` 
 
-## GET https://**functionURL**/api/user/scores/:count 
+### GET https://**functionURL**/api/user/scores/:count 
 #### Description
 Gets the top 'count' scores for logged in user sorted by score value.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 [
     {
@@ -106,10 +108,10 @@ Gets the top 'count' scores for logged in user sorted by score value.
 ]
 ``` 
 
-## GET https://**functionURL**/api/scores/top/:count 
+### GET https://**functionURL**/api/scores/top/:count 
 #### Description
 Gets the top 'count' scores for all users for all time.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 [
     {
@@ -163,10 +165,10 @@ Gets the top 'count' scores for all users for all time.
 ]
 ``` 
 
-## GET https://**functionURL**/api/scores/today/top/:count 
+### GET https://**functionURL**/api/scores/today/top/:count 
 #### Description
 Gets the top 'count' scores for all users for today only.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 [
     {
@@ -220,10 +222,10 @@ Gets the top 'count' scores for all users for today only.
 ]
 ``` 
 
-## GET https://**functionURL**/api/users/toptotaltimesplayed/:count 
+### GET https://**functionURL**/api/users/toptotaltimesplayed/:count 
 #### Description
 Gets the top users for all time in regards to the times they have played (i.e. number of times they have posted a new score).
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 [
     {
@@ -301,10 +303,10 @@ Gets the top users for all time in regards to the times they have played (i.e. n
 ]
 ```
 
-## GET https://**functionURL**/api/scores/latest/:count 
+### GET https://**functionURL**/api/scores/latest/:count 
 #### Description
 Gets the latest 'count' scores.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 [
     {
@@ -382,10 +384,10 @@ Gets the latest 'count' scores.
 ]
 ``` 
 
-## GET https://**functionURL**/api/scores/:scoreId 
+### GET https://**functionURL**/api/scores/:scoreId 
 #### Description
 Gets the specific details of a score document.
-#### Sample return value
+#### Sample HTTP response
 ```javascript
 {
     "_id": "5a1c11ddfe8c7c03c808c8d8",
@@ -396,3 +398,38 @@ Gets the specific details of a score document.
     "createdAt": "2017-11-26T14:48:00.000Z"
 }
 ``` 
+
+## Unity client
+
+On the folder `client-unity` you can find a Unity client (built with Unity 5.6) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
+
+### First call
+As described on the [FAQ](README.faq.md), the first call to the Azure Function will take some time, be patient.
+
+### API calls
+The API follows a callback scheme, check for example the following code to list top scores for all users:
+
+```csharp
+public void ListTopScoresForAllUsers()
+    {
+        //get the top 10 scores for all users
+        LeaderboardsSDKClient.Instance.ListTopScoresForAllUsers(10, response =>
+        {
+            if (response.Status == CallBackResult.Success)
+            {
+                string result = "List top scores for all users completed";
+                if (Globals.DebugFlag)
+                    foreach (var item in response.Result)
+                    {
+                        Debug.Log(string.Format("username is {0},value is {1}", item.username, item.value));
+                    }
+                StatusText.text = result;
+            }
+            else
+            {
+                ShowError(response.Exception.Message);
+            }
+        });
+        StatusText.text = "Loading...";
+    }
+```

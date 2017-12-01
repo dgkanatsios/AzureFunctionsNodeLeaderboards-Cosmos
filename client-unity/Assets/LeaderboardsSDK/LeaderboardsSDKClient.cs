@@ -3,12 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
-    public class ScoresAPIClient : MonoBehaviour
+    public class LeaderboardsSDKClient : MonoBehaviour
     {
         public string Url;
-        public static ScoresAPIClient Instance;
+        public static LeaderboardsSDKClient Instance;
 
         [HideInInspector]
         public string userID;
@@ -23,31 +23,38 @@ namespace ScoresAPI
         }
 
 
-
+        //POST https://functionURL/api/scores
         public void CreateScore(Score instance, Action<CallbackResponse<User>> oncreateScoreCompleted)
         {
             Utilities.ValidateForNull(instance, oncreateScoreCompleted);
             StartCoroutine(CreateScoreInternal(instance, oncreateScoreCompleted));
         }
 
-
+        //GET https://functionURL/api/users/:userId
         public void GetUserDetails(string _userID, Action<CallbackResponse<User>> callback)
         {
             Utilities.ValidateForNull(_userID, callback);
             StartCoroutine(GetUserDetailsInternal(_userID, callback));
         }
-
+        
+        //GET https://functionURL/api/user/scores/:count
         public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(ListScoresForCurrentUserInternal(count, callback));
+            StartCoroutine(ListScores(GetScoresAPIURL() + "/user/scores/" + count, callback));
         }
 
+        //GET https://functionURL/api/scores/top/:count
+        public void ListTopScoresForAllUsers(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(ListScores(GetScoresAPIURL() + "/scores/top/" + count, callback));
+        }
 
-        private IEnumerator ListScoresForCurrentUserInternal(int count, Action<CallbackResponse<Score[]>> callback)
+        private IEnumerator ListScores(string url, Action<CallbackResponse<Score[]>> callback)
         {
             using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (GetScoresAPIURL() + "/user/scores/" + count, HttpMethod.Get.ToString(), null, userID, username))
+                (url, HttpMethod.Get.ToString(), null, userID, username))
             {
                 yield return www.Send();
                 if (Globals.DebugFlag) Debug.Log(www.responseCode);

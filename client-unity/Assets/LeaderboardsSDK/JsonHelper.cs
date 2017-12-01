@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
     
     //http://forum.unity3d.com/threads/how-to-load-an-array-with-jsonutility.375735/#post-2585129

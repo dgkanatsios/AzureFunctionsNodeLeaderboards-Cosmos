@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
     [Serializable()]
     public class User

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
 
     [Serializable()]
@@ -12,5 +12,6 @@ namespace ScoresAPI
         public string _id;
         public int value;
         public string description;
+        public string username;
     }
 }

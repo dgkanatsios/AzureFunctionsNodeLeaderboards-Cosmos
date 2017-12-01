@@ -14,7 +14,7 @@ using Windows.Security.Cryptography;
 using System.Runtime.InteropServices.WindowsRuntime;
 #endif
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
     public static class Utilities
     {

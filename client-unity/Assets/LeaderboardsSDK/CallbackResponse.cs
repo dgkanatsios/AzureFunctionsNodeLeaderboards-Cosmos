@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ScoresAPI
+namespace LeaderboardsSDK
 {
     /// <summary>
     /// Holds the response status and possible (hope not!) exception instance
