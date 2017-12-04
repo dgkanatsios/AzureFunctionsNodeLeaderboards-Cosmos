@@ -27,8 +27,8 @@ Details of all the operations supported in the `leaderboardsFunctionApp` Azure F
 
 ### Index of operations
 
-- [POST https://**functionURL**/api/scores](#post-httpsfunctionURLapiscores)
-- [GET https://**functionURL**/api/users/:userId](#get-httpsfunctionURLapiusersuserId)
+- [POST https://functionURL/api/scores](#post-httpsfunctionURLapiscores)
+- [GET https://functionURL/api/users/:userId](#get-httpsfunctionURLapiusersuserId)
 - [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionURLapiusercorescount)
 - [GET https://functionURL/api/scores/top/:count](#get-httpsfunctionURLapiscorestopcount)
 - [GET https://functionURL/api/users/maxscore/:count](#get-httpsfunctionURLapiusersmaxscorecount)
@@ -36,9 +36,9 @@ Details of all the operations supported in the `leaderboardsFunctionApp` Azure F
 - [GET https://functionURL/api/users/toptotaltimesplayed/:count](#get-httpsfunctionURLapiuserstoptotaltimesplayedcount)
 - [GET https://functionURL/api/scores/latest/:count](#get-httpsfunctionURLapiscoreslatestcount)
 - [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionURLapiscoresscoreId)
-- [GET https://**functionURL**/api/health](#get-httpsfunctionURLapihealth )
+- [GET https://functionURL/api/health](#get-httpsfunctionURLapihealth )
 
-### POST https://**functionURL**/api/scores 
+### POST https://functionURL/api/scores 
 #### Description
 Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played. The return value contains the entire user object as well as the latest user's scores. 
 #### Post body
@@ -79,7 +79,7 @@ const latestScores = userDetails.latestScores; //reference to the latest scores 
 const scoreDetails = latestScores[latestScores.length - 1];//reference to the last inserted score, which is the one we created
 ```
 
-### GET https://**functionURL**/api/users/:userId 
+### GET https://functionURL/api/users/:userId 
 #### Description
 Gets a specific user's details, including top score, latest scores and number of times played.
 #### Sample HTTP response
@@ -109,7 +109,7 @@ Gets a specific user's details, including top score, latest scores and number of
 }
 ``` 
 
-### GET https://**functionURL**/api/user/scores/:count 
+### GET https://functionURL/api/user/scores/:count 
 #### Description
 Gets the top 'count' scores for logged in user sorted by score value.
 #### Sample HTTP response
@@ -142,7 +142,7 @@ Gets the top 'count' scores for logged in user sorted by score value.
 ]
 ``` 
 
-### GET https://**functionURL**/api/scores/top/:count 
+### GET https://functionURL/api/scores/top/:count 
 #### Description
 Gets top scores achieved in the game by all users, in descending order. This can include more than one score per user.
 #### Sample HTTP response
@@ -199,7 +199,7 @@ Gets top scores achieved in the game by all users, in descending order. This can
 ]
 ``` 
 
-### GET https://**functionURL**/api/users/maxscore/:count
+### GET https://functionURL/api/users/maxscore/:count
 #### Description
 Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order.
 #### Sample HTTP response
@@ -232,7 +232,7 @@ Gets all the max scores achieved in the game by all users, in descending order. 
 ]
 ``` 
 
-### GET https://**functionURL**/api/scores/today/top/:count 
+### GET https://functionURL/api/scores/today/top/:count 
 #### Description
 Gets the top 'count' scores for all users for today only.
 #### Sample HTTP response
@@ -289,7 +289,7 @@ Gets the top 'count' scores for all users for today only.
 ]
 ``` 
 
-### GET https://**functionURL**/api/users/toptotaltimesplayed/:count 
+### GET https://functionURL/api/users/toptotaltimesplayed/:count 
 #### Description
 Gets the top users for all time in regards to the times they have played (i.e. number of times they have posted a new score).
 #### Sample HTTP response
@@ -370,7 +370,7 @@ Gets the top users for all time in regards to the times they have played (i.e. n
 ]
 ```
 
-### GET https://**functionURL**/api/scores/latest/:count 
+### GET https://functionURL/api/scores/latest/:count 
 #### Description
 Gets the latest 'count' scores.
 #### Sample HTTP response
@@ -451,7 +451,7 @@ Gets the latest 'count' scores.
 ]
 ``` 
 
-### GET https://**functionURL**/api/scores/:scoreId 
+### GET https://functionURL/api/scores/:scoreId 
 #### Description
 Gets the specific details of a score document.
 #### Sample HTTP response
@@ -466,7 +466,7 @@ Gets the specific details of a score document.
 }
 ``` 
 
-### GET https://**functionURL**/api/health 
+### GET https://functionURL/api/health 
 #### Description
 Gets the status of application's health.
 #### Sample HTTP response
