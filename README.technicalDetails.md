@@ -28,14 +28,14 @@ Details of all the operations supported in the `leaderboardsFunctionApp` Azure F
 ### Index of operations
 
 - [POST https://functionURL/api/scores](#post-httpsfunctionurlapiscores)
-- [GET https://functionURL/api/users/:userId](#get-httpsfunctionurlapiusersuserId)
+- [GET https://functionURL/api/users/:userId](#get-httpsfunctionurlapiusersuserid)
 - [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionurlapiusercorescount)
 - [GET https://functionURL/api/scores/top/:count](#get-httpsfunctionurlapiscorestopcount)
 - [GET https://functionURL/api/users/maxscore/:count](#get-httpsfunctionurlapiusersmaxscorecount)
 - [GET https://functionURL/api/scores/today/top/:count](#get-httpsfunctionurlapiscorestodaytopcount)
 - [GET https://functionURL/api/users/toptotaltimesplayed/:count](#get-httpsfunctionurlapiuserstoptotaltimesplayedcount)
 - [GET https://functionURL/api/scores/latest/:count](#get-httpsfunctionurlapiscoreslatestcount)
-- [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionurlapiscoresscoreId)
+- [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionurlapiscoresscoreid)
 - [GET https://functionURL/api/health](#get-httpsfunctionurlapihealth )
 
 ### POST https://functionURL/api/scores 
