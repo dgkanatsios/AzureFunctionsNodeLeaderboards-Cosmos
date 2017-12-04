@@ -11,7 +11,7 @@ Click the button below to deploy the project in your Azure subscription.
 The script will take some time to execute (due to resources creation and npm install execution), please be patient.
 Be aware that AppService name, storage account name and database name must all be globally unique. If not, the script will fail to execute. 
 
-## Architecture
+## High level architecture
 
 The leaderboards API that's created is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our project is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction). Moreover, [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview) service is used to track the application's performance.
 

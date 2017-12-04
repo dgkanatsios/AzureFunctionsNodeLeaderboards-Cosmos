@@ -25,6 +25,19 @@ User schema contains:
 
 Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function. Wherever you see `:count` in the following API calls, this means an integer between 1 and `config.maxCountOfScoresToReturn` (for Score objects) or between 1 and `config.maxCountOfUsersToReturn` (for User objects).
 
+### Index of operations
+
+- [POST https://**functionURL**/api/scores](#post-httpsfunctionURLapiscores)
+- [GET https://**functionURL**/api/users/:userId](#get-httpsfunctionURLapiusersuserId)
+- [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionURLapiusercorescount)
+- [GET https://functionURL/api/scores/top/:count](#get-httpsfunctionURLapiscorestopcount)
+- [GET https://functionURL/api/users/maxscore/:count](#get-httpsfunctionURLapiusersmaxscorecount)
+- [GET https://functionURL/api/scores/today/top/:count](#get-httpsfunctionURLapiscorestodaytopcount)
+- [GET https://functionURL/api/users/toptotaltimesplayed/:count](#get-httpsfunctionURLapiuserstoptotaltimesplayedcount)
+- [GET https://functionURL/api/scores/latest/:count](#get-httpsfunctionURLapiscoreslatestcount)
+- [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionURLapiscoresscoreId)
+- [GET https://**functionURL**/api/health](#get-httpsfunctionURLapihealth )
+
 ### POST https://**functionURL**/api/scores 
 #### Description
 Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played. The return value contains the entire user object as well as the latest user's scores. 
