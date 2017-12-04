@@ -399,6 +399,21 @@ Gets the specific details of a score document.
 }
 ``` 
 
+### GET https://**functionURL**/api/health 
+#### Description
+Gets the status of application's health.
+#### Sample HTTP response
+```javascript
+{
+    "_id": "5a1c11ddfe8c7c03c808c8d8",
+    "value": 65,
+    "description": "test description",
+    "userId": "1234",
+    "username": "dimitris",
+    "createdAt": "2017-11-26T14:48:00.000Z"
+}
+``` 
+
 ## Docker 
 
 You can use that to build the scores API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).

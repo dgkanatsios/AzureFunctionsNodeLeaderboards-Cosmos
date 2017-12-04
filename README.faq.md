@@ -47,6 +47,6 @@ You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a
 Originally I was using [expressjs/compression](https://github.com/expressjs/compression) middleware. However, I encountered some instability during local development, not sure why (maybe it doesn't work so well with Azure Functions runtime?). Give it a shot and let me know if it works for you!
 
 #### I want to extend the API and add more operations. How can I do that?
-1. Add the desired route on the api/routes/scoresRoutes.js
-2. The route you just added should correspond to a method in api/controllers/scoresController.js
+1. Add the desired route on the api/routes/leaderboardsRoutes.js
+2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
 3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js

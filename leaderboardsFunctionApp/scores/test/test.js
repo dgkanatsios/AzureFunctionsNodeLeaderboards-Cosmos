@@ -14,7 +14,6 @@ utilities.DEBUG_GLOBAL = true;
 
 describe('Tests for the scores API: ', function () {
 
-
     it("inserts a score of value 499 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
             .set('x-ms-client-principal-id', 'testUserId')
@@ -190,6 +189,18 @@ describe('Tests for the scores API: ', function () {
             });
     });
 
+    it("checks the health of the DB connection", function (done) {
+        chai.request(server).get("/api/health")
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('string');
+                done();
+            });
+    });
+
     it('deletes the gamedata collection', function (done) {
         mongoose.connection.db.dropCollection('gamedata', function (err) {
             if (err) {
@@ -199,5 +210,7 @@ describe('Tests for the scores API: ', function () {
             }
         });
     });
+
+
 
 });

@@ -56,6 +56,7 @@ Here you can see a short list of all the operations that are supported, check [h
 | GET | listLatestScores | https://**functionURL**/api/scores/latest/:count | Gets the latest 'count' scores |
 | GET | getUser | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores | 
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
+| GET | checkDBhealth | https://**functionURL**/api/health | Gets the application's health |
 
 ## FAQ 
 Check [here](README.faq.md) for answers to common questions you may have.

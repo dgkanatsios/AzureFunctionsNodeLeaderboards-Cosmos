@@ -90,7 +90,7 @@ function createScore(req, res) {
 
     //validate score
     const scoreValue = utilities.getInteger(req.body.value);
-    if (isNaN(scoreValue) || scoreValue < 0){
+    if (isNaN(scoreValue) || scoreValue < 0) {
         controllerHelpers.respond('score value must be an integer', '', res, 400);
     }
 
@@ -168,6 +168,18 @@ function saveScore(user, req, res) {
     });
 }
 
+//https://**functionURL**/api/health
+function checkDBhealth(req, res) {
+    utilities.mongoConnect(mongoose)
+        .then(
+            () => {
+                controllerHelpers.respond(null, "Everything OK", res);
+            },
+            err => {
+                controllerHelpers.respond('Error' + err, null, res, 500);
+            }
+        )
+}
 
 
 module.exports = {
@@ -178,5 +190,6 @@ module.exports = {
     listLatestScores,
     createScore,
     getScore,
-    getUser
+    getUser,
+    checkDBhealth
 }
