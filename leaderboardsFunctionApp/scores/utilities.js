@@ -2,7 +2,7 @@ const config = require('./config');
 
 function log(msg, req) {
 
-    if (config.DEBUG_GLOBAL === 'false') return;
+    if (config.DEBUG_LOCAL === false) return;
 
     if (req && req.context)
         req.context.log(msg);

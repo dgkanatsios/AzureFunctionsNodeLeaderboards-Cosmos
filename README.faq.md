@@ -50,3 +50,6 @@ Originally I was using [expressjs/compression](https://github.com/expressjs/comp
 1. Add the desired route on the api/routes/leaderboardsRoutes.js
 2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
 3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
+
+#### Which region should I deploy my project to?
+Microsoft Azure operates in many datacenters around the globe, you can check them [here](https://azure.microsoft.com/en-us/regions/). If you want to see the latency between them and your location, you can use various online tools such as [azurespeed.com](http://www.azurespeed.com/) or [azurespedtest.azurewebsites.net](http://azurespeedtest.azurewebsites.net/).

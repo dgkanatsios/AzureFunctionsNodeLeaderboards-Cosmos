@@ -1,8 +1,29 @@
 # AzureFunctionsNodeLeaderboards-Cosmos - Technical details
 
+## Database architecture
+
+You can easily get acquainted with the database architecture by checking the User and Score Mongoose models on `scores/api/models` folder. We're using Mongoose discriminators to save everything on a single CosmosDB collection. That's why you'll aso find a base model schema, that refers to a single collection called `gamedata`.
+
+### Score schema
+
+Score schema contains:
+- the actual score value
+- the userId and username of the user that achieved the score
+- createdAt timestamp
+- an optional description
+
+### User schema
+
+User schema contains:
+- userId (saved in _id) and username of the user
+- createdAt timestamp
+- user's max score
+- an integer that holds the number of times user has played (i.e. number of times that user has POSTed a score)
+- and an array that holds user's latest scores (array length is equal to `latestScoresPerUserToKeep`)
+
 ## Leaderboards API supported REST HTTP methods/operations
 
-Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function.
+Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function. Wherever you see `:count` in the following API calls, this means an integer between 1 and `config.maxCountOfScoresToReturn` (for Score objects) or between 1 and `config.maxCountOfUsersToReturn` (for User objects).
 
 ### POST https://**functionURL**/api/scores 
 #### Description
@@ -110,7 +131,7 @@ Gets the top 'count' scores for logged in user sorted by score value.
 
 ### GET https://**functionURL**/api/scores/top/:count 
 #### Description
-Gets the top 'count' scores for all users for all time.
+Gets top scores achieved in the game by all users, in descending order. This can include more than one score per user.
 #### Sample HTTP response
 ```javascript
 [
@@ -157,6 +178,39 @@ Gets the top 'count' scores for all users for all time.
     {
         "_id": "5a1c1174fe8c7c03c808c8d0",
         "value": 12,
+        "description": "test description",
+        "userId": "5678",
+        "username": "nick",
+        "createdAt": "2017-11-26T14:48:00.000Z"
+    }
+]
+``` 
+
+### GET https://**functionURL**/api/users/maxscore/:count
+#### Description
+Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order.
+#### Sample HTTP response
+```javascript
+[
+    {
+        "_id": "5a1c1184fe8c7c03c808c8d4",
+        "value": 66,
+        "description": "test description",
+        "userId": "1234",
+        "username": "dimitris",
+        "createdAt": "2017-11-26T14:48:00.000Z"
+    },
+    {
+        "_id": "5a1c1152fe8c7c03c808c8ca",
+        "value": 51,
+        "description": "test description",
+        "userId": "5412",
+        "username": "john",
+        "createdAt": "2017-11-26T14:48:00.000Z"
+    },
+    {
+        "_id": "5a1c116dfe8c7c03c808c8ce",
+        "value": 43,
         "description": "test description",
         "userId": "5678",
         "username": "nick",
@@ -414,9 +468,9 @@ Gets the status of application's health.
 }
 ``` 
 
-## Docker 
+## Using a Docker container
 
-You can use that to build the scores API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).
+You can use the included Dockerfile on the `scores` folder to build the leaderboards API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
 

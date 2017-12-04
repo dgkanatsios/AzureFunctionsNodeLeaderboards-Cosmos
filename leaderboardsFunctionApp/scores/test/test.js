@@ -5,14 +5,23 @@ const server = require('../index');
 const should = chai.should();
 const expect = chai.expect;
 const mongoose = require('mongoose');
-const utilities = require('../utilities');
 const config = require('../config');
 
 chai.use(require('chai-http'));
 
-utilities.DEBUG_GLOBAL = true;
+describe('Tests for the leaderboards API: ', function () {
 
-describe('Tests for the scores API: ', function () {
+    it("checks the health of the DB connection", function (done) {
+        chai.request(server).get("/api/health")
+            .set('x-ms-client-principal-id', 'testUserId')
+            .set('x-ms-client-principal-name', 'testUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('string');
+                done();
+            });
+    });
 
     it("inserts a score of value 499 into the database for userID 'testUserId'", function (done) {
         chai.request(server).post("/api/scores")
@@ -61,7 +70,7 @@ describe('Tests for the scores API: ', function () {
     });
 
     it('checks for an uknown user', function (done) {
-        chai.request(server).get("/api/users/WrongUserId")
+        chai.request(server).get("/api/users/WRONG_USER_ID")
             .set('x-ms-client-principal-id', 'testUserId')
             .set('x-ms-client-principal-name', 'testUsername')
             .end(function (err, res) {
@@ -140,8 +149,37 @@ describe('Tests for the scores API: ', function () {
             });
     });
 
+
+    it("checks the result for a wront :count value", function (done) {
+        chai.request(server).get("/api/user/scores/TEN")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                err.should.not.be.null;
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+    it('lists max scores achieved in the game by all users, in descending order', function (done) {
+        chai.request(server).get("/api/users/maxscore/10")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('Array');
+                res.body.should.have.lengthOf(2);
+                res.body[0].maxScoreValue.should.equal(500);
+                res.body[1].maxScoreValue.should.equal(50);
+                res.body[0].username.should.equal('testUsername');
+                res.body[1].username.should.equal('anotherUsername');
+                done();
+            });
+    });
+
     let justAscoreId;
-    it('checks the top scores of all time', function (done) {
+    it('list top scores achieved in the game by all users, in descending order', function (done) {
         chai.request(server).get("/api/scores/top/10")
             .set('x-ms-client-principal-id', 'anotherUserId')
             .set('x-ms-client-principal-name', 'anotherUsername')
@@ -189,17 +227,6 @@ describe('Tests for the scores API: ', function () {
             });
     });
 
-    it("checks the health of the DB connection", function (done) {
-        chai.request(server).get("/api/health")
-            .set('x-ms-client-principal-id', 'testUserId')
-            .set('x-ms-client-principal-name', 'testUsername')
-            .end(function (err, res) {
-                expect(err).to.be.null;
-                res.should.have.status(200);
-                res.body.should.be.a('string');
-                done();
-            });
-    });
 
     it('deletes the gamedata collection', function (done) {
         mongoose.connection.db.dropCollection('gamedata', function (err) {

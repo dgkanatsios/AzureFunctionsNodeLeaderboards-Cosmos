@@ -11,6 +11,9 @@ module.exports = function (app) {
   app.route('/api/scores/top/today/:count')
     .get(leaderboardsAPI.listTodayTopScores);
 
+  app.route('/api/users/maxscore/:count')
+    .get(leaderboardsAPI.listTopScorePerUser);
+
   app.route('/api/scores/latest/:count')
     .get(leaderboardsAPI.listLatestScores);
 

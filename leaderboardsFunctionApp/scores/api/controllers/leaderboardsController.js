@@ -47,10 +47,18 @@ function listScoresForCurrentUser(req, res) {
 };
 
 //https://**functionURL**/api/scores/top/:count
-//top scores for all users for all time, descending
+//top scores achieved in the game by all users, in descending order. This can include more than one top score per user
 function listTopScores(req, res) {
     utilities.log("listTopScores", req);
     controllerHelpers.listScores(req, res, '-value');
+};
+
+//https://**functionURL**/api/users/maxscore/:count
+//lists all the max scores achieved in the game by all users, in descending order.
+//practically this includes the max score per user in descending order
+function listTopScorePerUser(req, res) {
+    utilities.log("listTopScorePerUser", req);
+    controllerHelpers.listUsers(req, res, '-maxScoreValue');
 };
 
 //https://**functionURL**/api/scores/latest/:count
@@ -181,12 +189,12 @@ function checkDBhealth(req, res) {
         )
 }
 
-
 module.exports = {
     listTopScores,
     listTodayTopScores,
     listScoresForCurrentUser,
     listTopUsersTotalTimesPlayed,
+    listTopScorePerUser,
     listLatestScores,
     createScore,
     getScore,
