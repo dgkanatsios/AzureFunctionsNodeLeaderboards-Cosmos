@@ -146,8 +146,8 @@ function userRankAmong(req, res) {
         controllerHelpers.respond(err, null, res, 400);
     } else {
         let user, nextPlayerResult;
-        User.findById(req.params.userId, config.userProjection) //find the current player
-            .then(_user => { //find the ones better than the current
+        User.findById(req.params.userId, config.userProjection) //find the requested player
+            .then(_user => { //find the ones better than the requested
                 user = _user;
                 return User.find({
                     _id: {
@@ -157,13 +157,14 @@ function userRankAmong(req, res) {
                         $gte: user.maxScoreValue
                     }
                 }).sort({
-                    maxScoreValue: -1,
+                    maxScoreValue: 1,
                     username: 1
                 }).limit(count);
             })
             .then(_nextPlayerResult => {
-                nextPlayerResult = _nextPlayerResult;
-                return User.find({ //find the ones worse than the current
+                //sort in descending value
+                nextPlayerResult = _nextPlayerResult.sort((a, b) => b.maxScoreValue - a.maxScoreValue);
+                return User.find({ //find the ones worse than the requested
                     _id: {
                         $ne: user._id
                     },
