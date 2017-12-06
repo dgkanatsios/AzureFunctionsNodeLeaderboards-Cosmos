@@ -29,12 +29,12 @@ function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount,
 function respond(error, data, res, httpStatus) {
     if (error) {
         httpStatus = httpStatus || 500;
-        res.status(httpStatus).send(error.message || JSON.stringify(error));
+        res.status(httpStatus).json({error});
     } else {
         if (data)
             res.json(data);
         else
-            res.status(400).send('No data found related to your GET/POST data');
+            res.status(400).json({error:'No data found for your GET/POST arguments'});
     }
 }
 

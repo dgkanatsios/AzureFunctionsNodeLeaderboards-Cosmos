@@ -32,4 +32,7 @@ module.exports = function (app) {
   app.route('/api/health')
     .get(leaderboardsAPI.checkDBhealth);
 
+  app.route('/api/users/rankamong/:userId/:count')
+    .get(leaderboardsAPI.userRankAmong);
+
 };

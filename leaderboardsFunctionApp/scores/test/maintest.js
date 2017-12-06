@@ -9,8 +9,7 @@ const config = require('../config');
 
 chai.use(require('chai-http'));
 
-describe('Tests for the leaderboards API: ', function () {
-
+describe('Main tests for the leaderboards API: ', function () {
     it("checks the health of the DB connection", function (done) {
         chai.request(server).get("/api/health")
             .set('x-ms-client-principal-id', 'testUserId')

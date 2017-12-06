@@ -134,6 +134,65 @@ function createScore(req, res) {
 
 };
 
+
+//https://**functionURL**/api/users/rankamong/:userId/:count
+function userRankAmong(req, res) {
+    //based on the implementation suggested here
+    //https://stackoverflow.com/questions/9992750/rank-leaderboard-in-mongo-with-surrounding-players
+    utilities.log("userRankAmong");
+    const count = utilities.getInteger(req.params.count);
+    if (isNaN(count) || count < 1 || count > config.maxCountOfUsersToReturn) {
+        const err = `count must be between 1 and ${config.maxCountOfUsersToReturn}`;
+        controllerHelpers.respond(err, null, res, 400);
+    } else {
+        let user, nextPlayerResult;
+        User.findById(req.params.userId, config.userProjection) //find the current player
+            .then(_user => { //find the ones better than the current
+                user = _user;
+                return User.find({
+                    _id: {
+                        $ne: user._id
+                    },
+                    maxScoreValue: {
+                        $gte: user.maxScoreValue
+                    }
+                }).sort({
+                    maxScoreValue: -1,
+                    username: 1
+                }).limit(count);
+            })
+            .then(_nextPlayerResult => {
+                nextPlayerResult = _nextPlayerResult;
+                return User.find({ //find the ones worse than the current
+                    _id: {
+                        $ne: user._id
+                    },
+                    maxScoreValue: {
+                        $lte: user.maxScoreValue
+                    }
+                }).sort({
+                    maxScoreValue: -1,
+                    username: -1
+                }).limit(count)
+            })
+            .then(previousPlayerResult => {
+                //utilities.log(previousPlayerResult.length);
+                //utilities.log(nextPlayerResult.length);
+                //send the result
+                controllerHelpers.respond(null, [
+                    ...nextPlayerResult,
+                    user,
+                    ...previousPlayerResult
+                ], res);
+
+            }).catch(error => {
+                utilities.log(error);
+                controllerHelpers.respond(error.message || error, '', res);
+            });
+    }
+}
+
+//helper function to save the score in the database
 function saveScore(user, req, res) {
     const newScore = new Score({
         value: Number(req.body.value),
@@ -199,5 +258,6 @@ module.exports = {
     createScore,
     getScore,
     getUser,
+    userRankAmong,
     checkDBhealth
 }
