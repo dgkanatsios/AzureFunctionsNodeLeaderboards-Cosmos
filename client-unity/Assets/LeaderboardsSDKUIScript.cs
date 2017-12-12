@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class LeaderboardsSDKUIScript : MonoBehaviour
 {
-    public Text StatusText;
+    private Text statusText;
 
     public void Start()
     {
         Globals.DebugFlag = true;
 
-        //get the authentication token somehow...
+        statusText = GameObject.Find("StatusText").GetComponent<Text>();
+
+        //get the authentication token(s) somehow...
         //e.g. for facebook, check the Unity Facebook SDK at https://developers.facebook.com/docs/unity
         LeaderboardsSDKClient.Instance.userID = "12345";
         LeaderboardsSDKClient.Instance.username = "dimitris2";
@@ -20,12 +22,10 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
         //https://azure.microsoft.com/en-us/documentation/articles/app-service-authentication-overview/
     }
 
-    private void ShowError(string error)
+    public void ClearOutput()
     {
-        Debug.Log(error);
-        StatusText.text = "Error: " + error;
+        statusText.text = string.Empty;
     }
-
 
 
     public void CreateScore()
@@ -38,15 +38,14 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
             if (response.Status == CallBackResult.Success)
             {
                 string result = "Create score completed";
-                if (Globals.DebugFlag) Debug.Log(result);
-                StatusText.text = result;
+                if (Globals.DebugFlag) WriteLine(result.ToString());
             }
             else
             {
-                ShowError(response.Exception.Message);
+                WriteLine(response.Exception.Message);
             }
         });
-        StatusText.text = "Loading...";
+        WriteLine("Loading...");
     }
     public void GetUserDetails()
     {
@@ -58,21 +57,21 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
                 if (Globals.DebugFlag)
                 {
                     User u = response.Result;
-                    Debug.Log("Max score:" + u.maxScoreValue);
-                    Debug.Log("Total times played:" + u.totalTimesPlayed);
+                    WriteLine("Max score:" + u.maxScoreValue);
+                    WriteLine("Total times played:" + u.totalTimesPlayed);
                     foreach (var score in u.latestScores)
                     {
-                        Debug.Log("score:" + score.value);
+                        WriteLine("score:" + score.value);
                     }
                 }
-                StatusText.text = result;
+                WriteLine(result);
             }
             else
             {
-                ShowError(response.Exception.Message);
+                WriteLine(response.Exception.Message);
             }
         });
-        StatusText.text = "Loading...";
+        WriteLine("Loading...");
     }
 
 
@@ -86,23 +85,23 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
                 if (Globals.DebugFlag)
                     foreach (var item in response.Result)
                     {
-                        Debug.Log(string.Format("score ID is {0},value is {1}", item._id, item.value));
+                        WriteLine(string.Format("score ID is {0},value is {1}", item._id, item.value));
                     }
-                StatusText.text = result;
+                WriteLine(result);
             }
             else
             {
-                ShowError(response.Exception.Message);
+                WriteLine(response.Exception.Message);
             }
         });
-        StatusText.text = "Loading...";
+        WriteLine("Loading...");
     }
 
 
-    public void ListTopScoresForAllUsers()
+    public void ListTopScores()
     {
         //get the top 10 scores for all users
-        LeaderboardsSDKClient.Instance.ListTopScoresForAllUsers(10, response =>
+        LeaderboardsSDKClient.Instance.ListTopScores(10, response =>
         {
             if (response.Status == CallBackResult.Success)
             {
@@ -110,16 +109,24 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
                 if (Globals.DebugFlag)
                     foreach (var item in response.Result)
                     {
-                        Debug.Log(string.Format("username is {0},value is {1}", item.username, item.value));
+                        WriteLine(string.Format("username is {0},value is {1}", item.username, item.value));
                     }
-                StatusText.text = result;
+                WriteLine(result);
             }
             else
             {
-                ShowError(response.Exception.Message);
+                WriteLine(response.Exception.Message);
             }
         });
-        StatusText.text = "Loading...";
+        WriteLine("Loading...");
+    }
+
+    public void WriteLine(string s)
+    {
+        if (statusText.text.Length > 20000)
+            statusText.text = string.Empty + "-- TEXT OVERFLOW --";
+
+        statusText.text += s + "\r\n";
     }
 
 }

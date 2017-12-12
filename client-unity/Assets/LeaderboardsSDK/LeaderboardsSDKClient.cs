@@ -45,7 +45,7 @@ namespace LeaderboardsSDK
         }
 
         //GET https://functionURL/api/scores/top/:count
-        public void ListTopScoresForAllUsers(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListTopScores(int count, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
             StartCoroutine(ListScores(GetScoresAPIURL() + "/scores/top/" + count, callback));

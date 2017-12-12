@@ -143,7 +143,7 @@ Gets the top 'count' scores for logged in user sorted by score value.
 
 ### GET https://functionURL/api/scores/top/:count 
 #### Description
-Gets top scores achieved in the game by all users, in descending order. This can include more than one score per user.
+Gets top `count` scores achieved in the game by all users, in descending order. This can include more than one score per user.
 #### Sample HTTP response
 ```javascript
 [
