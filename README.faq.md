@@ -1,32 +1,71 @@
 # AzureFunctionsNodeLeaderboards-Cosmos - Frequently Asked Questions
 
+## Running and testing 
+
+#### How can I develop this project locally?
+After you fork/clone the project, you could run it locally with `node index.js` on the `scores` folder. You should include a `.env` file that sets necessary environment variables. Moreover, you can check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally and test the project within its context. After you install Azure Functions tools, simply run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`) and your function will start accepting requests. Don't forget to create a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables in the `leaderboardsFunctionApp` folder. Here is a sample file.
+
+```javascript
+{
+    "IsEncrypted": false,
+    "Values": {
+        "MONGODB_CONNECTION_STRING": "mongodb://nodecosmos:PASSWORD@nodecosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb",
+        "AZURE_FUNCTIONS_RUNTIME": "true",
+        "NODE_ENV": "development"
+    },
+    "Host": {
+        "LocalHttpPort": 7071,
+        "CORS": "*"
+    }
+}
+```
+
+#### What frameworks are you using for testing?
+We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt. The tests are executed on a test database (name is set on the `config.js` file). Also, do not forget to create a `.env` file on the `scores` directory and assign your environmental variables there. Check below for a sample `.env` file that is used for development and testing.
+
+```
+MONGODB_CONNECTION_STRING=mongodb://nodecosmos:PASSWORD@nodecosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+PORT=3000
+AZURE_FUNCTIONS_RUNTIME=false
+NODE_ENV=development
+```
+#### How can I see the data on my CosmosDB instance?
+[Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) is a  free and cross-platform tool that allows you to browse your Azure Storage accounts as well as your CosmosDB databases. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
+
+
+#### What can I use for authentication/authorization?
+If you want to protect your game leaderboards from unauthorized access, you should implement an appropriate mechanism. Azure App Service (a service which Azure Functions sits on) has an excellent implementation that you can use to protect your backend and it is documented [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). To use it in this Functions app, comment the appropriate lines in the `authhelper.js` file.
+
+#### Can I compress HTTP output?
+Originally I was using [expressjs/compression](https://github.com/expressjs/compression) middleware. However, I encountered some instability during local development, not sure why (maybe it doesn't work so well with Azure Functions runtime?). Give it a shot and let me know if it works for you! If you use a proxy, you may want to delegate the CPU-intensive process to your reverse proxy, same goes if you want to use a certificate for SSL connections (shameless plug: check [here](https://dgkanatsios.com/2017/07/07/using-ssl-for-a-service-hosted-on-a-kubernetes-cluster/) for another article of mine on how to easily configure SSL for a Kubernetes cluster).
+
+#### I want to extend the leaderboards API and add more operations. How can I do that?
+1. Add the desired route on the api/routes/leaderboardsRoutes.js
+2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
+3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
+
+## Extending the project
+
 #### How to extend the Score or the User object?
 Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences. Added fields/properties will 'automagically' be persisted in the database.
 
 #### Do you accept PRs? I found a bug/I want to request a new feature
 Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues).
 
+## Various
+
 #### The calls to the Azure Function are sometimes a bit slow. Why?
-There is an idle timeout for Azure Functions on Consumption Plan, check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#consumption-plan) for details. Moreover, on this so-called "cold start" there is a delay as node reads all module files. They are cached, though, so subsequent executions have much better performance. You can check [here](https://github.com/Azure/azure-functions-pack) for a way this can be improved (we haven't tested this approach with this project). You can also alter the default timeout by modifying the `functionTimeout` in `host.json`.
+There is an idle timeout for Azure Functions on Consumption Plan, check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#consumption-plan) for details. Moreover, on this so-called "cold start" there is a delay as node reads and loads all module files. They are cached, though, so subsequent executions have significantly better performance. You can check [here](https://github.com/Azure/azure-functions-pack) for a way this can be improved (even though this approach hasn't been tested with current project). You can also alter the default timeout by modifying the `functionTimeout` in `host.json`. It can be set to a maximum of 10 minutes, as per the code below.
 
-#### How can I develop this project locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). Don't forget to create a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables in the `leaderboardsFunctionApp` folder.
-
-#### What frameworks are you using for testing?
-We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt. The tests are executed on a test database (name is set on the `config.js` file). Also, do not forget to create a `.env` file on the `scores` directory and assign your environmental variables there. Check below for a sample `.env` file that I'm using for development.
-
-```
-MONGODB_CONNECTION_STRING=mongodb://nodecosmos:PASSWORD==@nodecosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
-PORT=3000
-AZURE_FUNCTIONS_RUNTIME=false
-NODE_ENV=development
+```javascript
+// Set functionTimeout to 10 minutes
+{
+    "functionTimeout": "00:10:00"
+}
 ```
 
 #### I saw you're using Mongoose discriminators. Why?
 To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
-
-#### How can I see the data on my CosmosDB instance?
-[Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) is a  free and cross-platform tool that allows you to browse your Azure Storage accounts as well as your CosmosDB databases. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
 
 #### How much does CosmosDB cost?
 You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/) in order to undestand CosmosDB pricing.
@@ -34,8 +73,6 @@ You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/
 #### Can I try CosmosDB for free?
 Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure, also check [here](https://azure.microsoft.com/en-us/free/).
 
-#### What can I use for authentication/authorization?
-If you want to protect your game leaderboards from unauthorized access, you should implement an appropriate mechanism. Azure App Service (a service which Azure Functions sits on) has an excellent implementation that you can use to protect your backend and it is documented [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). To use it in this Functions app, comment the appropriate lines in the `authhelper.js` file.
 
 #### What if I want to set up some rate limit for my API?
 Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules: [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter). If you want to use a fast and scalable backend for these modules or if you just want something to cache your data, we recommend the [Azure Redis Cache](https://docs.microsoft.com/en-us/azure/redis-cache/) service.
@@ -50,16 +87,11 @@ Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Belo
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
 
-#### All this is great, but I'd like something simpler for my Unity game, is there anything else?
-You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).
-
-#### Can I compress HTTP output?
-Originally I was using [expressjs/compression](https://github.com/expressjs/compression) middleware. However, I encountered some instability during local development, not sure why (maybe it doesn't work so well with Azure Functions runtime?). Give it a shot and let me know if it works for you! If you use a proxy, you may want to delegate the CPU-intensive process to your reverse proxy, same goes if you want to use a certificate for SSL connections (shameless plug: check [here](https://dgkanatsios.com/2017/07/07/using-ssl-for-a-service-hosted-on-a-kubernetes-cluster/) for another article of mine on how to easily configure SSL for a Kubernetes cluster).
-
-#### I want to extend the leaderboards API and add more operations. How can I do that?
-1. Add the desired route on the api/routes/leaderboardsRoutes.js
-2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
-3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
-
 #### Which Azure region should I deploy my project to?
 Microsoft Azure operates in many datacenters around the globe, you can check them [here](https://azure.microsoft.com/en-us/regions/). If you want to see the latency between them and your location, you can use various online tools such as [azurespeed.com](http://www.azurespeed.com/) or [azurespedtest.azurewebsites.net](http://azurespeedtest.azurewebsites.net/).
+
+#### Is there a Visio diagram for the project architecture?
+Check `architecture.vsdx` in the `various` folder.
+
+#### All this is great, but I'd like something simpler for my Unity game, is there anything else?
+You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).
