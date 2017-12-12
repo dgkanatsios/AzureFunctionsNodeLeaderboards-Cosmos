@@ -35,9 +35,9 @@ After you deploy the script, you will have an Azure Resource Group will the foll
 - A CosmosDB database that uses the MongoDB API
 - A Storage Account
 - An App Service Name that hosts the Azure Function
-- The Azure Function will pull the code from the GitHub repo you designate
+- The Azure Function that will pull the code from the GitHub repo you designate and an Application Insights service to monitor its execution
 
-Now you can call the available web service methods from your game. You can visit the Azure Portal to get the Azure Function URL, it will have the format https://**functionName**.azurewebsites.net
+Now you can call the available web service operations from your game. You can visit the Azure Portal to get the Azure Function URL, it will be in the format https://**functionName**.azurewebsites.net
 
 ## Authentication
 It is required that you set two headers on each request to the Function, their names are `x-ms-client-principal-id` and `x-ms-client-principal-name`. If values are missing, then you request will fail. The `x-ms-client-principal-id` should be unique for each user. That is, each time you use the same `x-ms-client-principal-id` for inserting a new score, this score will belong to the same user. The 'how' this values are filled is left to you as an implementation. App Service (the service on which Azure Functions is based on) supports various authentication methods, you can check them [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). It is worth mentioning that there is no applied authorization on the API calls. This means that all users can call all methods with any kind of parameters.
