@@ -8,8 +8,8 @@ Click the button below to deploy the project in your Azure subscription.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
 
-The script will take some time to execute (due to resources creation and npm install execution), please be patient.
-Be aware that AppService name, storage account name and database name must all be globally unique. If not, the script will fail to execute. 
+The deployment will take some time to execute (due to resources' creation and time to pull code from GitHub), please be patient.
+Be aware that App Service name, Storage account name and CosmosDB database name must all be globally unique. If this is not the case, the deployment will fail to complete and you will see an error message in the Azure portal.
 
 ## High level architecture
 
