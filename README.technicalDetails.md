@@ -45,7 +45,7 @@ Creates a new score. Returns the updated user's details, including top score, la
 ```javascript
 //createdAt is optional
 //description is optional
-//50 is the integer value of the score
+//50 is the integer value of the score and it is required
 { "value":50, "createdAt":"2017-11-25T14:48:00", "description":"test description" }
 ```
 #### Sample HTTP response
@@ -56,7 +56,6 @@ Creates a new score. Returns the updated user's details, including top score, la
     "__v": 0,
     "maxScoreValue": 12,
     "totalTimesPlayed": 2,
-    "__type": "Users",
     "latestScores": [
         {
             "score": "5a1915c40c6eba5c6c74616b",
@@ -478,7 +477,6 @@ Gets the surrounding users of the requested one, ordered by their max score. The
         "__v": 0,
         "maxScoreValue": 22,
         "totalTimesPlayed": 1,
-        "__type": "Users",
         "latestScores": [
             {
                 "score": "5a2fd067add45342f4209313",
@@ -494,7 +492,6 @@ Gets the surrounding users of the requested one, ordered by their max score. The
         "__v": 0,
         "maxScoreValue": 21,
         "totalTimesPlayed": 1,
-        "__type": "Users",
         "latestScores": [
             {
                 "score": "5a2fd067add45342f420932b",
