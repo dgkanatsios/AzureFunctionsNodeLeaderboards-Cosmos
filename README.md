@@ -1,6 +1,6 @@
 # AzureFunctionsNodeLeaderboards-Cosmos
 
-This project allows you to set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app is a RESTful API service that stores game leaderboards (scores) and exposes them via well-known HTTP methods. Azure Application Insights service is used to provide information and metrics regarding application performance. A Unity game engine client is also provided, with a minimal SDK to access the Azure Function. **STILL WORK IN PROGRESS**
+**STILL WORK IN PROGRESS**!!! This project allows you to set up an Express Node.js app on an Azure Function that talks to a CosmosDB database via MongoDB API. The app is a RESTful API service that stores game leaderboards (scores) and exposes them via well-known HTTP methods. Azure Application Insights service is used to provide information and metrics regarding application performance. A Unity game engine client is also provided, with a minimal SDK to access the Azure Function.
 
 ## Deployment
 
@@ -17,7 +17,7 @@ The leaderboards API that's created is served by [Azure Functions](https://docs.
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
 
-On the software architecture side of things, [Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework. Also, the [azure-functions-express](https://github.com/yvele/azure-function-express) package is used to facilitate the usage of Express within an Azure Function.
+On the software architecture side of things, [Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework. Also, the [azure-functions-express](https://github.com/yvele/azure-function-express) package is used to facilitate the usage of Express framework within an Azure Function.
 
 ## Designing the leaderboard
 
@@ -60,8 +60,8 @@ Here you can see a short list of all the operations that are supported, check [h
 | GET | surroundingByScore | https://**functionURL**/api/users/surroundingByScore/:userId/:count | Gets the surrounding users of the requested one, ordered by their max score |
 | GET | checkDBhealth | https://**functionURL**/api/health | Gets the application's health |
 
-## FAQ 
-Check [here](README.faq.md) for answers to common questions you may have.
-
 ## Docker
 You might notice that there is a Dockerfile inside the Azure Functions code. Check the [README.technicalDetails.md](README.technicalDetails.md) file for instructions on how to build and run the projet on a Docker container.
+
+## FAQ 
+Check [here](README.faq.md) for answers to common questions you may have.
