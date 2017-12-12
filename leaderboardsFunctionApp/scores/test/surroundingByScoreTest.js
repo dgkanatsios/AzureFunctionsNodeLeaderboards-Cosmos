@@ -9,7 +9,7 @@ const config = require('../config');
 
 chai.use(require('chai-http'));
 
-describe('Rank tests for the leaderboards API: ', function () {
+describe('SurroundingByScore tests for the leaderboards API: ', function () {
     it("checks the health of the DB connection", function (done) {
         chai.request(server).get("/api/health")
             .set('x-ms-client-principal-id', 'testUserId')
@@ -44,7 +44,7 @@ describe('Rank tests for the leaderboards API: ', function () {
     });
 
     it('checks the rank of userId5', function (done) {
-        chai.request(server).get('/api/users/rankamong/userId5/1')
+        chai.request(server).get('/api/users/surroundingbyscore/userId5/1')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
             .end(function (err, res) {
@@ -60,7 +60,7 @@ describe('Rank tests for the leaderboards API: ', function () {
     });
 
     it('checks the rank of userId10', function (done) {
-        chai.request(server).get('/api/users/rankamong/userId10/2')
+        chai.request(server).get('/api/users/surroundingbyscore/userId10/2')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
             .end(function (err, res) {
@@ -78,7 +78,7 @@ describe('Rank tests for the leaderboards API: ', function () {
     });
 
     it('checks the rank of userId20', function (done) {
-        chai.request(server).get('/api/users/rankamong/userId20/3')
+        chai.request(server).get('/api/users/surroundingbyscore/userId20/3')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
             .end(function (err, res) {
@@ -96,9 +96,9 @@ describe('Rank tests for the leaderboards API: ', function () {
                 done();
             });
     });
-
-    it('deletes the gamedata collection', function (done) {
-        mongoose.connection.db.dropCollection('gamedata', function (err) {
+return;
+    it('drops the test database', function (done) {
+        mongoose.connection.db.dropDatabase(config.databaseNameTest, function (err) {
             if (err) {
                 done(err);
             } else {

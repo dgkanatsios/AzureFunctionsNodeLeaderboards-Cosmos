@@ -9,17 +9,27 @@ Sure, if you want to contribute via a pull request, go ahead! For bugs/features/
 #### The calls to the Azure Function are sometimes a bit slow. Why?
 There is an idle timeout for Azure Functions on Consumption Plan, check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#consumption-plan) for details. Moreover, on this so-called "cold start" there is a delay as node reads all module files. They are cached, though, so subsequent executions have much better performance. You can check [here](https://github.com/Azure/azure-functions-pack) for a way this can be improved (we haven't tested this approach with this project). You can also alter the default timeout by modifying the `functionTimeout` in `host.json`.
 
-#### How can I develop/test this project locally?
-Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). Don't forget to set a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables.
+#### How can I develop this project locally?
+Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally. After you install Azure Functions tools, run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`). Don't forget to create a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables in the `leaderboardsFunctionApp` folder.
 
-#### What frameworks are you using for tests?
-We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt.
+#### What frameworks are you using for testing?
+We use [mocha](https://mochajs.org/) test framework and [chai](http://chaijs.com/) assertion library. To execute the tests, just run `npm test` on the shell prompt. The tests are executed on a test database (name is set on the `config.js` file). Also, do not forget to create a `.env` file on the `scores` directory and assign your environmental variables there. Check below for a sample `.env` file that I'm using for development.
+
+```
+MONGODB_CONNECTION_STRING=mongodb://nodecosmos:PASSWORD==@nodecosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+PORT=3000
+AZURE_FUNCTIONS_RUNTIME=false
+NODE_ENV=development
+```
 
 #### I saw you're using Mongoose discriminators. Why?
 To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
 
 #### How can I see the data on my CosmosDB instance?
-Check [this](https://azure.microsoft.com/en-us/features/storage-explorer/) free and cross-platform tool. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
+[Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) is a  free and cross-platform tool that allows you to browse your Azure Storage accounts as well as your CosmosDB databases. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
+
+#### How much does CosmosDB cost?
+You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/) in order to undestand CosmosDB pricing.
 
 #### Can I try CosmosDB for free?
 Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure, also check [here](https://azure.microsoft.com/en-us/free/).
@@ -44,12 +54,12 @@ Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Belo
 You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).
 
 #### Can I compress HTTP output?
-Originally I was using [expressjs/compression](https://github.com/expressjs/compression) middleware. However, I encountered some instability during local development, not sure why (maybe it doesn't work so well with Azure Functions runtime?). Give it a shot and let me know if it works for you!
+Originally I was using [expressjs/compression](https://github.com/expressjs/compression) middleware. However, I encountered some instability during local development, not sure why (maybe it doesn't work so well with Azure Functions runtime?). Give it a shot and let me know if it works for you! If you use a proxy, you may want to delegate the CPU-intensive process to your reverse proxy, same goes if you want to use a certificate for SSL connections (shameless plug: check [here](https://dgkanatsios.com/2017/07/07/using-ssl-for-a-service-hosted-on-a-kubernetes-cluster/) for another article of mine on how to easily configure SSL for a Kubernetes cluster).
 
-#### I want to extend the API and add more operations. How can I do that?
+#### I want to extend the leaderboards API and add more operations. How can I do that?
 1. Add the desired route on the api/routes/leaderboardsRoutes.js
 2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
 3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
 
-#### Which region should I deploy my project to?
+#### Which Azure region should I deploy my project to?
 Microsoft Azure operates in many datacenters around the globe, you can check them [here](https://azure.microsoft.com/en-us/regions/). If you want to see the latency between them and your location, you can use various online tools such as [azurespeed.com](http://www.azurespeed.com/) or [azurespedtest.azurewebsites.net](http://azurespeedtest.azurewebsites.net/).

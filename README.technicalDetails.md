@@ -466,6 +466,91 @@ Gets the specific details of a score document.
 }
 ``` 
 
+### GET https://functionURL/api/users/surroundingbyscore/:userId/:count
+#### Description
+Gets the surrounding users of the requested one, ordered by their max score. The :count argument refers to how many better and how many worse scores will be returned. Check below for the response for a request `/api/users/surroundingbyscore/userId20/2`. API returns 5 users' details, 2 with better score than userId20, 2 with worse and userId20 details itself. So, most users that will be returned by this operation are `2 * count + 1`.
+#### Sample HTTP response
+```javascript
+[
+    {
+        "_id": "userId22",
+        "username": "username22",
+        "__v": 0,
+        "maxScoreValue": 22,
+        "totalTimesPlayed": 1,
+        "__type": "Users",
+        "latestScores": [
+            {
+                "score": "5a2fd067add45342f4209313",
+                "value": 22,
+                "_id": "5a2fd067add45342f420932e"
+            }
+        ],
+        "createdAt": "2017-12-12T12:49:18.550Z"
+    },
+    {
+        "_id": "userId21",
+        "username": "username21",
+        "__v": 0,
+        "maxScoreValue": 21,
+        "totalTimesPlayed": 1,
+        "__type": "Users",
+        "latestScores": [
+            {
+                "score": "5a2fd067add45342f420932b",
+                "value": 21,
+                "_id": "5a2fd068add45342f4209333"
+            }
+        ],
+        "createdAt": "2017-12-12T12:49:18.550Z"
+    },
+    {
+        "_id": "userId20",
+        "username": "username20",
+        "maxScoreValue": 20,
+        "totalTimesPlayed": 1,
+        "latestScores": [
+            {
+                "score": "5a2fd067add45342f420931d",
+                "value": 20,
+                "_id": "5a2fd067add45342f4209323"
+            }
+        ],
+        "createdAt": "2017-12-12T12:49:18.550Z"
+    },
+    {
+        "_id": "userId19",
+        "username": "username19",
+        "__v": 0,
+        "maxScoreValue": 19,
+        "totalTimesPlayed": 1,
+        "latestScores": [
+            {
+                "score": "5a2fd067add45342f420931e",
+                "value": 19,
+                "_id": "5a2fd067add45342f4209326"
+            }
+        ],
+        "createdAt": "2017-12-12T12:49:18.550Z"
+    },
+    {
+        "_id": "userId18",
+        "username": "username18",
+        "__v": 0,
+        "maxScoreValue": 18,
+        "totalTimesPlayed": 1,
+        "latestScores": [
+            {
+                "score": "5a2fd067add45342f4209329",
+                "value": 18,
+                "_id": "5a2fd067add45342f4209330"
+            }
+        ],
+        "createdAt": "2017-12-12T12:49:18.550Z"
+    }
+]
+``` 
+
 ### GET https://functionURL/api/health 
 #### Description
 Gets the status of application's health.

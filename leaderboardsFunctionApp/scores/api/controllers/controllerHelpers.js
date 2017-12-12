@@ -17,24 +17,32 @@ function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount,
     const count = utilities.getInteger(req.params.count);
     if (isNaN(count) || count < 1 || count > maxCount) {
         const err = `count must be between 1 and ${maxCount}`;
-        respond(err, null, res, 400);
+        respond(err, null, req, res, 400);
     } else {
         const _filter = queryFilter || {};
         schemaName.find(_filter, projection).limit(count).sort(sortByValue).exec(function (err, scores) {
-            respond(err, scores, res);
+            respond(err, scores, req, res);
         });
     }
 }
 
-function respond(error, data, res, httpStatus) {
+function respond(error, data, req, res, httpStatus) {
     if (error) {
         httpStatus = httpStatus || 500;
-        res.status(httpStatus).json({error});
+        utilities.logError(JSON.stringify(error), req);
+        res.status(httpStatus).json({
+            error
+        });
     } else {
         if (data)
             res.json(data);
-        else
-            res.status(400).json({error:'No data found for your GET/POST arguments'});
+        else {
+            const errorMessage = 'No data found for your GET/POST arguments';
+            utilities.logError(JSON.stringify(errorMessage), req);
+            res.status(400).json({
+                error : errorMessage
+            });
+        }
     }
 }
 

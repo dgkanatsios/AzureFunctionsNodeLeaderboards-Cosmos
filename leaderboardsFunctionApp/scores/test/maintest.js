@@ -227,8 +227,8 @@ describe('Main tests for the leaderboards API: ', function () {
     });
 
 
-    it('deletes the gamedata collection', function (done) {
-        mongoose.connection.db.dropCollection('gamedata', function (err) {
+    it('drops the test database', function (done) {
+        mongoose.connection.db.dropDatabase(config.databaseNameTest, function (err) {
             if (err) {
                 done(err);
             } else {
@@ -236,7 +236,5 @@ describe('Main tests for the leaderboards API: ', function () {
             }
         });
     });
-
-
 
 });

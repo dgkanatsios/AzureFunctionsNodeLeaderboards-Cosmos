@@ -51,12 +51,13 @@ Here you can see a short list of all the operations that are supported, check [h
 | POST | createScore | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score }. Returns the updated user details. |
 | GET | listScoresForCurrentUser | https://**functionURL**/api/user/scores/:count | Gets the top 'count' scores for logged in user sorted by score value |
 | GET | listTopScores | https://**functionURL**/api/scores/top/:count | Gets top scores achieved in the game by all users, in descending order. This can include more than one score per user |
-| GET | listTopScorePerUser | https://**functionURL**/api/users/maxscore/:count | Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order |
+| GET | listMaxScorePerUser | https://**functionURL**/api/users/maxscore/:count | Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order |
 | GET | listTodayTopScores | https://**functionURL**/api/scores/today/top/:count | Gets the top 'count' scores for today|
-| GET | listTopUsersTotalTimesPlayed | https://**functionURL**/api/users/toptotaltimesplayed/:count | Gets the top users for all time in regards to the times they have played (i.e. number of times they have posted a new score).|
+| GET | listTopUsersTotalTimesPlayed | https://**functionURL**/api/users/toptotaltimesplayed/:count | Gets the top 'count' users for all time in regards to the times they have played (i.e. number of times they have posted a new score).|
 | GET | listLatestScores | https://**functionURL**/api/scores/latest/:count | Gets the latest 'count' scores |
 | GET | getUser | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores | 
 | GET | getScore | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
+| GET | surroundingByScore | https://**functionURL**/api/users/surroundingByScore/:userId/:count | Gets the surrounding users of the requested one, ordered by their max score |
 | GET | checkDBhealth | https://**functionURL**/api/health | Gets the application's health |
 
 ## FAQ 

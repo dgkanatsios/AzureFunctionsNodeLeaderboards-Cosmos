@@ -1,5 +1,14 @@
 const config = require('./config');
 
+function logInfo(msg, req) {
+    log('INFO: ' + msg, req);
+}
+
+function logError(error, req) {
+
+    log('ERROR: ' + error, req);
+}
+
 function log(msg, req) {
 
     if (config.DEBUG_LOCAL === false) return;
@@ -10,6 +19,8 @@ function log(msg, req) {
         console.log(msg);
 }
 
+
+
 //parses the connection string
 //connects to the DB
 //returns a promise
@@ -18,7 +29,8 @@ function mongoConnect(mongooseInstance) {
     let connectionString = process.env.MONGODB_CONNECTION_STRING;
     //add the database name
     const pos = connectionString.lastIndexOf('/');
-    connectionString = connectionString.substring(0, pos) + `/${config.databaseName}` + connectionString.substring(pos + 1);
+    const databaseName = process.env.NODE_ENV === 'test' ? config.databaseNameTest : config.databaseName;
+    connectionString = connectionString.substring(0, pos) + `/${databaseName}` + connectionString.substring(pos + 1);
 
     //above methods need to be executed because Mongo connection string should also contain the database name
     //whereas the one that gets created from the ARM template contains only the server related details, not the the database name
@@ -43,7 +55,8 @@ function getInteger(value) {
 }
 
 module.exports = {
-    log,
+    logInfo,
+    logError,
     getInteger,
     mongoConnect
 };

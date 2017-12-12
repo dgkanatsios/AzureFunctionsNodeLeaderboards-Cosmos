@@ -12,7 +12,7 @@ module.exports = function (app) {
     .get(leaderboardsAPI.listTodayTopScores);
 
   app.route('/api/users/maxscore/:count')
-    .get(leaderboardsAPI.listTopScorePerUser);
+    .get(leaderboardsAPI.listMaxScorePerUser);
 
   app.route('/api/scores/latest/:count')
     .get(leaderboardsAPI.listLatestScores);
@@ -32,7 +32,7 @@ module.exports = function (app) {
   app.route('/api/health')
     .get(leaderboardsAPI.checkDBhealth);
 
-  app.route('/api/users/rankamong/:userId/:count')
-    .get(leaderboardsAPI.userRankAmong);
+  app.route('/api/users/surroundingbyscore/:userId/:count')
+    .get(leaderboardsAPI.surroundingByScore);
 
 };
