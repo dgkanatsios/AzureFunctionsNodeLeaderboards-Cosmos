@@ -96,7 +96,7 @@ describe('SurroundingByScore tests for the leaderboards API: ', function () {
                 done();
             });
     });
-return;
+
     it('drops the test database', function (done) {
         mongoose.connection.db.dropDatabase(config.databaseNameTest, function (err) {
             if (err) {
