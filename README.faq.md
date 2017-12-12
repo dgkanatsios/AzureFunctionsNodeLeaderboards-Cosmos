@@ -44,7 +44,10 @@ Originally I was using [expressjs/compression](https://github.com/expressjs/comp
 2. The route you just added should correspond to a method in api/controllers/leaderboardsController.js
 3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
 
-## Extending the project
+#### I use Postman
+Me too and it's awesome! If you don't know [Postman](https://www.getpostman.com/), it's a free app to test your APIs, highly recommended. To get started, you can find and import my set of requests from the `various/nodeleaderboardscores.postman_collection.json` file.
+
+## Extending/monitoring the project
 
 #### How to extend the Score or the User object?
 Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences. Added fields/properties will 'automagically' be persisted in the database.
@@ -52,7 +55,31 @@ Easy! Find the relevant JavaScript file in the api/models/folder and update it t
 #### Do you accept PRs? I found a bug/I want to request a new feature
 Sure, if you want to contribute via a pull request, go ahead! For bugs/features/complaints, I would be really grateful if you reported them [here](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboard/issues).
 
+#### What if I want to set up some rate limit for my API?
+Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules: [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter). If you want to use a fast and scalable backend for these modules or if you just want something to cache your data, we recommend the [Azure Redis Cache](https://docs.microsoft.com/en-us/azure/redis-cache/) service.
+
+#### Where is the Application Insights documentation?
+The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you. 
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
+
 ## Various
+
+#### What resources are created by the ARM template deployment (azuredeploy.json file)?
+You should the following resources created in your Azure subscription
+- A CosmosDB database account
+- A Storage account (that backs your Azure Function)
+- An App Service Plan (uses the Consumption plan)
+- An App Service (hosts your Function)
+- An Application Insights service that monitors your Function
+
+Check here a reference screenshot
+
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/resourcegroup.JPG?raw=true "Resources created by ARM deployment")
+
+If you are new to Azure, you should check the ARM documentation [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview).
 
 #### The calls to the Azure Function are sometimes a bit slow. Why?
 There is an idle timeout for Azure Functions on Consumption Plan, check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-scale#consumption-plan) for details. Moreover, on this so-called "cold start" there is a delay as node reads and loads all module files. They are cached, though, so subsequent executions have significantly better performance. You can check [here](https://github.com/Azure/azure-functions-pack) for a way this can be improved (even though this approach hasn't been tested with current project). You can also alter the default timeout by modifying the `functionTimeout` in `host.json`. It can be set to a maximum of 10 minutes, as per the code below.
@@ -73,19 +100,8 @@ You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/
 #### Can I try CosmosDB for free?
 Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure, also check [here](https://azure.microsoft.com/en-us/free/).
 
-
-#### What if I want to set up some rate limit for my API?
-Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules: [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter). If you want to use a fast and scalable backend for these modules or if you just want something to cache your data, we recommend the [Azure Redis Cache](https://docs.microsoft.com/en-us/azure/redis-cache/) service.
-
 #### Where is the Azure Functions documentation? How are Functions charged?
 Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/). When you deploy the Function via the ARM template provided, you are billed by Azure Functions consumption plan. Great thing with consumption plan is that the first million calls per month are free. It's a pretty cost-effecive plan, for the specifics rest you should check the relevant pricing page [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-feature-support).
-
-#### Where is the Application Insights documentation?
-Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you. 
-
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
-
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
 
 #### Which Azure region should I deploy my project to?
 Microsoft Azure operates in many datacenters around the globe, you can check them [here](https://azure.microsoft.com/en-us/regions/). If you want to see the latency between them and your location, you can use various online tools such as [azurespeed.com](http://www.azurespeed.com/) or [azurespedtest.azurewebsites.net](http://azurespeedtest.azurewebsites.net/).

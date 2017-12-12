@@ -1,0 +1,414 @@
+{
+	"info": {
+		"name": "nodeleaderboardscores",
+		"_postman_id": "0044baed-638f-a645-0442-f455e1ba0b08",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:7071/api/scores/5a1850c314fed73480d9d61b",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "1234"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores/5a1850c314fed73480d9d61b",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores",
+						"5a1850c314fed73480d9d61b"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/users/1234",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "1234"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/123",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"123"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/users/totaltimesplayed/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "1234"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/123",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"123"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/scores/top/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-ID",
+						"value": "1234"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-NAME",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores/top/10",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores",
+						"top",
+						"10"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/users/surroundingbyscore/3/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-ID",
+						"value": "1234"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-NAME",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/surroundingbyscore/userId20/6",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"surroundingbyscore",
+						"userId20",
+						"6"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/scores/top/today/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-ID",
+						"value": "1234"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-NAME",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores/top/today/10",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores",
+						"top",
+						"today",
+						"10"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/scores/latest/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-ID",
+						"value": "1234"
+					},
+					{
+						"key": "X-MS-CLIENT-PRINCIPAL-NAME",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores/latest/10",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores",
+						"latest",
+						"10"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/user/scores/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "123"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/user/scores",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"scores"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/users/maxscore/10",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "123"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\":50}"
+				},
+				"url": {
+					"raw": "{{URL}}/api/users/maxscore/10",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"maxscore",
+						"10"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/scores",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "5432"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "despina"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"value\":\"asdf\", \"createdAt\":\"2017-11-26T14:48:00\", \"description\":\"test description\" }"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:7071/api/health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"value\":\"asdf\", \"createdAt\":\"2017-11-26T14:48:00\", \"description\":\"test description\" }"
+				},
+				"url": {
+					"raw": "{{URL}}/api/health",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

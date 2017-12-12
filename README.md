@@ -15,7 +15,7 @@ Be aware that AppService name, storage account name and database name must all b
 
 The leaderboards API that's created is served by [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/), a [serverless](https://azure.microsoft.com/en-us/overview/serverless-computing/) compute platform that enables execution of code without you having to worry about the underlying infrastructure. The code is written in [Node.js](https://nodejs.org/en/) whereas the database that backs our project is [Azure Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/introduction) using the [MongoDB protocol](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction). Moreover, [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview) service is used to track the application's performance.
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/functions.JPG?raw=true "Reference architecture")
 
 On the software architecture side of things, [Mongoose](http://mongoosejs.com) is used to facilitate interactions with the database whereas the frontend API calls are served by [Express](https://expressjs.com/) web framework. Also, the [azure-functions-express](https://github.com/yvele/azure-function-express) package is used to facilitate the usage of Express framework within an Azure Function.
 
