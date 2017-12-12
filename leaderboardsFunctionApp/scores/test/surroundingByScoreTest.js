@@ -43,7 +43,7 @@ describe('SurroundingByScore tests for the leaderboards API: ', function () {
         });
     });
 
-    it('checks the rank of userId5', function (done) {
+    it('checks the surrounding users of userId5', function (done) {
         chai.request(server).get('/api/users/surroundingbyscore/userId5/1')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
@@ -59,7 +59,7 @@ describe('SurroundingByScore tests for the leaderboards API: ', function () {
             });
     });
 
-    it('checks the rank of userId10', function (done) {
+    it('checks the surrounding users of userId10', function (done) {
         chai.request(server).get('/api/users/surroundingbyscore/userId10/2')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
@@ -77,7 +77,7 @@ describe('SurroundingByScore tests for the leaderboards API: ', function () {
             });
     });
 
-    it('checks the rank of userId20', function (done) {
+    it('checks the surrounding users of userId20', function (done) {
         chai.request(server).get('/api/users/surroundingbyscore/userId20/3')
             .set('x-ms-client-principal-id', 'userId1')
             .set('x-ms-client-principal-name', '1')
