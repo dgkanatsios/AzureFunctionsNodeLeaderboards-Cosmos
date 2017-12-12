@@ -34,7 +34,7 @@
         },
         "repoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos",
+            "defaultValue": "https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos",
             "metadata": {
                 "description": "The URL for the GitHub repository that contains the project to deploy."
             }
@@ -147,7 +147,7 @@
                         },
                         {
                             "name": "Project",
-                            "value": "scoresFunctionApp"
+                            "value": "leaderboardsFunctionApp"
                         }
                     ]
                 }
