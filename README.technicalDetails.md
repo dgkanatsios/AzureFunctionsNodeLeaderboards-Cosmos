@@ -581,7 +581,7 @@ Of course, you can replace **username**,**azurefunctionsnodescores** with the va
 ```bash
 docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygameDB?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
 ```
-Don't forget to set your correct MongoDB or CosmosDB connection string (including the database name).
+Don't forget to set your correct CosmosDB connection string!
 
 ## Unity client
 
