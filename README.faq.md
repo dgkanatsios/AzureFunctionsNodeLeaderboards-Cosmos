@@ -61,9 +61,9 @@ Since your API is stateless, you should use a store to preserve state in order t
 ### Where is the Application Insights documentation?
 The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you.
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
 
  You can check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-monitoring) for a detailed guide about Azure Functions + Application Insights integration. Also, you can take a look at the Storage account that's created with the Azure Function, some logs about Function's calls are kept there.
 

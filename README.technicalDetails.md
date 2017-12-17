@@ -567,21 +567,21 @@ Gets the status of application's health.
 
 You can use the included Dockerfile on the `scores` folder to build the leaderboards API app as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on a [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/) Kubernetes cluster. Your container image(s) can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/). Check a sample architeture for this kind of deployment:
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
 
 ### Build Docker image
 To build the Docker image, cd to the `leaderboardsFunctionApp/scores` directory and run the Docker build CLI command, here's an example:
 
 ```bash
-docker build -t username/azurefunctionsnodescores:0.1 .
+docker build -t username/azurefunctionsnodeleaderboards:0.1 .
 ```
 
-Of course, you can (should!) replace **username**,**azurefunctionsnodescores** and the tagged version with the values of your choice. To run the container locally, you can use the following command:
+Of course, you can (should!) replace **username**,**azurefunctionsnodeleaderboards** and the tagged version with the values of your choice. To run the container locally, you can use the following command:
 
 ```bash
-docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygameDB?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
+docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/?ssl=true&replicaSet=globaldb" --name leaderoardsapi username/azurefunctionsnodeleaderboards:0.1 
 ```
-Don't forget to set your correct CosmosDB connection string and your Docker image name!
+Don't forget to set your correct CosmosDB connection string and your Docker image name.
 
 - To see how you can host your Docker image on Azure Web App for Containers, check [here](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image)
 - To create a managed Kubernetes Azure Container Service (AKS) cluster, check [here](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
