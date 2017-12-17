@@ -59,11 +59,13 @@ Sure, if you want to contribute via a pull request, go ahead! For bugs/features/
 Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules: [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter). If you want to use a fast and scalable backend for these modules or if you just want something to cache your data, we recommend the [Azure Redis Cache](https://docs.microsoft.com/en-us/azure/redis-cache/) service.
 
 ### Where is the Application Insights documentation?
-The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you. 
+The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you.
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights1.JPG?raw=true "Application Insights overview metrics")
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/appInsights2.JPG?raw=true "Application Insights performance")
+
+ You can check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-monitoring) for a detailed guide about Azure Functions + Application Insights integration. Also, you can take a look at the Storage account that's created with the Azure Function, some logs about Function's calls are kept there.
 
 ## Various
 
@@ -116,4 +118,4 @@ Microsoft Azure operates in many datacenters around the globe, you can check the
 Check `architecture.vsdx` in the `various` folder.
 
 ### All this is great, but I'd like something simpler for my Unity game, is there anything else?
-You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/).
+You can check [here](https://github.com/dgkanatsios/AzureServicesForUnity) for a Unity client that can communicate with various Azure PaaS services like [App Service Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/), [Event Hubs](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-what-is-event-hubs) and [Table Storage](https://azure.microsoft.com/en-us/services/storage/tables/). Check [here](https://dgkanatsios.com/2016/04/14/use-azure-services-from-unity/) for the relevant blog post.

@@ -565,27 +565,30 @@ Gets the status of application's health.
 
 ## Using a Docker container
 
-You can use the included Dockerfile on the `scores` folder to build the leaderboards API code as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/). Also, your container image can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/).
+You can use the included Dockerfile on the `scores` folder to build the leaderboards API app as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on a [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/) Kubernetes cluster. Your container image(s) can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/). Check a sample architeture for this kind of deployment:
 
 ![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeScores-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
 
 ### Build Docker image
-To build the Docker image, cd to the scoresFunctionApp/scores directory and run the Docker CLI, here's an example
+To build the Docker image, cd to the `leaderboardsFunctionApp/scores` directory and run the Docker build CLI command, here's an example:
 
 ```bash
 docker build -t username/azurefunctionsnodescores:0.1 .
 ```
 
-Of course, you can replace **username**,**azurefunctionsnodescores** with the values of your choice. To run the container locally, you should use the following command
+Of course, you can (should!) replace **username**,**azurefunctionsnodescores** and the tagged version with the values of your choice. To run the container locally, you can use the following command:
 
 ```bash
 docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/mygameDB?ssl=true&replicaSet=globaldb" --name myscoresapi username/azurefunctionsnodescores:0.1 
 ```
-Don't forget to set your correct CosmosDB connection string!
+Don't forget to set your correct CosmosDB connection string and your Docker image name!
+
+- To see how you can host your Docker image on Azure Web App for Containers, check [here](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image)
+- To create a managed Kubernetes Azure Container Service (AKS) cluster, check [here](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
 
 ## Unity client
 
-On the folder `client-unity` you can find a Unity client (built with Unity 5.6) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
+On the folder `client-unity` you can find a Unity client (built with Unity 5.6, other 5.x versions could work) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
 
 ### First call
 As described on the [FAQ](README.faq.md), the first call to the Azure Function will take some time, be patient.
