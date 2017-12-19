@@ -9,7 +9,7 @@ module.exports = function (app) {
     .get(leaderboardsAPI.listTopScores);
 
   app.route('/api/scores/top/today/:count')
-    .get(leaderboardsAPI.listTodayTopScores);
+    .get(leaderboardsAPI.listTopTodayScores);
 
   app.route('/api/users/maxscore/:count')
     .get(leaderboardsAPI.listMaxScorePerUser);

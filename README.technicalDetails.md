@@ -7,10 +7,12 @@ You can easily get acquainted with the database architecture by checking the Use
 ### Score schema
 
 Score schema contains:
-- the actual score value
+- the actual score value (required)
 - the userId and username of the user that achieved the score (they have been set up by the authorization headers)
-- createdAt timestamp
+- optional createdAt timestamp
 - an optional text description
+
+The createdAt timestamp may be not set, so the value will be created by the server or set by the client. This can be useful for mobile game scenarios that may have poor connectivity - in this way, score data can be kept offline and pushed to the server upon client connection. If it's set, it must be of a valid value or else the API will return error 400. We're using [moment.js](https://momentjs.com) for date parsing.
 
 ### User schema
 
@@ -32,7 +34,7 @@ Details of all the operations supported in the `leaderboardsFunctionApp/scores` 
 - [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionurlapiusercorescount)
 - [GET https://functionURL/api/scores/top/:count](#get-httpsfunctionurlapiscorestopcount)
 - [GET https://functionURL/api/users/maxscore/:count](#get-httpsfunctionurlapiusersmaxscorecount)
-- [GET https://functionURL/api/scores/today/top/:count](#get-httpsfunctionurlapiscorestodaytopcount)
+- [GET https://functionURL/api/scores/top/today/:count](#get-httpsfunctionurlapiscorestoptodaycount)
 - [GET https://functionURL/api/users/toptotaltimesplayed/:count](#get-httpsfunctionurlapiuserstoptotaltimesplayedcount)
 - [GET https://functionURL/api/scores/latest/:count](#get-httpsfunctionurlapiscoreslatestcount)
 - [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionurlapiscoresscoreid)
@@ -40,12 +42,11 @@ Details of all the operations supported in the `leaderboardsFunctionApp/scores` 
 
 ### POST https://functionURL/api/scores 
 #### Description
-Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played. The return value contains the entire user object as well as the latest user's scores. 
+Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played (which is equal to the number of times this method has been called for the specific user
 #### Post body
 ```javascript
-//createdAt is optional
-//description is optional
-//50 is the integer value of the score and it is required
+//createdAt and description are optional
+//50 is the required integer value of the score
 { "value":50, "createdAt":"2017-11-25T14:48:00", "description":"test description" }
 ```
 #### Sample HTTP response
@@ -54,17 +55,17 @@ Creates a new score. Returns the updated user's details, including top score, la
     "_id": "1234",
     "username": "dimitris",
     "__v": 0,
-    "maxScoreValue": 12,
+    "maxScoreValue": 50,
     "totalTimesPlayed": 2,
     "latestScores": [
         {
             "score": "5a1915c40c6eba5c6c74616b",
-            "value": 12,
+            "value": 9,
             "_id": "5a1915c50c6eba5c6c74616c"
         },
         {
             "score": "5a191a620c6eba5c6c74616d",
-            "value": 12,
+            "value": 50,
             "_id": "5a191a620c6eba5c6c74616e"
         }
     ],
@@ -78,7 +79,7 @@ const latestScores = userDetails.latestScores; //reference to the latest scores 
 const scoreDetails = latestScores[latestScores.length - 1];//reference to the last inserted score, which is the one we created
 ```
 
-If the value provided for the `score` is not an integer, API will return a 400 HTTP Error (Bad Request).
+If the value provided for the `score` is not an integer, the API will return a 400 HTTP Error (Bad Request). The validation is taking place at the `utilities.js` file.
 
 ### GET https://functionURL/api/users/:userId 
 #### Description
@@ -87,7 +88,7 @@ Gets a specific user's details, including top score, latest scores and number of
 ```javascript
 {
     "username": "dimitris",
-    "maxScoreValue": 12,
+    "maxScoreValue": 18,
     "totalTimesPlayed": 3,
     "latestScores": [
         {
@@ -97,12 +98,12 @@ Gets a specific user's details, including top score, latest scores and number of
         },
         {
             "score": "5a1915bb0c6eba5c6c746167",
-            "value": 12,
+            "value": 16,
             "_id": "5a1915bb0c6eba5c6c746168"
         },
         {
             "score": "5a1915bc0c6eba5c6c746169",
-            "value": 12,
+            "value": 18,
             "_id": "5a1915bc0c6eba5c6c74616a"
         }
     ],
@@ -110,9 +111,11 @@ Gets a specific user's details, including top score, latest scores and number of
 }
 ``` 
 
+If the `userId` provided does not exist in the database, error 400 is returned.
+
 ### GET https://functionURL/api/user/scores/:count 
 #### Description
-Gets the top 'count' scores for logged in user sorted by score value.
+Gets the top 'count' scores for logged in user sorted by descending score value. Logged in user is defined by the `x-ms-client-principal-id` HTTP header.
 #### Sample HTTP response
 ```javascript
 [
@@ -127,7 +130,7 @@ Gets the top 'count' scores for logged in user sorted by score value.
     {
         "_id": "5a1c0e0d5d68e203c81dbd56",
         "value": 49,
-        "description": "test description",
+        "description": "test description2",
         "userId": "1234",
         "username": "dimitris",
         "createdAt": "2017-11-26T14:48:00.000Z"
@@ -135,13 +138,15 @@ Gets the top 'count' scores for logged in user sorted by score value.
     {
         "_id": "5a1c0e135d68e203c81dbd58",
         "value": 48,
-        "description": "test description",
+        "description": "test description3",
         "userId": "1234",
         "username": "dimitris",
         "createdAt": "2017-11-26T14:48:00.000Z"
     }
 ]
 ``` 
+
+If the userId cannot be found in the database, error 400 is returned.
 
 ### GET https://functionURL/api/scores/top/:count 
 #### Description
@@ -202,7 +207,7 @@ Gets top `count` scores achieved in the game by all users, in descending order. 
 
 ### GET https://functionURL/api/users/maxscore/:count
 #### Description
-Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order.
+Gets the `count` maximum scores achieved in the game by all users, in descending order. Practically, this will bring the top `count` best scores of each user.
 #### Sample HTTP response
 ```javascript
 [
@@ -217,7 +222,7 @@ Gets all the max scores achieved in the game by all users, in descending order. 
     {
         "_id": "5a1c1152fe8c7c03c808c8ca",
         "value": 51,
-        "description": "test description",
+        "description": "test description2",
         "userId": "5412",
         "username": "john",
         "createdAt": "2017-11-26T14:48:00.000Z"
@@ -225,7 +230,7 @@ Gets all the max scores achieved in the game by all users, in descending order. 
     {
         "_id": "5a1c116dfe8c7c03c808c8ce",
         "value": 43,
-        "description": "test description",
+        "description": "test description3",
         "userId": "5678",
         "username": "nick",
         "createdAt": "2017-11-26T14:48:00.000Z"
@@ -233,9 +238,9 @@ Gets all the max scores achieved in the game by all users, in descending order. 
 ]
 ``` 
 
-### GET https://functionURL/api/scores/today/top/:count 
+### GET https://functionURL/api/scores/top/today/:count 
 #### Description
-Gets the top 'count' scores for all users for today only.
+Gets the top 'count' scores for all users for today. Time is calculated based on server time.
 #### Sample HTTP response
 ```javascript
 [

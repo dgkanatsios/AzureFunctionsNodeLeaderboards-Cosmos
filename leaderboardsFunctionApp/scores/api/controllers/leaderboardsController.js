@@ -14,10 +14,10 @@ function listTopUsersTotalTimesPlayed(req, res) {
     controllerHelpers.listUsers(req, res, '-totalTimesPlayed');
 }
 
-//https://**functionURL**/api/scores/today/top/:count
+//https://**functionURL**/api/scores/toptoday/:count
 //top scores for all users for today, descending
-function listTodayTopScores(req, res) {
-    utilities.logInfo("listTodayTopScores", req);
+function listTopTodayScores(req, res) {
+    utilities.logInfo("listTopTodayScores", req);
     const start = new Date();
     start.setHours(0, 0, 0, 0);
 
@@ -100,6 +100,16 @@ function createScore(req, res) {
     const scoreValue = utilities.getInteger(req.body.value);
     if (isNaN(scoreValue) || scoreValue < 0) {
         controllerHelpers.respond('score value must be an integer', '', req, res, 400);
+        return;
+    }
+
+    //validate createdAt, if exists
+    if (req.body.createdAt) {
+        const date = moment(req.body.createdAt);
+        if (!date.isValid()) {
+            controllerHelpers.respond('createdAt must be an valid date', '', req, res, 400);
+            return;
+        }
     }
 
     //check if the user exists
@@ -251,7 +261,7 @@ function checkDBhealth(req, res) {
 
 module.exports = {
     listTopScores,
-    listTodayTopScores,
+    listTopTodayScores,
     listScoresForCurrentUser,
     listTopUsersTotalTimesPlayed,
     listMaxScorePerUser,

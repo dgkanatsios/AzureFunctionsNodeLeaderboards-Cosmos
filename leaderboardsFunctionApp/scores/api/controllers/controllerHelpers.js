@@ -20,8 +20,11 @@ function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount,
         respond(err, null, req, res, 400);
     } else {
         const _filter = queryFilter || {};
-        schemaName.find(_filter, projection).limit(count).sort(sortByValue).exec(function (err, scores) {
-            respond(err, scores, req, res);
+        schemaName.find(_filter, projection).limit(count).sort(sortByValue).exec(function (err, documents) {
+            if (documents && documents.length > 0)
+                respond(err, documents, req, res);
+            else
+                respond('No data for your arguments/credentials', null, req, res, 400);
         });
     }
 }
@@ -37,10 +40,10 @@ function respond(error, data, req, res, httpStatus) {
         if (data)
             res.json(data);
         else {
-            const errorMessage = 'No data found for your GET/POST arguments';
+            const errorMessage = 'No data found for your arguments/credentials';
             utilities.logError(JSON.stringify(errorMessage), req);
             res.status(400).json({
-                error : errorMessage
+                error: errorMessage
             });
         }
     }
