@@ -1,4 +1,4 @@
-# AzureFunctionsNodeLeaderboards-Cosmos - Technical details
+# Technical details - AzureFunctionsNodeLeaderboards-Cosmos
 
 ## Database architecture
 
@@ -8,22 +8,22 @@ You can easily get acquainted with the database architecture by checking the Use
 
 Score schema contains:
 - the actual score value
-- the userId and username of the user that achieved the score
+- the userId and username of the user that achieved the score (they have been set up by the authorization headers)
 - createdAt timestamp
-- an optional description
+- an optional text description
 
 ### User schema
 
 User schema contains:
-- userId (saved in _id) and username of the user
+- userId (saved in _id) and username of the user (they have been set up by the authorization headers)
 - createdAt timestamp
 - user's max score
 - an integer that holds the number of times user has played (i.e. number of times that user has POSTed a score)
-- and an array that holds user's latest scores (array length is equal to `latestScoresPerUserToKeep`)
+- an array that holds user's latest scores (array length is equal to `latestScoresPerUserToKeep` value set in the `config.js` file)
 
-## Leaderboards API supported REST HTTP methods/operations
+## Leaderboards API supported HTTP methods/operations
 
-Details of all the operations supported in the `leaderboardsFunctionApp` Azure Function. Wherever you see `:count` in the following API calls, this means an integer between 1 and `config.maxCountOfScoresToReturn` (for Score objects) or between 1 and `config.maxCountOfUsersToReturn` (for User objects).
+Details of all the operations supported in the `leaderboardsFunctionApp/scores` Azure Function. Wherever you see `:count` in the following API calls, this stands for an integer between 1 and `config.maxCountOfScoresToReturn` (for Score objects) or between 1 and `config.maxCountOfUsersToReturn` (for User objects). These maximums are defined in `config.js` file, feel free to modify them if needed.
 
 ### Index of operations
 
@@ -77,6 +77,8 @@ const userDetails = ...;//the return value of the API call
 const latestScores = userDetails.latestScores; //reference to the latest scores array
 const scoreDetails = latestScores[latestScores.length - 1];//reference to the last inserted score, which is the one we created
 ```
+
+If the value provided for the `score` is not an integer, API will return a 400 HTTP Error (Bad Request).
 
 ### GET https://functionURL/api/users/:userId 
 #### Description
@@ -562,6 +564,17 @@ Gets the status of application's health.
     "createdAt": "2017-11-26T14:48:00.000Z"
 }
 ``` 
+
+## Authentication / Authorization
+
+All requests to all methods of the leaderboards API should contain two HTTP headers:
+
+- `x-ms-client-principal-id`
+- `x-ms-client-principal-name`
+
+These two headers are validated (i.e. checked for undefined) in the `authhelper.js` file, which is used as a custom Express middleware. If they're empty, the called leaderboards API method returns HTTP error 401. If they exist, they get transformed (copied) to `CUSTOM_USERID` and `CUSTOM_USERNAME`, respectively, so they can be used from the rest of your application code. Azure App Service (the platform on which Azure Functions) has an option to activate Authentication and authorization via numerous providers (Azure Active Directory, Facebook, Google, Microsoft Account, Twitter) and is thoroughly described [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). These providers should fill the necessary headers. Moreover, it is worth mentioning that there is no applied authorization on the API calls. This means that all authenticated users can call all methods with any kind of parameters.
+
+Feel free to use your own authentication mechanism, if required. For example, you could modify `authhelper.js` file so that the values passed are checked towards a database that contains your user information. This means that the user has authenticated using a custom mechanism you have provided.
 
 ## Using a Docker container
 
