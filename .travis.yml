@@ -1,4 +1,4 @@
 language: node_js
 node_js:
   - "8"
-script: cd leaderboardsFunctionApp/scores && npm install mocha && npm install --production && npm test
+script: cd leaderboardsFunctionApp/scores && npm install mocha chai chai-http body-parser && npm install --production && npm test
