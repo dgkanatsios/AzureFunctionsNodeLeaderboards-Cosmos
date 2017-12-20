@@ -1,4 +1,4 @@
-const latestScoresPerUserToKeep = 10;
+const latestScoresPerUserToKeep = 10; 
 const maxCountOfScoresToReturn = 10;
 const maxCountOfUsersToReturn = 10;
 const maxBetterOrWorseSurroundingUsersToReturn = 5; //used in the surroundingByScore operation
