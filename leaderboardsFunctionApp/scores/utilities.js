@@ -5,12 +5,10 @@ function logInfo(msg, req) {
 }
 
 function logError(error, req) {
-
     log('ERROR: ' + error, req);
 }
 
 function log(msg, req) {
-
     if (config.DEBUG_LOCAL === false) return;
 
     if (req && req.context)
