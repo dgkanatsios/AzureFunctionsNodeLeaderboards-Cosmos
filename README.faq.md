@@ -70,12 +70,16 @@ Since your API is stateless, you should use a store to preserve state in order t
 ## Monitoring
 
 ### What are Request Units (RUs) in CosmosDB?
-
 CosmosDB is a multi-tenant database. As such, you don't rent a CosmosDB server with specific hardware specifications. When you use CosmosDB, you pay for something called 'Request Units' (RUs) which is a measure of the computing resources that are needed in order to serve a specific client request. To find out more about RUs, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#request-units-and-request-charges).
 
-### How can I see how many (RUs) my queries are consuming? 
+### How much do I pay for the CosmosDB database this project is creating?
+For the most updated pricing details, check out the official pricing documentation [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/). Be aware that the collection that is created by the project uses 1000RUs (this is the default), you can modify it via Azure Portal or programmatically and scale it down to 400RUs (that's the minimum), if you don't need the extra horse power. If you do need it though, you could as easily scale it up to 10.000 RUs.
 
+### How can I see how many (RUs) my queries are consuming? 
 There are various ways that you can monitor your RUs consumption, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#use-api-for-mongodbs-portal-metrics) to see some of them. If you happen to have many similar queries hitting the database in a short amount of time, maybe you should consider refactoring the project to add a caching layer (we recommend [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/)) for your data.
+
+### Tell me more about CosmosDB partitioning and scaling
+Please check the official and frequently updated documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data).
 
 ### Where is the Application Insights documentation?
 The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you.
