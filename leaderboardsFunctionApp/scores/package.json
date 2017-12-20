@@ -8,8 +8,8 @@
     "test": "mocha --timeout 60000 --require test/mocha.env.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Dimitris-Ilias Gkanatsios <dgkanatsios@outlook.com>",
+  "license": "MIT",
   "dependencies": {
     "azure-function-express": "^1.2.2",
     "dotenv": "^4.0.0",
