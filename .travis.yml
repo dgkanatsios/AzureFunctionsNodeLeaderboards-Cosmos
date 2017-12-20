@@ -2,3 +2,7 @@ language: node_js
 node_js:
   - "8"
 script: cd leaderboardsFunctionApp/scores && npm install mocha chai chai-http body-parser && npm install --production && npm test
+env:
+  - PORT=3000
+  - AZURE_FUNCTIONS_RUNTIME=false
+  - NODE_ENV=development
