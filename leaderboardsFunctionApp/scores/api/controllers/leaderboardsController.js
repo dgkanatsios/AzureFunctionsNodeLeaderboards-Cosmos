@@ -200,7 +200,12 @@ function surroundingByScore(req, res) {
     } else {
         let user, nextPlayerResult;
         User.findById(req.params.userId, config.userProjection) //find the requested player
-            .then(_user => { //find the ones with better max score than the requested
+            .then(_user => {
+                if (!_user) {
+                    controllerHelpers.respond(`cannot find the user with the designated userId: ${req.params.userId}`, null, req, res, 400);
+                    return;
+                }
+                //find the ones with better max score than the requested
                 user = _user;
                 return User.find({
                     _id: {
@@ -251,10 +256,14 @@ function checkDBhealth(req, res) {
     utilities.mongoConnect(mongoose)
         .then(
             () => {
-                controllerHelpers.respond(null, "Everything OK", req, res);
+                controllerHelpers.respond(null, {
+                    message: "Everything OK"
+                }, req, res);
             },
             err => {
-                controllerHelpers.respond('Error' + err, null, req, res, 500);
+                controllerHelpers.respond({
+                    error: 'Error' + err
+                }, null, req, res, 500);
             }
         )
 }

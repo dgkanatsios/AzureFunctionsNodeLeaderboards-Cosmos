@@ -1,4 +1,4 @@
-# AzureFunctionsNodeLeaderboards-Cosmos - Frequently Asked Questions
+# Frequently Asked Questions -  AzureFunctionsNodeLeaderboards-Cosmos
 
 ## Running and testing 
 
@@ -106,7 +106,7 @@ To save you some money. CosmosDB charges per collection, check [here](https://an
 You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/) in order to undestand CosmosDB pricing.
 
 ### Can I try CosmosDB for free?
-Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure, also check [here](https://azure.microsoft.com/en-us/free/).
+Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Also, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure resources, check [here](https://azure.microsoft.com/en-us/free/).
 
 ### Where is the Azure Functions documentation? How are Functions charged?
 Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/). When you deploy the Function via the ARM template provided, you are billed by Azure Functions consumption plan. Great thing with consumption plan is that the first million calls per month are free. It's a pretty cost-effecive plan, for the specifics rest you should check the relevant pricing page [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-feature-support).

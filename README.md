@@ -1,6 +1,7 @@
 # AzureFunctionsNodeLeaderboards-Cosmos
 
 **STILL WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. 
+
 ## Deployment
 
 One-click deployment via [Azure ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authoring-templates) is supported, click the button below to deploy the project in your Azure subscription.
@@ -46,7 +47,7 @@ All requests to the leaderboards API **must** contain two headers on each reques
 
 ## Operations supported
 
-Here you can see a short list/summary of all the operations that are supported, check [here](README.technicalDetails.md) for full details and response samples.
+Here you can see a short list/summary of all the operations that are supported, check [here](README.operations.md) for full details and response samples.
 
 | VERB | URL | Description | 
 | --- | --- | --- |
@@ -65,8 +66,10 @@ Here you can see a short list/summary of all the operations that are supported, 
 ## Docker
 You might notice that there is a Dockerfile inside the Azure Functions code. Check the [README.technicalDetails.md](README.technicalDetails.md) file for instructions on how to build and run the projet on a Docker container.
 
-## FAQ 
-Check [here](README.faq.md) for answers to common questions you may have about the project.
+## More details 
+- Check the [README.faq.md](README.faq.md) for answers to common questions you may have about the project.
+- Check the [README.operations.md](README.operations.md) for the list of all supported HTTP methods of the leaderboards API.
+- Check the [README.technicalDetails.md](README.technicalDetails.md) for various technical details of the project.
 
 ## License
 This project is licensed under the MIT License.
