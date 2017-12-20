@@ -1,5 +1,14 @@
 # Frequently Asked Questions -  AzureFunctionsNodeLeaderboards-Cosmos
 
+Here you can find answers to many questions you may have around the project. If your question is not answered here, feel free to raise an issue.
+
+## Index
+
+- [Running and testing](#running-and-testing)
+- [Extending](#extending)
+- [Monitoring](#monitoring)
+- [Various](#various)
+
 ## Running and testing 
 
 ### How can I develop this project locally?
@@ -47,7 +56,7 @@ Originally I was using [expressjs/compression](https://github.com/expressjs/comp
 ### I use Postman, do you recommend it for testing?
 Me too, it's awesome, isn't it? If you don't know [Postman](https://www.getpostman.com/), it's a free app to test your APIs, highly recommended. To get started, you can find and import my set of requests from the `various/nodeleaderboardscores.postman_collection.json` file.
 
-## Extending/monitoring the project
+## Extending
 
 ### How to extend the Score or the User object?
 Easy! Find the relevant JavaScript file in the api/models/folder and update it to your preferences. Added fields/properties will 'automagically' be persisted in the database.
@@ -57,6 +66,16 @@ Sure, if you want to contribute via a pull request, go ahead! For bugs/features/
 
 ### What if I want to set up some rate limit for my API?
 Since your API is stateless, you should use a store to preserve state in order to properly limit client requests and protect your API. A cool option to do that is [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/) in alignment with one of these excellent express modules: [strict-rate-limiter](https://www.npmjs.com/package/strict-rate-limiter), [express-brute](https://www.npmjs.com/package/express-brute), or [rate-limiter](https://www.npmjs.com/package/express-limiter). If you want to use a fast and scalable backend for these modules or if you just want something to cache your data, we recommend the [Azure Redis Cache](https://docs.microsoft.com/en-us/azure/redis-cache/) service.
+
+## Monitoring
+
+### What are Request Units (RUs) in CosmosDB?
+
+CosmosDB is a multi-tenant database. As such, you don't rent a CosmosDB server with specific hardware specifications. When you use CosmosDB, you pay for something called 'Request Units' (RUs) which is a measure of the computing resources that are needed in order to serve a specific client request. To find out more about RUs, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#request-units-and-request-charges).
+
+### How can I see how many (RUs) my queries are consuming? 
+
+There are various ways that you can monitor your RUs consumption, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#use-api-for-mongodbs-portal-metrics) to see some of them. If you happen to have many similar queries hitting the database in a short amount of time, maybe you should consider refactoring the project to add a caching layer (we recommend [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/)) for your data.
 
 ### Where is the Application Insights documentation?
 The Function gets configured to use Application Insights for instrumentation. Check [here](https://docs.microsoft.com/en-us/azure/application-insights/). Below you can see two screenshots that contain some of the performance metrics Application Insights can generate for you.

@@ -6,7 +6,7 @@ Details of all the operations supported in the `leaderboardsFunctionApp/scores` 
 
 - [POST https://functionURL/api/scores](#post-httpsfunctionurlapiscores)
 - [GET https://functionURL/api/users/:userId](#get-httpsfunctionurlapiusersuserid)
-- [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionurlapiusercorescount)
+- [GET https://functionURL/api/user/scores/:count](#get-httpsfunctionurlapiuserscorescount)
 - [GET https://functionURL/api/scores/top/:count](#get-httpsfunctionurlapiscorestopcount)
 - [GET https://functionURL/api/users/maxscore/:count](#get-httpsfunctionurlapiusersmaxscorecount)
 - [GET https://functionURL/api/scores/top/today/:count](#get-httpsfunctionurlapiscorestoptodaycount)
@@ -14,6 +14,8 @@ Details of all the operations supported in the `leaderboardsFunctionApp/scores` 
 - [GET https://functionURL/api/scores/latest/:count](#get-httpsfunctionurlapiscoreslatestcount)
 - [GET https://functionURL/api/scores/:scoreId](#get-httpsfunctionurlapiscoresscoreid)
 - [GET https://functionURL/api/health](#get-httpsfunctionurlapihealth )
+
+In all the following methods, you should replace *functionURL* with your API's domain name, e.g. nodecosmos.azurewebsites.net.
 
 ### POST https://functionURL/api/scores 
 #### Description
@@ -532,9 +534,11 @@ Gets the surrounding users of the requested one, ordered by their max score. The
 ]
 ``` 
 
+This operation might be computationally expensive, since it may take 3 Read executions on the database for it to complete. You should be cautious in using it, check the [FAQ](README.faq.md) for additional details on how to see the amount of Request Units it takes to execute.
+
 ### GET https://functionURL/api/health 
 #### Description
-Gets the status of application's health. Underneath, it tries to connect to the database. It will return HTTP 200 if everything works as intended.
+Gets the status of application's health. Underneath, it tries to connect to the database. It will return HTTP 200 if everything works as intended or error 500 if something regarding the database is broken.
 #### Sample HTTP response
 ```javascript
 {

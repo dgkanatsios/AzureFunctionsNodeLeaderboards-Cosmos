@@ -48,7 +48,7 @@ function mongoConnect(mongooseInstance) {
 //else it returns NaN
 function getInteger(value) {
     let parsedValue = Number(value);
-    if (value.trim() != '' && typeof parsedValue === 'number' && (parsedValue % 1) === 0) {
+    if (value.toString().trim() != '' && typeof parsedValue === 'number' && (parsedValue % 1) === 0) {
         return parsedValue;
     } else
         return NaN;

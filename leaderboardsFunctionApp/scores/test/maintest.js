@@ -17,7 +17,7 @@ describe('Main tests for the leaderboards API: ', function () {
             .end(function (err, res) {
                 expect(err).to.be.null;
                 res.should.have.status(200);
-                res.body.should.be.a('string');
+                res.body.should.be.a('object');
                 done();
             });
     });
@@ -29,6 +29,7 @@ describe('Main tests for the leaderboards API: ', function () {
             .send({
                 value: 499, //score value
             }).end(function (err, res) {
+                console.log(JSON.stringify(err));
                 expect(err).to.be.null;
                 res.should.have.status(200);
                 res.body.should.be.a('object');

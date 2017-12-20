@@ -17,7 +17,7 @@ describe('SurroundingByScore tests for the leaderboards API: ', function () {
             .end(function (err, res) {
                 expect(err).to.be.null;
                 res.should.have.status(200);
-                res.body.should.be.a('string');
+                res.body.should.be.a('object');
                 done();
             });
     });

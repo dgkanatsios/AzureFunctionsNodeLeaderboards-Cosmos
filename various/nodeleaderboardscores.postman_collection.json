@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/users/totaltimesplayed/10",
+			"name": "localhost:7071/api/users/toptotaltimesplayed/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -103,14 +103,15 @@
 					"raw": "{\"value\":50}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/users/123",
+					"raw": "{{URL}}/api/users/toptotaltimesplayed/10",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
 						"users",
-						"123"
+						"toptotaltimesplayed",
+						"10"
 					]
 				},
 				"description": ""
@@ -366,7 +367,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"value\":\"asdf\", \"createdAt\":\"2017-11-26T14:48:00\", \"description\":\"test description\" }"
+					"raw": "{ \"value\":\"15\", \"description\":\"test description\" }"
 				},
 				"url": {
 					"raw": "{{URL}}/api/scores",
