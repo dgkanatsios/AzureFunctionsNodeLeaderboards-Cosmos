@@ -1,6 +1,6 @@
 # AzureFunctionsNodeLeaderboards-Cosmos
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos.svg?branch=master)](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos)
 
 **STILL WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. 
