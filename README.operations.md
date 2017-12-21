@@ -184,7 +184,7 @@ Gets top `count` scores achieved in the game by all users, in descending order. 
 
 ### GET https://functionURL/api/users/maxscore/:count
 #### Description
-Gets the `count` maximum scores achieved in the game by all users, in descending order. Practically, this will bring the top `count` best scores of each user.
+Gets the `count` maximum scores achieved in the game by each unique users, in descending order. Practically, this will fetch the top `count` best score of each single user.
 #### Sample HTTP response
 ```javascript
 [
@@ -217,7 +217,7 @@ Gets the `count` maximum scores achieved in the game by all users, in descending
 
 ### GET https://functionURL/api/scores/top/today/:count 
 #### Description
-Gets the top 'count' scores for all users for today. Time is calculated based on server time.
+Gets the top 'count' scores for all users for today. Time is calculated based on server relative time.
 #### Sample HTTP response
 ```javascript
 [

@@ -36,12 +36,12 @@ Feel free to use your own authentication mechanism, if required. For example, yo
 
 ## Using a Docker container
 
-You can use the included Dockerfile on the `scores` folder to build the leaderboards API app as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on a [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/) Kubernetes cluster. Your container image(s) can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/). Check a sample architeture for this kind of deployment:
+You can use the included Dockerfile on the `scores` folder to build the leaderboards API app as a Docker container. You can use the container in [Web App for Containers/App Service on Linux](https://docs.microsoft.com/en-us/azure/app-service/containers/) or even on a [Azure Container Service](https://docs.microsoft.com/en-us/azure/aks/) Kubernetes cluster. Your container image(s) can be hosted on [Azure Container Registry](https://docs.microsoft.com/en-us/azure/container-registry/). Check a sample architeture for this deployment(s):
 
-![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container")
+![alt text](https://github.com/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos/blob/master/media/docker.JPG?raw=true "Reference architecture for usage of a Docker container on Azure Container Service or Web App for Containers")
 
 ### Build Docker image
-To build the Docker image, cd to the `leaderboardsFunctionApp/scores` directory and run the Docker build CLI command, here's an example:
+To build the Docker image, cd to the `leaderboardsFunctionApp/scores` directory and run the Docker build CLI command:
 
 ```bash
 docker build -t username/azurefunctionsnodeleaderboards:0.1 .
@@ -52,10 +52,13 @@ Of course, you can (should!) replace **username**,**azurefunctionsnodeleaderboar
 ```bash
 docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/?ssl=true&replicaSet=globaldb" --name leaderoardsapi username/azurefunctionsnodeleaderboards:0.1 
 ```
+
 Don't forget to set your correct CosmosDB connection string and your Docker image name.
 
 - To see how you can host your Docker image on Azure Web App for Containers, check [here](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image)
 - To create a managed Kubernetes Azure Container Service (AKS) cluster, check [here](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
+
+You can find some Docker build commands on `various/docker.sh` whereas you can find a Kubernetes deployment YAML file on `various/kubedeploy.yaml`.
 
 ## Unity client
 

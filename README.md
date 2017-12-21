@@ -2,8 +2,9 @@
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos.svg?branch=master)](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-**STILL WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. 
+**STILL WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. A Unity client is also provided with a corresponding C# SDK.
 
 ## Deployment
 
@@ -54,16 +55,16 @@ Here you can see a short list/summary of all the operations that are supported, 
 
 | VERB | URL | Description | 
 | --- | --- | --- |
-| POST | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score }. Returns the updated user details. |
+| POST | https://**functionURL**/api/scores | Creates a new score. Post body has the format { "value":Integer value of the score, ... }. Returns the updated user details. |
+| GET | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores | 
 | GET | https://**functionURL**/api/user/scores/:count | Gets the top 'count' scores for logged in user sorted by score value |
 | GET | https://**functionURL**/api/scores/top/:count | Gets top scores achieved in the game by all users, in descending order. This can include more than one score per user |
-| GET | https://**functionURL**/api/users/maxscore/:count | Gets all the max scores achieved in the game by all users, in descending order. Practically this includes the max score per user in descending order |
-| GET | https://**functionURL**/api/scores/today/top/:count | Gets the top 'count' scores for today|
+| GET | https://**functionURL**/api/users/maxscore/:count | Gets the scores achieved by each unique user, in descending order. Practically this includes the max score per single user |
+| GET | https://**functionURL**/api/scores/today/top/:count | Gets the top 'count' scores for today |
 | GET | https://**functionURL**/api/users/toptotaltimesplayed/:count | Gets the top 'count' users for all time in regards to the times they have played (i.e. number of times they have posted a new score).|
 | GET | https://**functionURL**/api/scores/latest/:count | Gets the latest 'count' scores |
-| GET | https://**functionURL**/api/users/:userId | Gets a specific user's details, including top score and latest scores | 
 | GET | https://**functionURL**/api/scores/:scoreID | Gets a specific score |
-| GET | https://**functionURL**/api/users/surroundingByScore/:userId/:count | Gets the surrounding users of the requested one, ordered by their max score |
+| GET | https://**functionURL**/api/users/surroundingbyscore/:userId/:count | Gets the surrounding users of the requested one, ordered by their max score |
 | GET | https://**functionURL**/api/health | Gets the application's health |
 
 ## Docker

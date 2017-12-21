@@ -151,7 +151,36 @@ namespace LeaderboardsSDK
             }
         }
 
-
+        private IEnumerator GetStuff<T>(string url, Action<CallbackResponse<T>> callback)
+        {
+            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
+                (GetScoresAPIURL() + url, HttpMethod.Get.ToString(), null, userID, username))
+            {
+                yield return www.Send();
+                if (Globals.DebugFlag) Debug.Log(www.responseCode);
+                CallbackResponse<User> response = new CallbackResponse<User>();
+                if (Utilities.IsWWWError(www))
+                {
+                    if (Globals.DebugFlag) Debug.Log(www.error);
+                    Utilities.BuildResponseObjectOnFailure(response, www);
+                }
+                else
+                {
+                    try
+                    {
+                        User data = JsonUtility.FromJson<User>(www.downloadHandler.text);
+                        response.Result = data;
+                        response.Status = CallBackResult.Success;
+                    }
+                    catch (Exception ex)
+                    {
+                        response.Status = CallBackResult.DeserializationFailure;
+                        response.Exception = ex;
+                    }
+                }
+                callback(response);
+            }
+        }
 
 
         private string GetScoresAPIURL()

@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  mongoconnectionstring: <YOUR BASE64 ENCODED COSMOSDB CONNECTION STRING>
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nodeleaderboards-deployment
+  labels:
+    name: nodeleaderboards
+    app: demo
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: nodeleaderboards
+        app: demo
+    spec:
+      containers:
+      - name: nodeleaderboards
+        image: docker.io/dgkanatsios/azurefunctionsnodeleaderboards:0.1
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        env:
+        - name: MONGODB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: mongoconnectionstring
+        - name: PORT
+          value: "3000"
+        - name: AZURE_FUNCTIONS_RUNTIME
+          value: "false"
+        - name: NODE_ENV
+          value: "production"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeleaderboards-service
+  labels:
+    name: nodeleaderboards
+    app: demo
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    name: nodeleaderboards
+    app: demo
+  type: LoadBalancer
