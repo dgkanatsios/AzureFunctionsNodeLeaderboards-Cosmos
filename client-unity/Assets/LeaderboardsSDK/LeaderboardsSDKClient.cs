@@ -27,66 +27,37 @@ namespace LeaderboardsSDK
         public void CreateScore(Score instance, Action<CallbackResponse<User>> oncreateScoreCompleted)
         {
             Utilities.ValidateForNull(instance, oncreateScoreCompleted);
-            StartCoroutine(CreateScoreInternal(instance, oncreateScoreCompleted));
+            StartCoroutine(PostScoreInternal(instance, oncreateScoreCompleted));
         }
 
         //GET https://functionURL/api/users/:userId
         public void GetUserDetails(string _userID, Action<CallbackResponse<User>> callback)
         {
             Utilities.ValidateForNull(_userID, callback);
-            StartCoroutine(GetUserDetailsInternal(_userID, callback));
+            StartCoroutine(GetStuffSingle<User>("/users/" + WWW.EscapeURL(_userID), callback));
         }
         
         //GET https://functionURL/api/user/scores/:count
         public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(ListScores(GetScoresAPIURL() + "/user/scores/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/user/scores/" + count, callback));
         }
 
         //GET https://functionURL/api/scores/top/:count
         public void ListTopScores(int count, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(ListScores(GetScoresAPIURL() + "/scores/top/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/scores/top/" + count, callback));
         }
 
-        private IEnumerator ListScores(string url, Action<CallbackResponse<Score[]>> callback)
-        {
-            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (url, HttpMethod.Get.ToString(), null, userID, username))
-            {
-                yield return www.Send();
-                if (Globals.DebugFlag) Debug.Log(www.responseCode);
-                CallbackResponse<Score[]> response = new CallbackResponse<Score[]>();
-                if (Utilities.IsWWWError(www))
-                {
-                    if (Globals.DebugFlag) Debug.Log(www.error);
-                    Utilities.BuildResponseObjectOnFailure(response, www);
-                }
-                else
-                {
-                    try
-                    {
-                        Score[] data = JsonHelper.GetJsonArray<Score>(www.downloadHandler.text);
-                        response.Result = data;
-                        response.Status = CallBackResult.Success;
-                    }
-                    catch (Exception ex)
-                    {
-                        response.Status = CallBackResult.DeserializationFailure;
-                        response.Exception = ex;
-                    }
-                }
-                callback(response);
-            }
-        }
+        
 
-        private IEnumerator CreateScoreInternal(Score instance, Action<CallbackResponse<User>> onInsertCompleted)
+        private IEnumerator PostScoreInternal(Score instance, Action<CallbackResponse<User>> onInsertCompleted)
         {
             string json = JsonUtility.ToJson(instance);
 
-            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest(GetScoresAPIURL() + "scores",
+            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest(GetLeaderboardsAPIURL() + "scores",
                 HttpMethod.Post.ToString(), json, userID, username))
             {
                 yield return www.Send();
@@ -119,15 +90,14 @@ namespace LeaderboardsSDK
                 onInsertCompleted(response);
             }
         }
-
-        private IEnumerator GetUserDetailsInternal(string _userID, Action<CallbackResponse<User>> callback)
+        private IEnumerator GetStuffSingle<T>(string url, Action<CallbackResponse<T>> callback)
         {
             using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (GetScoresAPIURL() + "/users/" + WWW.EscapeURL(_userID), HttpMethod.Get.ToString(), null, userID, username))
+                (GetLeaderboardsAPIURL() + url, HttpMethod.Get.ToString(), null, userID, username))
             {
                 yield return www.Send();
                 if (Globals.DebugFlag) Debug.Log(www.responseCode);
-                CallbackResponse<User> response = new CallbackResponse<User>();
+                CallbackResponse<T> response = new CallbackResponse<T>();
                 if (Utilities.IsWWWError(www))
                 {
                     if (Globals.DebugFlag) Debug.Log(www.error);
@@ -137,7 +107,37 @@ namespace LeaderboardsSDK
                 {
                     try
                     {
-                        User data = JsonUtility.FromJson<User>(www.downloadHandler.text);
+                        T data = JsonUtility.FromJson<T>(www.downloadHandler.text);
+                        response.Result = data;
+                        response.Status = CallBackResult.Success;
+                    }
+                    catch (Exception ex)
+                    {
+                        response.Status = CallBackResult.DeserializationFailure;
+                        response.Exception = ex;
+                    }
+                }
+                callback(response);
+            }
+        }
+        private IEnumerator GetStuffArray<T>(string url, Action<CallbackResponse<T[]>> callback)
+        {
+            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
+                (GetLeaderboardsAPIURL() + url, HttpMethod.Get.ToString(), null, userID, username))
+            {
+                yield return www.Send();
+                if (Globals.DebugFlag) Debug.Log(www.responseCode);
+                var response = new CallbackResponse<T[]>();
+                if (Utilities.IsWWWError(www))
+                {
+                    if (Globals.DebugFlag) Debug.Log(www.error);
+                    Utilities.BuildResponseObjectOnFailure(response, www);
+                }
+                else
+                {
+                    try
+                    {
+                        T[] data = JsonHelper.GetJsonArray<T>(www.downloadHandler.text);
                         response.Result = data;
                         response.Status = CallBackResult.Success;
                     }
@@ -151,39 +151,7 @@ namespace LeaderboardsSDK
             }
         }
 
-        private IEnumerator GetStuff<T>(string url, Action<CallbackResponse<T>> callback)
-        {
-            using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (GetScoresAPIURL() + url, HttpMethod.Get.ToString(), null, userID, username))
-            {
-                yield return www.Send();
-                if (Globals.DebugFlag) Debug.Log(www.responseCode);
-                CallbackResponse<User> response = new CallbackResponse<User>();
-                if (Utilities.IsWWWError(www))
-                {
-                    if (Globals.DebugFlag) Debug.Log(www.error);
-                    Utilities.BuildResponseObjectOnFailure(response, www);
-                }
-                else
-                {
-                    try
-                    {
-                        User data = JsonUtility.FromJson<User>(www.downloadHandler.text);
-                        response.Result = data;
-                        response.Status = CallBackResult.Success;
-                    }
-                    catch (Exception ex)
-                    {
-                        response.Status = CallBackResult.DeserializationFailure;
-                        response.Exception = ex;
-                    }
-                }
-                callback(response);
-            }
-        }
-
-
-        private string GetScoresAPIURL()
+        private string GetLeaderboardsAPIURL()
         {
             return string.Format("{0}/api/", Url);
         }

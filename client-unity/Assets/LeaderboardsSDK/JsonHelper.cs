@@ -23,16 +23,5 @@ namespace LeaderboardsSDK
             public T[] array = null;
         }
 
-        [Serializable]
-        private class TableStorageResult<T>
-        {
-            public T[] value = null;
-        }
-
-        public static T[] GetJsonArrayFromTableStorage<T>(string json)
-        {
-            TableStorageResult<T> result = JsonUtility.FromJson<TableStorageResult<T>>(json);
-            return result.value;
-        }
     }
 }

@@ -5,7 +5,7 @@
         "appName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the function app that you wish to create. Needs to be globally unique, will determine your Function's DNS"
+                "description": "The name of the function app that you wish to create. Needs to be globally unique, this will determine your Function's DNS."
             }
         },
         "databaseAccountName": {
@@ -17,7 +17,7 @@
         "hostingPlanName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the hosting plan that you wish to create."
+                "description": "The name of the App Service plan that you wish to create. Pick a distinctive name like 'leaderboardsplan'."
             }
         },
         "storageAccountType": {
@@ -29,7 +29,7 @@
                 "Standard_RAGRS"
             ],
             "metadata": {
-                "description": "Storage Account type"
+                "description": "Storage Account type. If you are not sure which one to pick, just leave the default Standard_LRS."
             }
         },
         "repoURL": {

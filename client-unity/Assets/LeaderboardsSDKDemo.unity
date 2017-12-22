@@ -719,6 +719,11 @@ Prefab:
       propertyPath: StatusText
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114729813453719174, guid: 03edc143baf9ef24684a16b0259418d4,
+        type: 2}
+      propertyPath: Url
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03edc143baf9ef24684a16b0259418d4, type: 2}
   m_IsPrefabParent: 0
