@@ -19,7 +19,7 @@ In all the following methods, you should replace *functionURL* with your API's d
 
 ### POST https://functionURL/api/scores 
 #### Description
-Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played (which is equal to the number of times this method has been called for the specific user
+Creates a new score. Returns the updated user's details, including top score, latest scores and number of times played (which is equal to the number of times this method has been called for the specific user. Variables `createdAt` and `description` are optional and can be omitted. If `createdAt` is omitted, the API will set its value at the current server time.
 #### Post body
 ```javascript
 //createdAt and description are optional
@@ -49,7 +49,7 @@ Creates a new score. Returns the updated user's details, including top score, la
     "createdAt": "2017-11-25T07:03:15.977Z"
 }
 ``` 
-To access the score you inserted, you can use
+To access the score you inserted, you can use the following code:
 ```javascript
 const userDetails = ...;//the return value of the API call
 const latestScores = userDetails.latestScores; //reference to the latest scores array
@@ -184,7 +184,7 @@ Gets top `count` scores achieved in the game by all users, in descending order. 
 
 ### GET https://functionURL/api/users/maxscore/:count
 #### Description
-Gets the `count` maximum scores achieved in the game by each unique users, in descending order. Practically, this will fetch the top `count` best score of each single user.
+Sorts the best (max) unique score each user has achieved and returns the top `count` of them, in descending order. This will bring only one score per user (since it queries for the top score of each user).
 #### Sample HTTP response
 ```javascript
 [

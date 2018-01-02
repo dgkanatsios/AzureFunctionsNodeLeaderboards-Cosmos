@@ -36,7 +36,7 @@ namespace LeaderboardsSDK
             Utilities.ValidateForNull(_userID, callback);
             StartCoroutine(GetStuffSingle<User>("/users/" + WWW.EscapeURL(_userID), callback));
         }
-        
+
         //GET https://functionURL/api/user/scores/:count
         public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
         {
@@ -51,7 +51,47 @@ namespace LeaderboardsSDK
             StartCoroutine(GetStuffArray<Score>("/scores/top/" + count, callback));
         }
 
-        
+        //GET https://functionURL/api/users/maxscore/:count
+        public void ListTopScorePerUser(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(GetStuffArray<Score>("/users/maxscore/" + count, callback));
+        }
+
+        //GET https://functionURL/api/scores/top/today/:count
+        public void ListTodayTopScores(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(GetStuffArray<Score>("/scores/top/today/" + count, callback));
+        }
+
+        //GET https://functionURL/api/users/toptotaltimesplayed/:count 
+        public void ListTopScorePerUser(int count, Action<CallbackResponse<User[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(GetStuffArray<User>("/users/toptotaltimesplayed/" + count, callback));
+        }
+
+        //GET https://functionURL/api/scores/latest/:count
+        public void ListLatestScores(int count, Action<CallbackResponse<Score[]>> callback)
+        {
+            Utilities.ValidateForNull(callback);
+            StartCoroutine(GetStuffArray<Score>("/scores/latest/today/" + count, callback));
+        }
+
+        //GET https://functionURL/api/scores/:scoreId
+        public void ListScore(string scoreId, Action<CallbackResponse<Score>> callback)
+        {
+            Utilities.ValidateForNull(scoreId, callback);
+            StartCoroutine(GetStuffSingle<Score>("/scores/" + scoreId, callback));
+        }
+
+        //GET https://functionURL/api/users/surroundingbyscore/:userId/:count
+        public void ListUsersSurroundingByScore(string userId, int count, Action<CallbackResponse<User[]>> callback)
+        {
+            Utilities.ValidateForNull(userId, callback);
+            StartCoroutine(GetStuffArray<User>("/users/surroundingbyscore/" + userId + "/" + count, callback));
+        }
 
         private IEnumerator PostScoreInternal(Score instance, Action<CallbackResponse<User>> onInsertCompleted)
         {
