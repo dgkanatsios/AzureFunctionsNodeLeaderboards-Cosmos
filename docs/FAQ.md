@@ -1,4 +1,4 @@
-# Frequently Asked Questions -  AzureFunctionsNodeLeaderboards-Cosmos
+# Frequently Asked Questions -  AzureFunctionsNodeLeaderboards-Cosmos ![](https://gaforgithub.azurewebsites.net/api?repo=AzureFunctionsNodeLeaderboardsCosmosFAQ&empty)
 
 Here you can find answers to many questions you may have around the project. If your question is not answered here, feel free to raise an issue.
 

@@ -1,4 +1,5 @@
-# Technical details - AzureFunctionsNodeLeaderboards-Cosmos
+# Technical details - AzureFunctionsNodeLeaderboards-Cosmos ![](https://gaforgithub.azurewebsites.net/api?repo=AzureFunctionsNodeLeaderboardsCosmosTechnicalDetails&empty)
+
 
 ## Database architecture
 
@@ -65,7 +66,7 @@ You can find some Docker build commands on `various/docker.sh` whereas you can f
 On the folder `client-unity` you can find a Unity client (built with Unity 5.6, but other 5.x versions could work) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
 
 ### First call might be slow!
-As described on the [FAQ](README.faq.md), the first call to the Azure Function will take some time, be patient.
+As described on the [FAQ](FAQ.md), the first call to the Azure Function will take some time, be patient.
 
 ### API calls
 The API follows the callback scheme, for example, check the following code that lists the top scores for all users:

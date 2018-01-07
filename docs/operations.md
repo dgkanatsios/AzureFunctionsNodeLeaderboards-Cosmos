@@ -1,4 +1,5 @@
-# Leaderboards API supported HTTP methods/operations - AzureFunctionsNodeLeaderboards-Cosmos
+# Leaderboards API supported HTTP methods/operations - AzureFunctionsNodeLeaderboards-Cosmos ![](https://gaforgithub.azurewebsites.net/api?repo=AzureFunctionsNodeLeaderboardsCosmosOperations&empty)
+
 
 Details of all the operations supported in the `leaderboardsFunctionApp/scores` Azure Function. Wherever you see `:count` in the following API calls, this stands for an integer between 1 and `config.maxCountOfScoresToReturn` (for Score objects) or between 1 and `config.maxCountOfUsersToReturn` (for User objects). These maximums are defined in `config.js` file, feel free to modify them if needed.
 
@@ -534,7 +535,7 @@ Gets the surrounding users of the requested one, ordered by their max score. The
 ]
 ``` 
 
-This operation might be computationally expensive, since it may take 3 Read executions on the database for it to complete. You should be cautious in using it, check the [FAQ](README.faq.md) for additional details on how to see the amount of Request Units it takes to execute.
+This operation might be computationally expensive, since it may take 3 Read executions on the database for it to complete. You should be cautious in using it, check the [FAQ](docs/FAQ.md) for additional details on how to see the amount of Request Units it takes to execute.
 
 ### GET https://functionURL/api/health 
 #### Description

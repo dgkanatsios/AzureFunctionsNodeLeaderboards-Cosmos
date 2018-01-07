@@ -3,8 +3,9 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos.svg?branch=master)](https://travis-ci.org/dgkanatsios/AzureFunctionsNodeLeaderboards-Cosmos)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![unofficial Google Analytics for GitHub](https://gaforgithub.azurewebsites.net/api?repo=AzureFunctionsNodeLeaderboardsCosmos)](https://github.com/dgkanatsios/gaforgithub)
 
-**STILL WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. A Unity client is also provided with a corresponding C# SDK.
+**WORK IN PROGRESS**!!! This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  and get surrounding (ranked) top players of a current user. A Unity client is also provided with a corresponding C# SDK.
 
 ## Deployment
 
@@ -47,11 +48,11 @@ After you deploy the script, you will have an Azure Resource Group containing th
 Now, you can call the available web service operations from your game. You can visit the Azure Portal to get the Azure Function URL, it will be in the format https://**functionName**.azurewebsites.net
 
 ## Authentication
-All requests to the leaderboards API **must** contain two headers on each request: `x-ms-client-principal-id` and `x-ms-client-principal-name`. If these values are missing, then the request will fail. The `x-ms-client-principal-id` should be unique for each user. Meaning, each time you use the same `x-ms-client-principal-id` for inserting a new score, this score will belong to the same user. The implemented leaderboards API does not impose any method to validate/verify these values, so you are free to implement whatever you like. However, App Service supports various authentication methods which automatically set the required headers, you can check them [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). For more details on authentication/authorization, please check [here](README.technicalDetails.md).
+All requests to the leaderboards API **must** contain two headers on each request: `x-ms-client-principal-id` and `x-ms-client-principal-name`. If these values are missing, then the request will fail. The `x-ms-client-principal-id` should be unique for each user. Meaning, each time you use the same `x-ms-client-principal-id` for inserting a new score, this score will belong to the same user. The implemented leaderboards API does not impose any method to validate/verify these values, so you are free to implement whatever you like. However, App Service supports various authentication methods which automatically set the required headers, you can check them [here](https://docs.microsoft.com/en-us/azure/app-service/app-service-authentication-overview). For more details on authentication/authorization, please check [here](docs/technicalDetails.md).
 
 ## Operations supported
 
-Here you can see a short list/summary of all the operations that are supported, check [here](README.operations.md) for full details and response samples.
+Here you can see a short list/summary of all the operations that are supported, check [here](docs/operations.md) for full details and response samples.
 
 | VERB | URL | Description | 
 | --- | --- | --- |
@@ -68,12 +69,12 @@ Here you can see a short list/summary of all the operations that are supported, 
 | GET | https://**functionURL**/api/health | Gets the application's health |
 
 ## Docker
-You might notice that there is a Dockerfile inside the Azure Functions code. Check the [README.technicalDetails.md](README.technicalDetails.md) file for instructions on how to build and run the projet on a Docker container.
+You might notice that there is a Dockerfile inside the Azure Functions code. Check the [docs/technicalDetails.md](docs/technicalDetails.md) file for instructions on how to build and run the projet on a Docker container.
 
 ## More details 
-- Check the [README.faq.md](README.faq.md) for answers to common questions you may have about the project.
-- Check the [README.operations.md](README.operations.md) for the list of all supported HTTP methods of the leaderboards API.
-- Check the [README.technicalDetails.md](README.technicalDetails.md) for various technical details of the project.
+- Check the [docs/FAQ.md](docs/FAQ.md) for answers to common questions you may have about the project.
+- Check the [docs/operations.md](docs/operations.md) for the list of all supported HTTP methods of the leaderboards API.
+- Check the [docs/technicalDetails.md](docs/technicalDetails.md) for various technical details of the project.
 
 ## License
 This project is licensed under the MIT License.
