@@ -12,13 +12,22 @@ Here you can find answers to many questions you may have around the project. If 
 ## Running and testing 
 
 ### How can I develop this project locally?
-After you fork/clone the project, you could run it locally with `node index.js` on the `scores` folder. You should include a `.env` file that sets necessary environment variables. Moreover, you can check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally and test the project within its context. After you install Azure Functions tools, simply run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`) and your function will start accepting requests. Don't forget to create a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables in the `leaderboardsFunctionApp` folder. Here is a sample file.
+After you fork/clone the project, you could run it locally with `node index.js` on the `scores` folder. You should include a `.env` file that sets necessary environment variables. Mine is listed here (with sensitive values hidden, of course)
+
+```
+MONGODB_CONNECTION_STRING=mongodb://nodecosmos:LALALALA@myurlcosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
+PORT=3000
+AZURE_FUNCTIONS_RUNTIME=false
+NODE_ENV=development
+```
+
+ Moreover, you can check [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local) for details on how to run the Functions runtime locally and test the project within its context (the method I personally prefer). After you install Azure Functions tools, simply run `func host start` on the Function(s) root directory (for our project it's the directory `scoresFunctionApp`) and your function will start accepting requests. Don't forget to create a [local.settings.json](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#local-settings-file) file that contains your environment variables in the `leaderboardsFunctionApp` folder. Here is a sample file:
 
 ```javascript
 {
     "IsEncrypted": false,
     "Values": {
-        "MONGODB_CONNECTION_STRING": "mongodb://nodecosmos:PASSWORD@nodecosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb",
+        "MONGODB_CONNECTION_STRING": "mongodb://nodecosmos:LALALALA@myurlcosmos.documents.azure.com:10255/?ssl=true&replicaSet=globaldb",
         "AZURE_FUNCTIONS_RUNTIME": "true",
         "NODE_ENV": "development"
     },

@@ -69,7 +69,25 @@ On the folder `client-unity` you can find a Unity client (built with Unity 5.6, 
 As described on the [FAQ](FAQ.md), the first call to the Azure Function will take some time, be patient.
 
 ### API calls
-The API follows the callback scheme, for example, check the following code that lists the top scores for all users:
+
+Here you can see the list of all the methods in the Unity SDK that correspond to the leaderboard API methods. All methods should be called on the ```LeaderboardsSDKClient.Instance``` singleton object.
+
+| Operation | Unity SDK call | 
+| --- | --- |
+| POST https://functionURL/api/scores | CreateScore(Score instance, Action<CallbackResponse<User>> oncreateScoreCompleted) |
+| GET https://functionURL/api/users/:userId | GetUserDetails(string userID, Action<CallbackResponse<User>> callback) |
+| GET https://functionURL/api/user/scores/:count | ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
+| GET https://functionURL/api/scores/top/:count | ListTopScores(int count, Action<CallbackResponse<Score[]>> callback) |
+| GET https://functionURL/api/users/maxscore/:count | ListTopScorePerUser(int count, Action<CallbackResponse<Score[]>> callback) |
+| GET https://functionURL/api/scores/top/today/:count | ListTodayTopScores(int count, Action<CallbackResponse<Score[]>> callback) |
+| GET https://functionURL/api/users/toptotaltimesplayed/:count | ListTopScorePerUser(int count, Action<CallbackResponse<User[]>> callback) |
+| GET https://functionURL/api/scores/latest/:count | ListLatestScores(int count, Action<CallbackResponse<Score[]>> callback) |
+| GET https://functionURL/api/scores/:scoreId | ListScore(string scoreId, Action<CallbackResponse<Score>> callback) |
+| GET https://functionURL/api/users/surroundingbyscore/:userId/:count | ListUsersSurroundingByScore(string userId, int count, Action<CallbackResponse<User[]>> callback) |
+
+### Sample API call
+
+All API calls follows the callback scheme. Callback contains a boolean to determine whether the network call has been successful, the (potential) error details and the actual API call result. For an example, check the following code that lists the top scores for all users:
 
 ```csharp
 public void ListTopScoresForAllUsers()

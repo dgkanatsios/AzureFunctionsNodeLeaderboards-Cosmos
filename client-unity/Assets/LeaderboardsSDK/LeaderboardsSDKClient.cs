@@ -31,10 +31,10 @@ namespace LeaderboardsSDK
         }
 
         //GET https://functionURL/api/users/:userId
-        public void GetUserDetails(string _userID, Action<CallbackResponse<User>> callback)
+        public void GetUserDetails(string userID, Action<CallbackResponse<User>> callback)
         {
-            Utilities.ValidateForNull(_userID, callback);
-            StartCoroutine(GetStuffSingle<User>("/users/" + WWW.EscapeURL(_userID), callback));
+            Utilities.ValidateForNull(userID, callback);
+            StartCoroutine(GetStuffSingle<User>("/users/" + WWW.EscapeURL(userID), callback));
         }
 
         //GET https://functionURL/api/user/scores/:count
