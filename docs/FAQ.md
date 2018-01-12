@@ -47,8 +47,8 @@ PORT=3000
 AZURE_FUNCTIONS_RUNTIME=false
 NODE_ENV=development
 ```
-### How can I see the data on my CosmosDB instance?
-[Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) is a  free and cross-platform tool that allows you to browse your Azure Storage accounts as well as your CosmosDB databases. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
+### How can I see the data on my Cosmos DB instance?
+[Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/) is a  free and cross-platform tool that allows you to browse your Azure Storage accounts as well as your Cosmos DB databases. You can also use familiar MongoDB related tools, like [MongoChef](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-mongochef) and [Robomongo](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-robomongo).
 
 
 ### What can I use for authentication/authorization?
@@ -78,16 +78,16 @@ Since your API is stateless, you should use a store to preserve state in order t
 
 ## Monitoring
 
-### What are Request Units (RUs) in CosmosDB?
-CosmosDB is a multi-tenant database. As such, you don't rent a CosmosDB server with specific hardware specifications. When you use CosmosDB, you pay for something called 'Request Units' (RUs) which is a measure of the computing resources that are needed in order to serve a specific client request. To find out more about RUs, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#request-units-and-request-charges).
+### What are Request Units (RUs) in Cosmos DB?
+Cosmos DB is a multi-tenant database. As such, you don't rent a Cosmos DB server with specific hardware specifications. When you use Cosmos DB, you pay for something called 'Request Units' (RUs) which is a measure of the computing resources that are needed in order to serve a specific client request. To find out more about RUs, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#request-units-and-request-charges).
 
-### How much do I pay for the CosmosDB database this project is creating?
+### How much do I pay for the Cosmos DB database this project is creating?
 For the most updated pricing details, check out the official pricing documentation [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/). Be aware that the collection that is created by the project uses 1000RUs (this is the default), you can modify it via Azure Portal or programmatically and scale it down to 400RUs (that's the minimum), if you don't need the extra horse power. If you do need it though, you could as easily scale it up to 10.000 RUs.
 
 ### How can I see how many (RUs) my queries are consuming? 
 There are various ways that you can monitor your RUs consumption, check the official documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/request-units#use-api-for-mongodbs-portal-metrics) to see some of them. If you happen to have many similar queries hitting the database in a short amount of time, maybe you should consider refactoring the project to add a caching layer (we recommend [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/)) for your data.
 
-### Tell me more about CosmosDB partitioning and scaling
+### Tell me more about Cosmos DB partitioning and scaling
 Please check the official and frequently updated documentation [here](https://docs.microsoft.com/en-us/azure/cosmos-db/partition-data).
 
 ### Where is the Application Insights documentation?
@@ -103,7 +103,7 @@ The Function gets configured to use Application Insights for instrumentation. Ch
 
 ### What resources are created by the ARM template deployment (azuredeploy.json file)?
 You should the following resources created in your Azure subscription
-- A CosmosDB database account
+- A Cosmos DB database account
 - A Storage account (that backs your Azure Function)
 - An App Service Plan (uses the Consumption plan)
 - An App Service (hosts your Function)
@@ -132,13 +132,13 @@ Other two options to prevent this behavior would be
 Moreover, on the very first call to your Azure Function  (the so-called "cold start") there will be a delay as node installs, reads and loads all module files. They are cached, though, so subsequent executions have significantly better performance. You can check [here](https://github.com/Azure/azure-functions-pack) for a way this can be improved (even though this approach hasn't been tested with current project).
 
 ### I saw you're using Mongoose discriminators. Why?
-To save you some money. CosmosDB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
+To save you some money. Cosmos DB charges per collection, check [here](https://anthonychu.ca/post/cosmos-db-mongoose-discriminators/) for a relevant blog post.
 
-### How much does CosmosDB cost?
-You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/) in order to undestand CosmosDB pricing.
+### How much does Cosmos DB cost?
+You can read [here](https://azure.microsoft.com/en-us/pricing/details/cosmos-db/) in order to undestand Cosmos DB pricing.
 
-### Can I try CosmosDB for free?
-Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Also, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for CosmosDB. For CosmosDB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure resources, check [here](https://azure.microsoft.com/en-us/free/).
+### Can I try Cosmos DB for free?
+Yup! Check [here](https://azure.microsoft.com/en-us/try/cosmosdb/). Also, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction) to learn more about MongoDB API for Cosmos DB. For Cosmos DB use cases, check [here](https://docs.microsoft.com/en-us/azure/cosmos-db/use-cases). For some free Azure resources, check [here](https://azure.microsoft.com/en-us/free/).
 
 ### Where is the Azure Functions documentation? How are Functions charged?
 Check [here](https://docs.microsoft.com/en-us/azure/azure-functions/). When you deploy the Function via the ARM template provided, you are billed by Azure Functions consumption plan. Great thing with consumption plan is that the first million calls per month are free. It's a pretty cost-effecive plan, for the specifics rest you should check the relevant pricing page [here](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-feature-support).

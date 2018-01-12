@@ -11,7 +11,7 @@
         "databaseAccountName": {
             "type": "string",
             "metadata": {
-                "description": "The CosmosDB database account name (server name). Needs to be globally unique."
+                "description": "The Cosmos DB database account name (server name). Needs to be globally unique."
             }
         },
         "hostingPlanName": {

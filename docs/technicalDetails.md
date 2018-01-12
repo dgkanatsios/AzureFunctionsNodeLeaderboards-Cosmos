@@ -3,7 +3,7 @@
 
 ## Database architecture
 
-You can easily get acquainted with the database architecture by checking the User and Score Mongoose models on `scores/api/models` folder. We're using Mongoose discriminators to save everything on a single CosmosDB collection. That's why you'll aso find a base model schema, that refers to a single collection called `gamedata`.
+You can easily get acquainted with the database architecture by checking the User and Score Mongoose models on `scores/api/models` folder. We're using Mongoose discriminators to save everything on a single Cosmos DB collection. That's why you'll aso find a base model schema, that refers to a single collection called `gamedata`.
 
 ### Score schema
 
@@ -54,7 +54,7 @@ Of course, you can (should!) replace **username**,**azurefunctionsnodeleaderboar
 docker run -d -p 3000:3000 -e "MONGODB_CONNECTION_STRING=mongodb://node-scores:12345678@node-scores.documents.azure.com:10255/?ssl=true&replicaSet=globaldb" --name leaderoardsapi username/azurefunctionsnodeleaderboards:0.1 
 ```
 
-Don't forget to set your correct CosmosDB connection string and your Docker image name.
+Don't forget to set your correct Cosmos DB connection string and your Docker image name.
 
 - To see how you can host your Docker image on Azure Web App for Containers, check [here](https://docs.microsoft.com/en-us/azure/app-service/containers/tutorial-custom-docker-image)
 - To create a managed Kubernetes Azure Container Service (AKS) cluster, check [here](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough)
@@ -113,3 +113,16 @@ public void ListTopScoresForAllUsers()
         StatusText.text = "Loading...";
     }
 ```
+
+### Authentication
+
+You need to set two required HTTP headers when calling the leaderboard API methods. These are set in the sample game with the following lines of code:
+
+```csharp
+    //get the authentication token(s) somehow...
+    //e.g. for facebook, check the Unity Facebook SDK at https://developers.facebook.com/docs/unity
+    LeaderboardsSDKClient.Instance.userID = "CURRENT_PLAYER_UNIQUE_ID";
+    LeaderboardsSDKClient.Instance.username = "CURRENT_PLAYER_USERNAME";
+```
+
+You need to somehow set them yourself, either using unique values stored in game's local storage, or get them via a web service you own, or use custom authentication means (like [Facebook login](https://developers.facebook.com/docs/unity)).

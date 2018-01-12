@@ -15,8 +15,8 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
 
         //get the authentication token(s) somehow...
         //e.g. for facebook, check the Unity Facebook SDK at https://developers.facebook.com/docs/unity
-        LeaderboardsSDKClient.Instance.userID = "12345";
-        LeaderboardsSDKClient.Instance.username = "dimitris2";
+        LeaderboardsSDKClient.Instance.userID = "CURRENT_PLAYER_UNIQUE_ID";
+        LeaderboardsSDKClient.Instance.username = "CURRENT_PLAYER_USERNAME";
 
         //check here for more information regarding authentication and authorization in Azure App Service
         //https://azure.microsoft.com/en-us/documentation/articles/app-service-authentication-overview/
