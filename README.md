@@ -6,7 +6,7 @@
 [![unofficial Google Analytics for GitHub](https://gaforgithub.azurewebsites.net/api?repo=AzureFunctionsNodeLeaderboardsCosmos)](https://github.com/dgkanatsios/gaforgithub)
 ![](https://img.shields.io/badge/status-stable-green.svg)
 
-This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones  more. A Unity client is also provided with a corresponding C# SDK. You can read some of the thought process that drove the creation of this project in the blog post [here](https://dgkanatsios.com/2018/01/08/designing-a-general-purpose-game-leaderboard/).
+This project is a starter kit that allows you to set up a RESTful API service that stores game leaderboards (scores) and exposes them via HTTP(s) methods/operations. A game developer can use this API service in their game and post new scores, get the top scores, find out the latest ones and more. A Unity client is also provided. You can read some of the thought process that drove the creation of this project in the blog post [here](https://dgkanatsios.com/2018/01/08/designing-a-general-purpose-game-leaderboard/).
 
 ## Deployment
 
