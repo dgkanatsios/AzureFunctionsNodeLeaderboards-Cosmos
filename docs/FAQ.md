@@ -63,7 +63,7 @@ Originally I was using [expressjs/compression](https://github.com/expressjs/comp
 3. You may wish to use one of the helper methods in api/controllers/controllerHelpers.js
 
 ### I use Postman, do you recommend it for testing?
-Me too, it's awesome, isn't it? If you don't know [Postman](https://www.getpostman.com/), it's a free app to test your APIs, highly recommended. To get started, you can find and import my set of requests from the `various/nodeleaderboardscores.postman_collection.json` file.
+Me too, it's awesome, isn't it? If you don't know [Postman](https://www.getpostman.com/), it's a free app to test your APIs, highly recommended. To get started, you can find and import my set of requests from the `various/nodeleaderboardscores.postman_collection.json` file. To get this working, you need to create a {{URL}} Postman variable ([details](https://www.getpostman.com/docs/postman/environments_and_globals/variables)). 
 
 ## Extending
 

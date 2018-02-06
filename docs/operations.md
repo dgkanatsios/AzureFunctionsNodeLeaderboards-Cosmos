@@ -437,7 +437,7 @@ Gets the latest 'count' scores for all users. Scores are sorted in descending or
 
 ### GET https://functionURL/api/scores/:scoreId 
 #### Description
-Gets the specific details of a specific score.
+Gets the specific details of a specific score (i.e. the entire Score object). You need to pass the _id of the Score in the GET request.
 #### Sample HTTP response
 ```javascript
 {
