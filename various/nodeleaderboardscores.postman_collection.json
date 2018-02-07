@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:7071/api/scores/5a1850c314fed73480d9d61b",
+			"name": "FUNCTIONS_URL/api/scores/5a1850c314fed73480d9d61b",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -44,7 +44,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/users/1234",
+			"name": "FUNCTIONS_URL/api/users/1234",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/users/toptotaltimesplayed/10",
+			"name": "FUNCTIONS_URL/api/users/toptotaltimesplayed/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -119,7 +119,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/scores/top/10",
+			"name": "FUNCTIONS_URL/api/scores/top/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -157,7 +157,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/users/surroundingbyscore/3/1",
+			"name": "FUNCTIONS_URL/api/users/surroundingbyscore/3/1",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -196,7 +196,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/scores/top/today/10",
+			"name": "FUNCTIONS_URL/api/scores/top/today/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -235,7 +235,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/scores/latest/10",
+			"name": "FUNCTIONS_URL/api/scores/latest/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -273,7 +273,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/user/scores/10",
+			"name": "FUNCTIONS_URL/api/user/scores/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -310,7 +310,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/users/maxscore/10",
+			"name": "FUNCTIONS_URL/api/users/maxscore/10",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -348,7 +348,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/scores",
+			"name": "FUNCTIONS_URL/api/scores",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -384,7 +384,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:7071/api/health",
+			"name": "FUNCTIONS_URL/api/health",
 			"request": {
 				"method": "GET",
 				"header": [
