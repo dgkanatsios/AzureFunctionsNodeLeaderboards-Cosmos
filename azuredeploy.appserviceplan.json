@@ -82,7 +82,7 @@
             "type": "microsoft.insights/components",
             "apiVersion": "2015-05-01",
             "name": "[variables('functionAppName')]",
-            "location": "[resourceGroup().location]",
+            "location": "South Central US",
             "properties": {
                 "ApplicationId": "[variables('functionAppName')]"
             }
