@@ -12,14 +12,14 @@ This project is a starter kit that allows you to set up a RESTful API service th
 
 One-click deployment via [Azure ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authoring-templates) is supported, click the button below to deploy the project in your Azure subscription using Azure Functions Consumption Plan.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a> with Consumption Plan
 
 The deployment will take some time to execute (due to resources' creation and time to pull code from GitHub), please be patient.
 Be aware that App name, Storage account name and Cosmos DB database name must all be globally unique. Otherwise, the deployment will fail to complete and you will see an error message in the Azure portal. In this case, you should delete the created Resource Group and try again.
 
 If you do want to deploy the project using Azure Functions App Service Plan, use the button below:
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.appserviceplan.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdgkanatsios%2FAzureFunctionsNodeLeaderboard%2Fmaster%2Fazuredeploy.appserviceplan.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/></a> with App Service Plan
 
 ## High level architecture
 
