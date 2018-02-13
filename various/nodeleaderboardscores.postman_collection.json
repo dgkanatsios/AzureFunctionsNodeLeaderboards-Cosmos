@@ -1,11 +1,46 @@
 {
 	"info": {
 		"name": "nodeleaderboardscores",
-		"_postman_id": "0044baed-638f-a645-0442-f455e1ba0b08",
+		"_postman_id": "0f7e51a2-fbfa-b70d-10e8-b380925513ea",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "FUNCTIONS_URL/api/scores",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "1234"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"value\":\"15\", \"description\":\"test description\" }"
+				},
+				"url": {
+					"raw": "{{URL}}/api/scores",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"scores"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "FUNCTIONS_URL/api/scores/5a1850c314fed73480d9d61b",
 			"request": {
@@ -29,17 +64,16 @@
 					"raw": "{\"value\":50}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/scores/5a1850c314fed73480d9d61b",
+					"raw": "{{URL}}/api/scores/5a8219f25cf9a319a853a52d",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
 						"api",
 						"scores",
-						"5a1850c314fed73480d9d61b"
+						"5a8219f25cf9a319a853a52d"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -73,10 +107,9 @@
 					"path": [
 						"api",
 						"users",
-						"123"
+						"1234"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -113,8 +146,7 @@
 						"toptotaltimesplayed",
 						"10"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -151,8 +183,7 @@
 						"top",
 						"10"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -179,7 +210,7 @@
 					"raw": "{\"value\":50}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/users/surroundingbyscore/userId20/6",
+					"raw": "{{URL}}/api/users/surroundingbyscore/1234/3",
 					"host": [
 						"{{URL}}"
 					],
@@ -187,11 +218,10 @@
 						"api",
 						"users",
 						"surroundingbyscore",
-						"userId20",
-						"6"
+						"1234",
+						"3"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -229,8 +259,7 @@
 						"today",
 						"10"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -267,8 +296,7 @@
 						"latest",
 						"10"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -283,7 +311,7 @@
 					},
 					{
 						"key": "x-ms-client-principal-id",
-						"value": "123"
+						"value": "1234"
 					},
 					{
 						"key": "x-ms-client-principal-name",
@@ -295,7 +323,7 @@
 					"raw": "{\"value\":50}"
 				},
 				"url": {
-					"raw": "{{URL}}/api/user/scores",
+					"raw": "{{URL}}/api/user/scores/10",
 					"host": [
 						"{{URL}}"
 					],
@@ -304,8 +332,7 @@
 						"user",
 						"scores"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -342,44 +369,7 @@
 						"maxscore",
 						"10"
 					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "FUNCTIONS_URL/api/scores",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "x-ms-client-principal-id",
-						"value": "5432"
-					},
-					{
-						"key": "x-ms-client-principal-name",
-						"value": "despina"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{ \"value\":\"15\", \"description\":\"test description\" }"
-				},
-				"url": {
-					"raw": "{{URL}}/api/scores",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"api",
-						"scores"
-					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -406,10 +396,31 @@
 						"api",
 						"health"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cb3d676e-2e00-441b-8968-9e5608efa0d4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8c0f455e-c357-430d-8498-8751dcbb015f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
