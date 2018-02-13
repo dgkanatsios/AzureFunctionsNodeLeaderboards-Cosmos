@@ -347,7 +347,7 @@
 					},
 					{
 						"key": "x-ms-client-principal-id",
-						"value": "123"
+						"value": "1234"
 					},
 					{
 						"key": "x-ms-client-principal-name",
@@ -381,6 +381,14 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "x-ms-client-principal-id",
+						"value": "1234"
+					},
+					{
+						"key": "x-ms-client-principal-name",
+						"value": "dimitris"
 					}
 				],
 				"body": {
