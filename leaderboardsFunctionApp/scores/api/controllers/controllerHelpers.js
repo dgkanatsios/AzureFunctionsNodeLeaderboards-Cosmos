@@ -15,12 +15,19 @@ function listScores(req, res, sortByValue, queryFilter) {
 
 function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount, projection) {
     const count = utilities.getInteger(req.params.count);
+    
+    let skipCount = req.query.skip || 0;
+    skipCount = utilities.getInteger(skipCount);
+    
     if (isNaN(count) || count < 1 || count > maxCount) {
         const err = `count must be between 1 and ${maxCount}`;
         respond(err, null, req, res, 400);
+    } else if (isNaN(skipCount) || skipCount < 0) {
+        const err = `skip must be >= 0`;
+        respond(err, null, req, res, 400);
     } else {
         const _filter = queryFilter || {};
-        schemaName.find(_filter, projection).limit(count).sort(sortByValue).exec(function (err, documents) {
+        schemaName.find(_filter, projection).skip(skipCount).limit(count).sort(sortByValue).exec(function (err, documents) {
             if (documents && documents.length > 0)
                 respond(err, documents, req, res);
             else

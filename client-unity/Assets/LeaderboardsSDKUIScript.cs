@@ -77,7 +77,7 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
 
     public void ListScoresForCurrentUser()
     {
-        LeaderboardsSDKClient.Instance.ListScoresForCurrentUser(10, response =>
+        LeaderboardsSDKClient.Instance.ListScoresForCurrentUser(10, 0, response =>
         {
             if (response.Status == CallBackResult.Success)
             {
@@ -101,11 +101,34 @@ public class LeaderboardsSDKUIScript : MonoBehaviour
     public void ListTopScores()
     {
         //get the top 10 scores for all users
-        LeaderboardsSDKClient.Instance.ListTopScores(10, response =>
+        LeaderboardsSDKClient.Instance.ListTopScores(10, 0, response =>
+         {
+             if (response.Status == CallBackResult.Success)
+             {
+                 string result = "List top scores for all users completed";
+                 if (Globals.DebugFlag)
+                     foreach (var item in response.Result)
+                     {
+                         WriteLine(string.Format("username is {0},value is {1}", item.username, item.value));
+                     }
+                 WriteLine(result);
+             }
+             else
+             {
+                 WriteLine(response.Exception.Message);
+             }
+         });
+        WriteLine("Loading...");
+    }
+
+    public void ListTopScoresSkip()
+    {
+        //get the top 10 scores for all users, skipping 2
+        LeaderboardsSDKClient.Instance.ListTopScores(10, 2, response =>
         {
             if (response.Status == CallBackResult.Success)
             {
-                string result = "List top scores for all users completed";
+                string result = "List top scores for all users (skipping 2) completed";
                 if (Globals.DebugFlag)
                     foreach (var item in response.Result)
                     {

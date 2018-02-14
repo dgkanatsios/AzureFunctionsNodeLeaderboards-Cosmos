@@ -93,7 +93,7 @@ If the `userId` provided does not exist in the database, error 400 is returned.
 
 ### GET https://functionURL/api/user/scores/:count 
 #### Description
-Gets the top 'count' scores for logged in user sorted by descending score value. Logged in user is defined by the `x-ms-client-principal-id` HTTP header.
+Gets the top 'count' scores for logged in user sorted by descending score value. Logged in user is defined by the `x-ms-client-principal-id` HTTP header. Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -128,7 +128,7 @@ If the userId cannot be found in the database, error 400 is returned.
 
 ### GET https://functionURL/api/scores/top/:count 
 #### Description
-Gets top `count` scores achieved in the game by all users, in descending order. This can include more than one score per user.
+Gets top `count` scores achieved in the game by all users, in descending order. This can include more than one score per user. Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -185,7 +185,7 @@ Gets top `count` scores achieved in the game by all users, in descending order. 
 
 ### GET https://functionURL/api/users/maxscore/:count
 #### Description
-Sorts the best (max) unique score each user has achieved and returns the top `count` of them, in descending order. This will bring only one score per user (since it queries for the top score of each user).
+Sorts the best (max) unique score each user has achieved and returns the top `count` of them, in descending order. This will bring only one score per user (since it queries for the top score of each user). Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -218,7 +218,7 @@ Sorts the best (max) unique score each user has achieved and returns the top `co
 
 ### GET https://functionURL/api/scores/top/today/:count 
 #### Description
-Gets the top 'count' scores for all users for today. Time is calculated based on server relative time.
+Gets the top 'count' scores for all users for today. Time is calculated based on server relative time. Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -275,7 +275,7 @@ Gets the top 'count' scores for all users for today. Time is calculated based on
 
 ### GET https://functionURL/api/users/toptotaltimesplayed/:count 
 #### Description
-Gets the top users for all time in regards to the times they have played (this is equal to the number of times they have posted a new score). Users are sorted in descending order of their times played.
+Gets the top users for all time in regards to the times they have played (this is equal to the number of times they have posted a new score). Users are sorted in descending order of their times played. Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -356,7 +356,7 @@ Gets the top users for all time in regards to the times they have played (this i
 
 ### GET https://functionURL/api/scores/latest/:count 
 #### Description
-Gets the latest 'count' scores for all users. Scores are sorted in descending order of the datetime they were achieved.
+Gets the latest 'count' scores for all users. Scores are sorted in descending order of the datetime they were achieved. Supports paging via the `skip` query string parameter, check [here](#paging) for details.
 #### Sample HTTP response
 ```javascript
 [
@@ -546,3 +546,15 @@ Gets the status of application's health. Underneath, it tries to connect to the 
     "message": "Everything OK"
 }
 ``` 
+
+### Paging
+You can optionally use paging for some operations via the `skip` query string parameter. `skip` is an **optional** parameter and must be an integer larger or equal to zero. If it's ommitted, it means that no skipping is desired. The operations that support skipping are:
+- https://**functionURL**/api/users/toptotaltimesplayed
+- https://**functionURL**/api/scores/toptoday/:count
+- https://**functionURL**/api/user/scores/:count
+- https://**functionURL**/api/scores/top/:count
+- https://**functionURL**/api/users/maxscore/:count
+- https://**functionURL**/api/scores/latest/:count
+
+#### How it works
+You just append the query string `skip` parameter. For example, to get the top 10 scores, you should call *https://**functionURL**/api/scores/top/10* or *https://**functionURL**/api/scores/top/10?skip=0*. To get the next 10 scores, you should call *https://**functionURL**/api/scores/top/10?skip=10*. To get the next 10, you should call *https://**functionURL**/api/scores/top/10?skip=20* etc.   

@@ -65,7 +65,7 @@ You can find some Docker build commands on `various/docker.sh` whereas you can f
 
 ## Unity client
 
-On the folder `client-unity` you can find a Unity client (built with Unity 5.6, but other 5.x versions could work) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
+On the folder `client-unity` you can find a Unity client (built with Unity 5.6, but other 5.x versions could work) that accesses the Leaderboards API operations using the standard [UnityWebRequest](https://docs.unity3d.com/ScriptReference/Networking.UnityWebRequest.html) class. Inside the Unity project you can find a sample scene that demonstrates accessing the API calls. To make this work, modify the `LeaderboardsSDKHelper` game object's URL property on the editor with your Function's endpoint (like `https://nodecosmos.azurewebsites.net/`). Do not include the `api` part of the URL. Click `Play` on the Editor, or export to your platform of choice and enjoy accessing your Leaderboards API on Azure Functions!
 
 ### First call might be slow!
 As described on the [FAQ](FAQ.md), the first call to the Azure Function will take some time, be patient.

@@ -38,45 +38,45 @@ namespace LeaderboardsSDK
         }
 
         //GET https://functionURL/api/user/scores/:count
-        public void ListScoresForCurrentUser(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListScoresForCurrentUser(int count, int skipCount, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<Score>("/user/scores/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/user/scores/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/scores/top/:count
-        public void ListTopScores(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListTopScores(int count, int skipCount, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<Score>("/scores/top/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/scores/top/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/users/maxscore/:count
-        public void ListTopScorePerUser(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListTopScorePerUser(int count, int skipCount, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<Score>("/users/maxscore/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/users/maxscore/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/scores/top/today/:count
-        public void ListTodayTopScores(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListTodayTopScores(int count, int skipCount, Action<CallbackResponse<Score[]>> callback)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<Score>("/scores/top/today/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/scores/top/today/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/users/toptotaltimesplayed/:count 
-        public void ListTopScorePerUser(int count, Action<CallbackResponse<User[]>> callback)
+        public void ListTopScorePerUser(int count, Action<CallbackResponse<User[]>> callback, int skipCount = 0)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<User>("/users/toptotaltimesplayed/" + count, callback));
+            StartCoroutine(GetStuffArray<User>("/users/toptotaltimesplayed/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/scores/latest/:count
-        public void ListLatestScores(int count, Action<CallbackResponse<Score[]>> callback)
+        public void ListLatestScores(int count, Action<CallbackResponse<Score[]>> callback, int skipCount = 0)
         {
             Utilities.ValidateForNull(callback);
-            StartCoroutine(GetStuffArray<Score>("/scores/latest/today/" + count, callback));
+            StartCoroutine(GetStuffArray<Score>("/scores/latest/today/" + count, skipCount, callback));
         }
 
         //GET https://functionURL/api/scores/:scoreId
@@ -89,8 +89,9 @@ namespace LeaderboardsSDK
         //GET https://functionURL/api/users/surroundingbyscore/:userId/:count
         public void ListUsersSurroundingByScore(string userId, int count, Action<CallbackResponse<User[]>> callback)
         {
+            //skipping is not relevant here
             Utilities.ValidateForNull(userId, callback);
-            StartCoroutine(GetStuffArray<User>("/users/surroundingbyscore/" + userId + "/" + count, callback));
+            StartCoroutine(GetStuffArray<User>("/users/surroundingbyscore/" + userId + "/" + count, 0, callback));
         }
 
         private IEnumerator PostScoreInternal(Score instance, Action<CallbackResponse<User>> onInsertCompleted)
@@ -160,10 +161,16 @@ namespace LeaderboardsSDK
                 callback(response);
             }
         }
-        private IEnumerator GetStuffArray<T>(string url, Action<CallbackResponse<T[]>> callback)
+        private IEnumerator GetStuffArray<T>(string url, int skipCount, Action<CallbackResponse<T[]>> callback)
         {
+            string fullurl = GetLeaderboardsAPIURL() + url;
+            if (skipCount < 0)
+                throw new ArgumentException("skipCount cannot be less than zero");
+            else if (skipCount > 0)
+                fullurl += "?skip=" + skipCount;
+
             using (UnityWebRequest www = Utilities.BuildScoresAPIWebRequest
-                (GetLeaderboardsAPIURL() + url, HttpMethod.Get.ToString(), null, userID, username))
+                (fullurl, HttpMethod.Get.ToString(), null, userID, username))
             {
                 yield return www.Send();
                 if (Globals.DebugFlag) Debug.Log(www.responseCode);

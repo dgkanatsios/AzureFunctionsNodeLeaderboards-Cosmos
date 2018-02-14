@@ -161,6 +161,17 @@ describe('Main tests for the leaderboards API: ', function () {
             });
     });
 
+    it("checks the result for a wront skip query string value", function (done) {
+        chai.request(server).get("/api/user/scores/10?skip=lala")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                err.should.not.be.null;
+                res.should.have.status(400);
+                done();
+            });
+    });
+
     it('lists max scores achieved in the game by all users, in descending order', function (done) {
         chai.request(server).get("/api/users/maxscore/10")
             .set('x-ms-client-principal-id', 'anotherUserId')
@@ -197,6 +208,24 @@ describe('Main tests for the leaderboards API: ', function () {
             });
     });
 
+    it('list top scores achieved in the game by all users, in descending order, skipping 10', function (done) {
+        chai.request(server).get("/api/scores/top/10?skip=10")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('Array');
+                res.body.should.have.lengthOf(10);
+                res.body[0].value.should.equal(42);
+                res.body[3].userId.should.equal('anotherUserId');
+                res.body[4].username.should.equal('anotherUsername');
+                res.body[4].value.should.equal(38);
+                res.body[7].value.should.equal(35);
+                done();
+            });
+    });
+
     it('checks the details of a specific score', function (done) {
         chai.request(server).get(`/api/scores/${justAscoreId}`)
             .set('x-ms-client-principal-id', 'anotherUserId')
@@ -223,6 +252,21 @@ describe('Main tests for the leaderboards API: ', function () {
                 res.body[0].username.should.equal('anotherUsername');
                 res.body[1]._id.should.equal('testUserId');
                 res.body[1].username.should.equal('testUsername');
+                done();
+            });
+    });
+
+    it('lists top users based on the total times played, skipping 1', function (done) {
+        chai.request(server).get("/api/users/toptotaltimesplayed/10?skip=1")
+            .set('x-ms-client-principal-id', 'anotherUserId')
+            .set('x-ms-client-principal-name', 'anotherUsername')
+            .end(function (err, res) {
+                expect(err).to.be.null;
+                res.should.have.status(200);
+                res.body.should.be.a('Array');
+                res.body.should.have.lengthOf(1);
+                res.body[0]._id.should.equal('testUserId');
+                res.body[0].username.should.equal('testUsername');
                 done();
             });
     });

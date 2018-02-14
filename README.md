@@ -57,7 +57,7 @@ All requests to the leaderboards API **must** contain two headers on each reques
 
 ## Operations supported
 
-Here you can see a short list/summary of all the operations that are supported, check [here](docs/operations.md) for full details and response samples.
+Here you can see a short list/summary of all the operations that are supported, check [here](docs/operations.md) for full details and response samples. Some operations support skipping via a `skip` query string parameter, check [the operations page](docs/operations.md) for details.
 
 | VERB | URL | Description | 
 | --- | --- | --- |
