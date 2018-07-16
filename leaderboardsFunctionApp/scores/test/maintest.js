@@ -137,19 +137,17 @@ describe('Main tests for the leaderboards API: ', function () {
             .end(function (err, res) {
                 expect(err).to.be.null;
                 res.should.have.status(200);
-                res.body.should.be.a('Array');
-                res.body.should.have.lengthOf(10);
-                res.body[0].value.should.equal(50);
-                res.body[9].value.should.equal(41);
-                res.body.forEach(element => {
-                    element.userId.should.equal('anotherUserId');
-                    element.username.should.equal('anotherUsername');
-                });
+                console.log(JSON.stringify(res.body));
+                //{"total":50,"posts":[{"value":50},{"value":6},{"value":10},{"value":5},{"value":9},{"value":2},{"value":8},{"value":3},{"value":7},{"value":13}]}
+                res.body.should.be.a('object');
+                res.body.posts.should.have.lengthOf(10);
+                res.body.total.should.equal(50);
+                res.body.posts[0].value.should.equal(50);
+
                 done();
             });
     });
-
-
+    return;
     it("checks the result for a wront :count value", function (done) {
         chai.request(server).get("/api/user/scores/TEN")
             .set('x-ms-client-principal-id', 'anotherUserId')

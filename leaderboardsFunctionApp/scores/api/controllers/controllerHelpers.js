@@ -15,10 +15,10 @@ function listScores(req, res, sortByValue, queryFilter) {
 
 function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount, projection) {
     const count = utilities.getInteger(req.params.count);
-    
+
     let skipCount = req.query.skip || 0;
     skipCount = utilities.getInteger(skipCount);
-    
+
     if (isNaN(count) || count < 1 || count > maxCount) {
         const err = `count must be between 1 and ${maxCount}`;
         respond(err, null, req, res, 400);
@@ -27,9 +27,44 @@ function listDocuments(req, res, sortByValue, queryFilter, schemaName, maxCount,
         respond(err, null, req, res, 400);
     } else {
         const _filter = queryFilter || {};
-        schemaName.find(_filter, projection).skip(skipCount).limit(count).sort(sortByValue).exec(function (err, documents) {
-            if (documents && documents.length > 0)
-                respond(err, documents, req, res);
+
+        schemaName.aggregate([{
+                $match: _filter
+            },
+            {
+                $project: {
+                    value: 1,
+                    userId: 1,
+                    username: 1
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    total: {
+                        $sum: 1
+                    },
+                    posts: {
+                        $push: {
+                            value: '$value'
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    total: 1,
+                    posts: {
+                        $slice: ['$posts', skipCount, count]
+                    }
+
+                }
+            }
+        ], function (err, result) {
+            console.log(err);
+            if (result)
+                respond(err, result[0], req, res); //we use [0] because normally it returns an array with one element
             else
                 respond('No data for your arguments/credentials', null, req, res, 400);
         });

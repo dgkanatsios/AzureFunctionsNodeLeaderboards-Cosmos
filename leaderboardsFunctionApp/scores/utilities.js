@@ -1,7 +1,10 @@
 const config = require('./config');
 
 function logInfo(msg, req) {
-    log('INFO: ' + msg, req);
+
+    if (process.env.NODE_ENV !== 'test') {
+        log('INFO: ' + msg, req);
+    }
 }
 
 function logError(error, req) {
